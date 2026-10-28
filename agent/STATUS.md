@@ -1,15 +1,12 @@
 # Agent Status
 
 ## HANDOFF
-phase: Restructure — persona move + seam markers (step 2 of approved plan)
-status: IN_PROGRESS
-next_action: Add seam markers and slot headings to all rule files under contracts/persona/{iac,administrative}/rules/, then write tools/check_sync.
-files: agent/REPO-MAP.md, README.md
-notes: Personas moved with git mv (history preserved). Root core sections verified byte-identical to iac originals (marker-stripped). Leave contracts/persona/iac/rules/zoo-dcg-bug.md untouched (user's file).
+phase: Restructure — complete (approved plan fully executed)
+status: DONE
+next_action: Optional follow-ups only on request — push to origin, tag contracts-v1.0.0, or decide the fate of contracts/persona/iac/rules/zoo-dcg-bug.md (user's untracked file).
+files: README.md, docs/authoring/core-sync.md, tools/check_sync, agent/ruleset.md
+notes: Evidence 2026-10-28 — `python3 tools/check_sync` → OK; `uv run --with pytest --no-project python -m pytest tests/ -q` → 8 passed. Six commits 845a6d1..b749841 on main, not yet pushed.
 
 ## Active Tasks
-- [ ] Add seam markers + slot headings to persona rule files
-- [ ] Write tools/check_sync + tests/test_check_sync.py; green run
-- [ ] Persona manifests (agent/ruleset.md), versions 1.0.0
-- [ ] docs/authoring/core-sync.md + persona-anatomy.md
-- [ ] agent/bootstrap.md for repo-maintainer; final README polish
+- [ ] Decide: push to origin and/or tag contracts-v1.0.0
+- [ ] Decide: keep or remove contracts/persona/iac/rules/zoo-dcg-bug.md (untracked user file)

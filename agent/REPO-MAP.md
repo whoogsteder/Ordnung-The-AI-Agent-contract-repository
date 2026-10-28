@@ -7,9 +7,9 @@
 - `rules/verification.md` — evidence and checker rules for repo work ✅
 
 ## agent/ (this repo's boot material)
-- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.0.0, core-source declaration 🟡 (root copy not yet covered by check_sync)
+- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.0.0; core drift against personas checked by tools/check_sync ✅
 - `agent/STATUS.md` — session state (HANDOFF lives here) ✅
-- `agent/bootstrap.md` — PLANNED: bootstrap protocol adapted for authoring work
+- `agent/bootstrap.md` — new-project bootstrapping protocol adapted for authoring work ✅
 
 ## contracts/persona/iac/ (persona: infrastructure-as-code) ✅
 - `contracts/persona/iac/rules/` — base, verification, python, terraform_tfgrunt, ansible, web, adr ✅
@@ -22,12 +22,12 @@
 - `contracts/persona/administrative/rules/` — base, verification, python, documents, financial, approval, dr ✅
 - Same agent/, docs/agent-contract/, licenses/ shape as iac persona ✅
 
-## tools/ 📋 PLANNED
-- `tools/check_sync` — core-section sync checker across personas (stdlib Python)
+## tools/ ✅
+- `tools/check_sync` — core/slot/persona seam checker: structure, cross-persona core drift, root dogfood copy, manifest presence + SemVer (stdlib Python)
 
-## tests/ 📋 PLANNED
-- `test_check_sync.py` — pytest incl. planted-drift fixture
+## tests/ ✅
+- `tests/test_check_sync.py` — pytest incl. planted-drift fixtures and a real-repo pass test (`uv run --with pytest --no-project python -m pytest tests/ -q`)
 
-## docs/authoring/ 📋 PLANNED
-- `core-sync.md` — seam marker convention, section-slot map, release flow
-- `persona-anatomy.md` — how to add a persona (fill-the-slots guide)
+## docs/authoring/ ✅
+- `core-sync.md` — seam marker convention, base.md section-slot map, one-commit rule, release/version policy
+- `persona-anatomy.md` — folder shape and steps to add a persona
