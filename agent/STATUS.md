@@ -1,11 +1,13 @@
 # Agent Status
 
 ## HANDOFF
-phase: Ordnung! rebrand + license — complete; everything pushed
+phase: security-advisories drive — discarded by user; lessons landed on main
 status: DONE
-next_action: Optional — point origin at the canonical URL (`git remote set-url origin https://github.com/pv-whoogsteder/Ordnung-The-AI-Agent-contract-repository.git`; old URL redirects fine) and/or tag contracts-v1.0.0.
-files: LICENSE.txt, README.md, CONTRIBUTING.md
-notes: Evidence 2026-10-28 — push succeeded; ls-remote on old URL resolves to dd5d23f (GitHub redirect confirms repo renamed). License credits W. Hoogsteder + Qwen3.8-Flash. check_sync OK, pytest 8 passed before commit.
+next_action: None required. Optional: push to origin (old remote URL redirects fine), tag contracts-v1.0.0, or start the real security persona with our own team using tools/new_persona.
+files: tools/new_persona, CONTRIBUTING.md
+notes: Evidence 2026-10-28 — branch feat_security-advisories-persona deleted (throwaway proven, user chose to discard; own security team will author the real one). Fix kept on main: new_persona now strips ALL template persona blocks + genericized slot hints; smoke test in throwaway copy shows clean scaffold (core+slots+stub only) and check_sync OK. pytest 8 passed.
 
 ## Active Tasks
+- [ ] Own security team: author the real security persona via tools/new_persona
+- [ ] Decide: keep or remove contracts/persona/iac/rules/zoo-dcg-bug.md (untracked user file)
 - [ ] Optional: tag contracts-v1.0.0 now that v1.0.0 manifests are public

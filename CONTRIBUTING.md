@@ -18,6 +18,7 @@ python3 tools/new_persona <your-persona>     # scaffolds contracts/persona/<your
 # 2. keep/adapt/delete the optional modules; add your own with <!-- persona --> markers
 # 3. write your rationale in docs/agent-contract/
 python3 tools/check_sync                     # must say OK before you commit
+grep -rn TODO contracts/persona/<your-persona>/   # must come up empty — leftover template slots are the most common miss
 uv run --with pytest --no-project python -m pytest tests/ -q
 ```
 

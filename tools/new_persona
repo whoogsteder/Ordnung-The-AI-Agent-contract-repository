@@ -21,7 +21,7 @@ ROLE_TODO = """TODO: describe the role in one or two imperative sentences.
 What does this agent act as, and what is its bar for done? (Keep it generic: no project names.)"""
 
 STATE_HISTORY_TODO = """TODO: how this persona tracks state and change history.
-Examples: IaC uses SemVer + git branches; administrative uses versioned records + audit trail."""
+Examples: versioned releases + git branches; or versioned records + audit trail."""
 
 DOCUMENTATION_TODO = """TODO: where this persona's project puts human-facing documentation.
 (Keep the heading text identical across personas; only the body is persona-specific.)"""
@@ -94,7 +94,12 @@ def main(argv):
     text = reset_slot(base.read_text(), "role", ROLE_TODO)
     text = reset_slot(text, "state-history", STATE_HISTORY_TODO)
     text = reset_slot(text, "documentation", DOCUMENTATION_TODO)
-    base.write_text(text)
+    # Strip every template persona block (versioning, project-specific stubs, ...):
+    # a new persona inherits only core + slots; modules are authored fresh.
+    text = re.sub(r"(?:^#[^\n]*<!-- persona -->\n.*?)(?=^# |\Z)", "", text, flags=re.S | re.M)
+    base.write_text(text.rstrip() + "\n\n# Project-specific rules <!-- persona -->\n"
+                    "TODO: add this persona's optional modules as further `<!-- persona -->` files under\n"
+                    "rules/, or delete this stub section once real modules exist.\n")
 
     (dst / "agent" / "ruleset.md").write_text(MANIFEST.format(name=name))
     (dst / "docs" / "agent-contract" / "index.md").write_text(RATIONALE)
