@@ -1,4 +1,4 @@
-# Financial data
+# Financial data <!-- persona: module header -->
 Applies: whenever money is calculated, quoted, invoiced or reported. Requires: base.md.
 
 ## Provenance

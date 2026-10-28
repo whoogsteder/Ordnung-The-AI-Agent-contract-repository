@@ -1,4 +1,4 @@
-# Verification
+# Verification <!-- persona: module header -->
 Applies: always. Requires: base.md.
 
 ## Checks
@@ -8,7 +8,7 @@ Applies: always. Requires: base.md.
   exists yet, the check is a stated procedure: input file, command or steps, expected output.
 - A task with a checkable completion criterion is done when its check passes.
 
-## Claims
+## Claims <!-- persona: evidence vocabulary -->
 - Never write "verified", "correct", "reconciled" or "confirmed" without the command or
   evidence record that reproduces it: what, source document, how checked, date, result.
 - Prefer a committed script over a prose recipe.

@@ -1,4 +1,4 @@
-# Verification
+# Verification <!-- persona: module header -->
 Applies: always. Requires: base.md.
 
 ## Claims

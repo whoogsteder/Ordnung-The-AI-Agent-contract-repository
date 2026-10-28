@@ -1,4 +1,4 @@
-# Documents and records
+# Documents and records <!-- persona: module header -->
 Applies: when creating or managing quotes, invoices, offers, receipts, contracts or
 correspondence. Requires: base.md.
 

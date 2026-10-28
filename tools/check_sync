@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""check_sync — enforce the core/slot/persona seam convention across personas.
+
+Convention (docs/authoring/core-sync.md): every top-level ('# ') heading in a
+contract rule file carries a marker:
+  <!-- core -->                    body must be identical across all personas that ship the file
+  <!-- slot: <name> -->            same intent, may differ; heading must exist in every persona
+                                   that ships the file under the shared section name
+  <!-- persona --> or <!-- persona: text -->   owned by one persona, no cross-obligation
+
+Usage: check_sync [REPO_ROOT]   (default: repo root inferred from script location)
+Exit 0 = consistent; exit 1 = violations reported on stdout.
+"""
+import re
+import sys
+from pathlib import Path
+
+MARKER = re.compile(r"<!--\s*(core|slot:\s*[\w-]+|persona(?::\s*[^>]+)?)\s*-->")
+
+
+def parse_file(path: Path):
+    """Return list of (heading, marker_or_None, normalized_body)."""
+    sections = []
+    heading, marker, body = None, None, []
+    for line in path.read_text().splitlines():
+        if line.startswith("# "):
+            if heading is not None:
+                sections.append((heading, marker, normalize(body)))
+            stripped = line.rstrip()
+            m = MARKER.search(stripped)
+            marker = m.group(1).strip() if m else None
+            heading = MARKER.sub("", stripped).strip()
+            body = []
+        elif heading is not None:
+            body.append(line.rstrip())
+    if heading is not None:
+        sections.append((heading, marker, normalize(body)))
+    return sections
+
+
+def normalize(lines):
+    return "\n".join(l for l in lines if l.strip()).strip()
+
+
+def kind(marker):
+    if marker is None:
+        return None
+    if marker == "core":
+        return "core"
+    if marker.startswith("slot:"):
+        return "slot"
+    return "persona"
+
+
+def check(root: Path):
+    problems = []
+    personas = {}  # persona -> {rel_rules_path: sections}
+    persona_dir = root / "contracts" / "persona"
+    if not persona_dir.is_dir():
+        return [f"missing directory: {persona_dir}"]
+    for pdir in sorted(persona_dir.iterdir()):
+        if not (pdir / "rules").is_dir():
+            continue
+        files = {}
+        for rf in sorted((pdir / "rules").glob("*.md")):
+            sections = parse_file(rf)
+            for heading, marker, _ in sections:
+                if kind(marker) is None:
+                    problems.append(f"{rf.relative_to(root)}: unmarked top-level heading {heading!r}")
+            files[rf.name] = sections
+        personas[pdir.name] = files
+        manifest = pdir / "agent" / "ruleset.md"
+        if not manifest.is_file():
+            problems.append(f"{pdir.name}: missing manifest agent/ruleset.md")
+        elif not re.search(r"^version:\s*\d+\.\d+\.\d+", manifest.read_text(), re.M):
+            problems.append(f"{pdir.name}: manifest lacks 'version: X.Y.Z'")
+
+    # core equality + slot structure across personas that ship the same file
+    shared_files = set.intersection(*(set(f) for f in personas.values())) if personas else set()
+    for fname in sorted(shared_files):
+        by_heading = compare(personas, fname)
+        problems += compare_problems(by_heading, fname)
+
+    # root dogfood contract: its <!-- core --> sections must match the personas'
+    root_rules = root / "rules"
+    if root_rules.is_dir():
+        for rf in sorted(root_rules.glob("*.md")):
+            fname = rf.name
+            if fname not in shared_files:
+                continue
+            by_heading = compare(personas, fname)
+            for heading, marker, body in parse_file(rf):
+                k = kind(marker)
+                if k is None:
+                    problems.append(f"{rf.relative_to(root)}: unmarked top-level heading {heading!r}")
+                    continue
+                per = by_heading.get(heading, {})
+                if {pk for pk, _ in per.values()} != {k}:
+                    continue  # personas disagree on this section; reported by persona check
+                if k == "core":
+                    if not per:
+                        problems.append(f"{fname}: root marks {heading!r} core but no persona does")
+                    for p, (pk, pb) in sorted(per.items()):
+                        if pb != body:
+                            problems.append(f"{fname}: core section {heading!r} differs between "
+                                            f"root and {p}")
+    return problems
+
+
+def compare(personas, fname):
+    by_heading = {}  # heading -> {persona: (kind, body)}; persona-marked sections included so kind mismatches surface
+    for pname, files in personas.items():
+        for heading, marker, body in files[fname]:
+            k = kind(marker)
+            if k is not None:
+                by_heading.setdefault(heading, {})[pname] = (k, body)
+    return by_heading
+
+
+def compare_problems(by_heading, fname):
+    problems = []
+    for heading, per in sorted(by_heading.items()):
+        kinds = {k for k, _ in per.values()}
+        if len(kinds) > 1:
+            problems.append(f"{fname}: section {heading!r} marked differently across personas: "
+                            + ", ".join(f"{p}={k}" for p, (k, _) in sorted(per.items())))
+            continue
+        if kinds == {"core"} and len(per) > 1:
+            first = next(iter(per))
+            for p, (_, b) in per.items():
+                if b != per[first][1]:
+                    problems.append(f"{fname}: core section {heading!r} differs between "
+                                    f"{first} and {p}")
+    return problems
+
+
+def main():
+    root = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent
+    problems = check(root)
+    if problems:
+        print(f"check_sync: {len(problems)} problem(s)")
+        for p in problems:
+            print(" -", p)
+        return 1
+    print("check_sync: OK")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

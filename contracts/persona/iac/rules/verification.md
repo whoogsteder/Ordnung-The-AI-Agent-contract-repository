@@ -1,4 +1,4 @@
-# Verification
+# Verification <!-- persona: module header -->
 Applies: always. Requires: base.md.
 
 ## Tests
@@ -9,7 +9,7 @@ Applies: always. Requires: base.md.
   Remove the marker when it passes.
 - A task with a testable completion criterion is done when its test passes.
 
-## Claims
+## Claims <!-- persona: evidence vocabulary -->
 - Never write "verified", "proven" or "confirmed" without the command that reproduces
   it, or an evidence record: what, command, environment, date, result.
 - Prefer a committed script over a prose recipe.

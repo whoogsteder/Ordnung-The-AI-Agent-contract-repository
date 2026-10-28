@@ -1,4 +1,4 @@
-# Decision Records
+# Decision Records <!-- slot: decision-records -->
 Applies: when the project records decisions in `docs/decisions/`. Requires: base.md.
 
 Use for choices that outlive a single task: supplier/tool selection, pricing or rate model,

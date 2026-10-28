@@ -80,10 +80,10 @@ notes: <any context needed for the next action — API quirks, auth details, env
 - Update `CHANGELOG.md` at the repository root (Keep a Changelog format) with every release.
 - No secrets in this repo: it publishes rules, not credentials. `.env` patterns stay git-ignored defensively.
 
-# Documentation <!-- core -->
+# Documentation <!-- slot: documentation -->
 - Every deliverable ships with docs. No docs = not done.
 - README.md in the project root is the landing page: intro, quickstart, links.
-- Every code language or tool will list its preferred doc pairing. in files under rules/
+- Every code language or tool will list its preferred doc pairing in files under rules/.
 - Code comments explain "how this line works." Docs explain "what to run and what it means."
 - **Status markers:** Use these in REPO-MAP documentation section:
   - ✅ IMPLEMENTED — Complete and working

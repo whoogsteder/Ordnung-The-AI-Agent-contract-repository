@@ -1,4 +1,4 @@
-# Approval classes
+# Approval classes <!-- persona: module header -->
 Applies: always. Requires: base.md.
 
 Every action falls in one of three classes. Classify before acting; state the class when it is 2 or 3.

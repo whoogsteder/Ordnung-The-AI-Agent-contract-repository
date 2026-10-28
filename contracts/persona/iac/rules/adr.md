@@ -1,4 +1,4 @@
-# ADRs (Architecture Decision Records)
+# ADRs (Architecture Decision Records) <!-- slot: decision-records -->
 Applies: when the project records decisions in `docs/adr/`. Requires: base.md.
 
 - Location: `docs/adr/NNN-<topic>.md` (zero-padded, e.g. `001-model-gateway-litellm.md`).
