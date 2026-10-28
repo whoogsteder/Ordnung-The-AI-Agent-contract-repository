@@ -11,16 +11,16 @@
 - `agent/STATUS.md` — session state (HANDOFF lives here) ✅
 - `agent/bootstrap.md` — PLANNED: bootstrap protocol adapted for authoring work
 
-## IaC/ (persona: infrastructure-as-code) 📋 pending move to contracts/persona/iac/
-- `IaC/rules/` — base, verification, python, terraform_tfgrunt, ansible, web, adr ✅
-- `IaC/agent/` — bootstrap, project_layout, STATUS template ✅
-- `IaC/docs/agent-contract/` — rationale docs (do not read at boot) ✅
-- `IaC/licenses/` — license picker texts ✅
-- `IaC/rules/zoo-dcg-bug.md` — user's untracked file, leave in place until user decides
+## contracts/persona/iac/ (persona: infrastructure-as-code) ✅
+- `contracts/persona/iac/rules/` — base, verification, python, terraform_tfgrunt, ansible, web, adr ✅
+- `contracts/persona/iac/agent/` — bootstrap, project_layout, STATUS template ✅
+- `contracts/persona/iac/docs/agent-contract/` — rationale docs (do not read at boot) ✅
+- `contracts/persona/iac/licenses/` — license picker texts ✅
+- `contracts/persona/iac/rules/zoo-dcg-bug.md` — user's untracked file, leave in place until user decides
 
-## administrative/ (persona: administrative work) 📋 pending move to contracts/persona/administrative/
-- `administrative/rules/` — base, verification, python, documents, financial, approval, dr ✅
-- Same agent/, docs/agent-contract/, licenses/ shape as IaC persona ✅
+## contracts/persona/administrative/ (persona: administrative work) ✅
+- `contracts/persona/administrative/rules/` — base, verification, python, documents, financial, approval, dr ✅
+- Same agent/, docs/agent-contract/, licenses/ shape as iac persona ✅
 
 ## tools/ 📋 PLANNED
 - `tools/check_sync` — core-section sync checker across personas (stdlib Python)

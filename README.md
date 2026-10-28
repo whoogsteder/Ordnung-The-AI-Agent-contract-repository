@@ -13,13 +13,13 @@ only way to keep sessions coherent.
 
 | Ruleset | Role | Specialist modules |
 |---|---|---|
-| [`IaC/`](IaC/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
-| [`administrative/`](administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
+| [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
+| [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
 
 Both share the same transferable core: session boot protocol, externalized memory, HANDOFF
 continuity, verification discipline, decision records. The decision-record naming follows the
-persona: `IaC/` uses **ADRs** (`rules/adr.md`, `docs/adr/`) because "architecture" is literal
-there and the convention matches existing projects; `administrative/` uses plain **DRs**
+persona: `contracts/persona/iac/` uses **ADRs** (`rules/adr.md`, `docs/adr/`) because "architecture" is literal
+there and the convention matches existing projects; `contracts/persona/administrative/` uses plain **DRs**
 (`rules/dr.md`, `docs/decisions/`) — the decision discipline applies, the architecture framing
 does not.
 
@@ -82,7 +82,7 @@ the agent behaves; the chat is disposable.
 
 ## Using a ruleset in a project
 
-1. **Copy** the ruleset folder (e.g. `administrative/`) into the project root.
+1. **Copy** the ruleset folder (e.g. `contracts/persona/administrative/`) into the project root.
 2. **Open the project with any agent.** The tool's entry-point file sends it to `AGENTS.md`,
    which makes the agent read all of `rules/` before doing anything else.
 3. **First session runs bootstrap**: the agent asks about goal and scope, settles licensing,
@@ -107,7 +107,7 @@ explicitly ask for that specific change.
 
 Each ruleset explains itself in detail under `docs/agent-contract/`:
 
-- [IaC rationale](IaC/docs/agent-contract/index.md) — base contract, verification/test ladder,
+- [IaC rationale](contracts/persona/iac/docs/agent-contract/index.md) — base contract, verification/test ladder,
   bootstrap lifecycle, tooling modules.
-- [Administrative rationale](administrative/docs/agent-contract/index.md) — base contract,
+- [Administrative rationale](contracts/persona/administrative/docs/agent-contract/index.md) — base contract,
   verification/records ladder, bootstrap lifecycle, financial integrity & approval classes.
