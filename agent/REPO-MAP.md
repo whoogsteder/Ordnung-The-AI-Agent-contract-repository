@@ -1,7 +1,8 @@
 # REPO-MAP — Ordnung! (repo-maintainer persona)
 
 ## Root
-- `README.md` — landing page: Ordnung! intro, personas, contribution invite, checks ✅
+- `README.md` — landing page: logo banner (`img/ordnung_logo.png`, 800×192), Ordnung! intro, personas, contribution invite, checks ✅
+- `img/` — project assets (logo) ✅
 - `CONTRIBUTING.md` — contributor guide: quickstart with tools/new_persona, contribution rules ✅
 - `AGENTS.md` / `CLAUDE.md` — this repo's own agent boot pointer (repo-maintainer contract) ✅
 - `rules/base.md` — repo-maintainer contract core (marked `<!-- core -->` / `<!-- slot: -->` / `<!-- persona -->`) ✅
