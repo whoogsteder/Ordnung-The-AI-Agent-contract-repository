@@ -1,4 +1,4 @@
-# Ordnung!
+![Ordnung! The AI Agent contract repository!](img/ordnung_logo.png)
 
 **Bringing order to your agents.** 🧹
 
