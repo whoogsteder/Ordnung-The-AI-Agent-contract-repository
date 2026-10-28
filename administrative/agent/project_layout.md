@@ -20,7 +20,7 @@ Use these files to externalize memory from your context. These exist in every pr
 │   └── bootstrap.md       # New project bootstrap protocol
 ├── rules/                 # Agent rules: base.md always; one module per record type/tool in use
 ├── docs/                  # Documentation
-│   ├── adr/               # Decision Records: NNN-<topic>.md
+│   ├── decisions/         # Decision Records: NNN-<topic>.md
 │   ├── guides/            # How-to documentation (read on demand)
 │   └── procedures/        # Step-by-step operational procedures per scenario
 ├── templates/             # Document templates (quotes, invoices, letters) — see rules/documents.md

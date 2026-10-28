@@ -1,4 +1,9 @@
-# Bootstrap protocol (new project — no agent/STATUS.md exists yet)
+# Bootstrap protocol (new project — no agent/REPO-MAP.md and no project-written agent/STATUS.md yet)
+
+The contract ships `agent/STATUS.md` as an empty template (headers only, no HANDOFF). If the
+file still has no HANDOFF block, bootstrap has not run in this project — run it. A STATUS.md
+containing a written HANDOFF means the project is already bootstrapped: skip to normal
+session continuity instead.
 
 You are starting from scratch. Do the following IN ORDER before any implementation:
 
@@ -20,14 +25,14 @@ You are starting from scratch. Do the following IN ORDER before any implementati
        next_action: Create project structure per the layout in agent/project_layout.md
        files: (none yet)
    - `agent/REPO-MAP.md` (directory guide — start from the core layout, add tool dirs as they appear)
-   - `docs/` and `docs/adr/` directories
+   - `docs/` and `docs/decisions/` directories
    - Does the open project use git?
      - add `.gitignore`, add .env and obvious secrects to gitignore.
      - Create `.env.example` clone keys from .env file if present. Replace secrets with template example values.
      - `git init` + initial commit
 
 4. **If the project involves design decisions or research:**
-   - Create ADRs under `docs/adr/` and follow the process in `rules/adr.md`.
+   - Create DRs under `docs/decisions/` and follow the process in `rules/dr.md`.
 
 5. **Set the first real `next_action`** in `agent/STATUS.md` to the first implementation step. Then proceed as normal.
 

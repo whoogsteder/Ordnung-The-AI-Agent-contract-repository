@@ -15,7 +15,9 @@ Accuracy over speed: in administrative work a plausible wrong number is worse th
   IMPLEMENTED or PARTIAL for current operational tasks; skip PLANNED docs unless explicitly
   working on that design. This prevents context bloat from loading irrelevant planned designs.
 - Explore on demand. Hit something unknown mid-task? One targeted read or search, then continue.
-- If no entry-point `agent/REPO-MAP.md` or `agent/STATUS.md` files exist, this is a new project — follow the bootstrap protocol in `agent/bootstrap.md`.
+- If `agent/REPO-MAP.md` is missing, or `agent/STATUS.md` is missing or still the empty contract
+  template (no HANDOFF block written), this is a new project — follow the bootstrap protocol in
+  `agent/bootstrap.md`.
 
 # REPO-MAP maintenance (mandatory)
 REPO-MAP.md is the agent's index for scoping reads and searches. It must stay current:

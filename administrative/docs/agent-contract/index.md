@@ -19,7 +19,7 @@ flowchart TD
     C --> E
     D --> E
     E --> F["Boot protocol: list rules/,<br/>read every rules/*.md (base.md first)"]
-    F --> G{agent/REPO-MAP.md<br/>and agent/STATUS.md exist?}
+    F --> G{agent/REPO-MAP.md exists &<br/>agent/STATUS.md has a HANDOFF?}
     G -->|no — new project| H[agent/bootstrap.md:<br/>scope, license, skeleton]
     G -->|yes — existing project| I[Read STATUS.md HANDOFF,<br/>scope work with REPO-MAP]
     H --> I
@@ -34,7 +34,7 @@ Plain-text version (for non-rendering contexts):
 agent starts
   └─ entry point: CLAUDE.md / .github/copilot-instructions.md → AGENTS.md
        └─ boot: list rules/ → read every rules/*.md, base.md first
-            ├─ no agent/REPO-MAP.md or STATUS.md → agent/bootstrap.md (new-project protocol)
+            ├─ no REPO-MAP, or STATUS is empty template → agent/bootstrap.md (new-project protocol)
             └─ exists → read STATUS.md HANDOFF, scope via REPO-MAP
                  └─ work under the rules
                       └─ update REPO-MAP + STATUS on triggers; archive DONE items → loop
@@ -52,7 +52,7 @@ material, listed in REPO-MAP but never edited by agents (base.md, Rule files).
 | Page | Rules it explains |
 |---|---|
 | [base-contract.md](base-contract.md) | `rules/base.md` — context discipline, externalized memory, HANDOFF, archiving, rule-file protection |
-| [verification.md](verification.md) | `rules/verification.md`, Enforcement in `rules/adr.md` — claims become checks; the records ladder (static → recomputation → round-trip → spot-check source → outside confirmation) |
+| [verification.md](verification.md) | `rules/verification.md`, Enforcement in `rules/dr.md` — claims become checks; the records ladder (static → recomputation → round-trip → spot-check source → outside confirmation) |
 | [memory-and-bootstrap.md](memory-and-bootstrap.md) | `agent/bootstrap.md`, `agent/project_layout.md`, REPO-MAP/STATUS lifecycle |
 | [financial-and-records.md](financial-and-records.md) | `rules/financial.md`, `rules/documents.md`, `rules/approval.md`, `rules/python.md` — provenance, immutability, the approval classes; why agents may never silently balance a discrepancy |
 

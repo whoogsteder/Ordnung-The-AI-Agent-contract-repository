@@ -1,6 +1,6 @@
 # Verification: why claims become checks
 
-Companion to `rules/verification.md` (and the Enforcement section of `rules/adr.md`).
+Companion to `rules/verification.md` (and the Enforcement section of `rules/dr.md`).
 Start at [index.md](index.md) for the map of all rationale pages.
 The rule files tell agents what to do; this page explains why, for the people who
 maintain the rules and review the work.

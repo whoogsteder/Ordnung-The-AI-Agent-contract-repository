@@ -2,15 +2,15 @@
 Applies: when the project records decisions in `docs/adr/`. Requires: base.md.
 
 - Location: `docs/adr/NNN-<topic>.md` (zero-padded, e.g. `001-model-gateway-litellm.md`).
-- Each ADR has: Context / Decision / Consequences / Status.
+- Each record has: Context / Decision / Consequences / Status.
 - Statuses:
   - `PROPOSED` — open, not yet decided.
   - `ACCEPTED` — decided; safe to build on.
   - `CLOSED` — rejected or superseded (state why).
 
 ## Rule
-- An ADR may stay `PROPOSED` while work proceeds, as long as the current task does not depend on it.
-- If a task depends on a `PROPOSED` ADR: drive it to a decision (`ACCEPTED`/`CLOSED`) first, or halt that work until it is resolved. Never implement against an undecided decision.
+- A record may stay `PROPOSED` while work proceeds, as long as the current task does not depend on it.
+- If a task depends on a `PROPOSED` record: drive it to a decision (`ACCEPTED`/`CLOSED`) first, or halt that work until it is resolved. Never implement against an undecided decision.
 - Cite decisions as `ADR-NNN decision N`; both must exist. A `CLOSED` ADR is cited only
   by other ADRs and history files.
 

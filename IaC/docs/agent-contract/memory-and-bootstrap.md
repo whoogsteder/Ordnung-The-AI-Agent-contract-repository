@@ -7,7 +7,7 @@ Companions to `agent/bootstrap.md`, `agent/project_layout.md` and the memory sec
 
 ```mermaid
 flowchart TD
-    S[Session start] --> R{REPO-MAP + STATUS<br/>present?}
+    S[Session start] --> R{REPO-MAP exists & STATUS<br/>has a written HANDOFF?}
     R -->|no| B["bootstrap.md protocol:<br/>1 scope discussion — stop and wait<br/>2 license per component<br/>3 skeleton: docs/, CHANGELOG,<br/>REPO-MAP, empty STATUS"]
     B --> W[Work on the task]
     R -->|yes| H[Read HANDOFF, echo next_action]
@@ -39,12 +39,16 @@ template meant for redistribution should not inherit a proprietary code license,
 versa. The license files in `licenses/` travel with the contract precisely so the question is
 answerable at the moment it is asked.
 
-## Why bootstrap writes an empty STATUS.md
+## Why the contract ships an empty STATUS.md template
 
-Creating STATUS.md with zero content is the trick that makes the whole memory system
-self-enforcing: from the first session onward, every session start finds the file and follows
-the update triggers. A project where STATUS appears "later, when there is something to report"
-is a project where nobody remembers to create it.
+The ruleset includes `agent/STATUS.md` as a headers-only template, and bootstrap fills it with
+the first HANDOFF. Two reasons: every session start finds the file and follows the update
+triggers — a project where STATUS appears "later, when there is something to report" is a
+project where nobody remembers to create it — and an empty template makes the format itself
+discoverable without reading any rule. The cost is that *existence* can no longer mark a new
+project, so the bootstrap trigger is content-based: **no REPO-MAP, or a STATUS.md with no
+written HANDOFF block**, means bootstrap has not run. (base.md and bootstrap.md state this
+identically; the flow diagrams use the same test.)
 
 ## REPO-MAP as the anti-hallucination index
 

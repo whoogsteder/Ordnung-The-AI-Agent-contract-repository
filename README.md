@@ -17,7 +17,11 @@ only way to keep sessions coherent.
 | [`administrative/`](administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
 
 Both share the same transferable core: session boot protocol, externalized memory, HANDOFF
-continuity, verification discipline, decision records.
+continuity, verification discipline, decision records. The decision-record naming follows the
+persona: `IaC/` uses **ADRs** (`rules/adr.md`, `docs/adr/`) because "architecture" is literal
+there and the convention matches existing projects; `administrative/` uses plain **DRs**
+(`rules/dr.md`, `docs/decisions/`) — the decision discipline applies, the architecture framing
+does not.
 
 ## Anatomy of a ruleset
 
@@ -51,7 +55,7 @@ flowchart TD
     C --> E
     D --> E
     E --> F["Boot protocol: list rules/,<br/>read every rules/*.md (base.md first)"]
-    F --> G{agent/REPO-MAP.md<br/>and agent/STATUS.md exist?}
+    F --> G{agent/REPO-MAP.md exists &<br/>agent/STATUS.md has a HANDOFF?}
     G -->|no — new project| H[agent/bootstrap.md:<br/>scope, license, skeleton]
     G -->|yes — existing project| I[Read STATUS.md HANDOFF,<br/>scope work with REPO-MAP]
     H --> I
@@ -66,7 +70,7 @@ Plain-text version (for non-rendering contexts):
 agent starts
   └─ entry point: CLAUDE.md / .github/copilot-instructions.md → AGENTS.md
        └─ boot: list rules/ → read every rules/*.md, base.md first
-            ├─ no agent/REPO-MAP.md or STATUS.md → agent/bootstrap.md (new-project protocol)
+            ├─ no REPO-MAP, or STATUS is empty template → agent/bootstrap.md (new-project protocol)
             └─ exists → read STATUS.md HANDOFF, scope via REPO-MAP
                  └─ work under the rules
                       └─ update REPO-MAP + STATUS on triggers; archive DONE items → loop
@@ -82,8 +86,10 @@ the agent behaves; the chat is disposable.
 2. **Open the project with any agent.** The tool's entry-point file sends it to `AGENTS.md`,
    which makes the agent read all of `rules/` before doing anything else.
 3. **First session runs bootstrap**: the agent asks about goal and scope, settles licensing,
-   and creates the project skeleton plus its memory files (`agent/REPO-MAP.md`,
-   `agent/STATUS.md`). Everything after that is the loop in the diagram above.
+   creates the project skeleton and `agent/REPO-MAP.md`, and fills the shipped empty
+   `agent/STATUS.md` template with its first HANDOFF. Everything after that is the loop in the
+   diagram above. (Bootstrap recognizes itself by content: no REPO-MAP, or a STATUS.md without
+   a written HANDOFF, means it has not run yet.)
 
 The ruleset folder itself is read-only for agents: rule files may only change when you
 explicitly ask for that specific change.

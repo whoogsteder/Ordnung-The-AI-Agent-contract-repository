@@ -1,4 +1,9 @@
-# Bootstrap protocol (new project — no agent/STATUS.md exists yet)
+# Bootstrap protocol (new project — no agent/REPO-MAP.md and no project-written agent/STATUS.md yet)
+
+The contract ships `agent/STATUS.md` as an empty template (headers only, no HANDOFF). If the
+file still has no HANDOFF block, bootstrap has not run in this project — run it. A STATUS.md
+containing a written HANDOFF means the project is already bootstrapped: skip to normal
+session continuity instead.
 
 You are starting from scratch. Do the following IN ORDER before any implementation:
 
