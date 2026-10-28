@@ -18,16 +18,29 @@ Use these files to externalize memory from your context. These exist in every pr
 │   ├── STATUS.md          # Session handoff + state (single source for continuity)
 │   ├── REPO-MAP.md        # Stable file index — scopes the agent's reads/searches
 │   └── bootstrap.md       # New project bootstrap protocol
-├── rules/                 # Agent rules: base.md always; one module per language/tool in use
+├── rules/                 # Agent rules: base.md always; one module per record type/tool in use
 ├── docs/                  # Documentation
-│   ├── architecture/      # Topic specific architecture designs (read on demand)
-│   │   └── adr/           # Architecture Decision Records: NNN-<topic>.md
+│   ├── adr/               # Decision Records: NNN-<topic>.md
 │   ├── guides/            # How-to documentation (read on demand)
-│   └── runbooks/          # Operational procedures per scenario
+│   └── procedures/        # Step-by-step operational procedures per scenario
+├── templates/             # Document templates (quotes, invoices, letters) — see rules/documents.md
+├── records/               # Working records: drafts and finals by type/year (see rules/documents.md)
+│   ├── quotes/
+│   ├── invoices/
+│   └── correspondence/
+├── data/                  # Structured data: exports, ledgers, master data (see rules/python.md)
+│   ├── counterparties/    # Master data — single source of truth per counterparty
+│   └── imports/           # Read-only source exports (bank CSV, accounting dumps)
 ├── .env.example           # Secret placeholders (real .env is git-ignored, if applicable)
-├── .gitignore             # Guards: secrets, local artefacts, dev/runtime outputs
+├── .gitignore             # Guards: secrets, personal data, local artefacts
 └── README.md              # Human readable landing page
 ```
+
+## Record-handling guards
+- `data/imports/` files are evidence: read-only inputs, never edited in place.
+- Real customer/supplier data is git-ignored unless the project declares the repository private
+  (see base.md, Data handling & privacy); commit redacted samples with the same shape instead.
+- Registers (number sequences and their next free number) live in `agent/REPO-MAP.md`.
 
 ## Tool-Specific Layouts
 

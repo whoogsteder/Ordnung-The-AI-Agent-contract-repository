@@ -21,8 +21,10 @@ You are starting from scratch. Do the following IN ORDER before any implementati
        files: (none yet)
    - `agent/REPO-MAP.md` (directory guide — start from the core layout, add tool dirs as they appear)
    - `docs/` and `docs/adr/` directories
-   - `.gitignore`, `.env.example` (if applicable)
-   - `git init` + initial commit
+   - Does the open project use git?
+     - add `.gitignore`, add .env and obvious secrects to gitignore.
+     - Create `.env.example` clone keys from .env file if present. Replace secrets with template example values.
+     - `git init` + initial commit
 
 4. **If the project involves design decisions or research:**
    - Create ADRs under `docs/adr/` and follow the process in `rules/adr.md`.

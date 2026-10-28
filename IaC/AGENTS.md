@@ -7,3 +7,6 @@ Before you do ANYTHING else, in this exact order:
 The files in `rules/` are the project's rules and the single source of truth for every
 agent (Copilot, Continue, Cline, and any other). `base.md` always applies; the other
 `rules/*.md` files apply when that language/tool is in use.
+
+`docs/agent-contract/` explains *why* these rules exist. It is background for humans and
+for agents only on request — do NOT read it during the boot sequence or as part of task work.
