@@ -1,7 +1,8 @@
-# REPO-MAP — AI Agent Rulesets (repo-maintainer persona)
+# REPO-MAP — Ordnung! (repo-maintainer persona)
 
 ## Root
-- `README.md` — landing page: contract concept, personas, install instructions ✅
+- `README.md` — landing page: Ordnung! intro, personas, contribution invite, checks ✅
+- `CONTRIBUTING.md` — contributor guide: quickstart with tools/new_persona, contribution rules ✅
 - `AGENTS.md` / `CLAUDE.md` — this repo's own agent boot pointer (repo-maintainer contract) ✅
 - `rules/base.md` — repo-maintainer contract core (marked `<!-- core -->` / `<!-- slot: -->` / `<!-- persona -->`) ✅
 - `rules/verification.md` — evidence and checker rules for repo work ✅
@@ -24,6 +25,7 @@
 
 ## tools/ ✅
 - `tools/check_sync` — core/slot/persona seam checker: structure, cross-persona core drift, root dogfood copy, manifest presence + SemVer (stdlib Python)
+- `tools/new_persona` — scaffold a contributor persona from the iac template: slots reset to TODO, fresh manifest + rationale stub (smoke-tested 2026-10-28; not yet covered by pytest)
 
 ## tests/ ✅
 - `tests/test_check_sync.py` — pytest incl. planted-drift fixtures and a real-repo pass test (`uv run --with pytest --no-project python -m pytest tests/ -q`)

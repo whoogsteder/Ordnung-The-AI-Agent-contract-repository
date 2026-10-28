@@ -59,7 +59,7 @@ Left unsupervised, an agent that hits a conflicting rule will "fix" the rule —
 changing its own contract and every future session's behaviour. The Rule-files section makes
 rules read-only to agents and routes the energy through the human: report the conflict, ask,
 never work around it. It pairs with the genericity rule (no project-specific facts in rules):
-the moment one project's paths or record numbers leak into a shared rule, the ruleset stops
+the moment one project's paths or record numbers leak into a shared rule, the contract stops
 being reusable — and edits made under session pressure are exactly how that happens.
 
 ## "Approval of one change does not cover others"

@@ -1,4 +1,4 @@
-# Ruleset manifest — administrative persona
+# Contract manifest — administrative persona
 
 persona: administrative
 version: 1.0.0

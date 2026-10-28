@@ -41,7 +41,7 @@ answerable at the moment it is asked.
 
 ## Why the contract ships an empty STATUS.md template
 
-The ruleset includes `agent/STATUS.md` as a headers-only template, and bootstrap fills it with
+The contract includes `agent/STATUS.md` as a headers-only template, and bootstrap fills it with
 the first HANDOFF. Two reasons: every session start finds the file and follows the update
 triggers — a project where STATUS appears "later, when there is something to report" is a
 project where nobody remembers to create it — and an empty template makes the format itself

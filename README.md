@@ -1,17 +1,36 @@
-# AI Agent Rulesets
+# Ordnung!
 
-Role-specific **agent contracts**: each folder turns a generic coding agent into a specialist —
-an infrastructure designer, an administrative assistant — by giving it a role, working
-discipline, and a memory system it can run across sessions without supervision.
+**Bringing order to your agents.** 🧹
+
+Every AI coding agent starts your project as a brilliant amnesiac: great at the task in front
+of it, hopeless at remembering why you do things this way — until the next session wipes the
+slate clean. **Ordnung is the cure**: drop-in *agent contracts* that give a generic agent a
+role, a working discipline, and a memory system written to files instead of chat history. The
+agent may forget; the Ordnung does not.
+
+Each contract is a self-contained folder you copy into your project root. It turns the same
+generic agent into a specialist — an infrastructure designer, an administrative assistant —
+and keeps it coherent across sessions without you babysitting.
 
 The contracts are **agent-agnostic**: the same files drive Copilot, Claude Code, Cline,
 Continue, Cursor or any tool that reads `AGENTS.md`. They were shaped against small local
 models (Qwen, DeepSeek), where explicit rules and externalized state are not a nicety but the
 only way to keep sessions coherent.
 
+## Bring your own persona 🤝
+
+Ordnung is built to grow: **your take on an agent contract is welcome here.** Maybe you have a
+discipline for data-science notebooks, homelab operations, or legal drafting that actually
+keeps an agent honest. The framework gives you the hard parts up front — the shared core
+(boot protocol, HANDOFF continuity, verification discipline), guides for writing rules and
+rationale, and tooling (`tools/check_sync`, `tools/new_persona`) that scaffolds a new persona
+and keeps its shared sections from drifting against the others. You bring the specialist
+flavor; the repo keeps everyone's copy honest. Start at
+[CONTRIBUTING.md](CONTRIBUTING.md) — it walks through the whole process.
+
 ## What is in the repo
 
-| Ruleset | Role | Specialist modules |
+| Contract | Role | Specialist modules |
 |---|---|---|
 | [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
 | [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
@@ -23,10 +42,10 @@ there and the convention matches existing projects; `contracts/persona/administr
 (`rules/dr.md`, `docs/decisions/`) — the decision discipline applies, the architecture framing
 does not.
 
-## Anatomy of a ruleset
+## Anatomy of a contract
 
 ```
-<ruleset>/
+<contract>/
 ├── AGENTS.md                        ← single source of truth: the boot protocol
 ├── CLAUDE.md                        ← one line: load @AGENTS.md (Claude Code entry)
 ├── .github/copilot-instructions.md  ← same pointer, for Copilot
@@ -80,9 +99,9 @@ The design idea in one sentence: **durable state lives in files, not in conversa
 `agent/REPO-MAP.md` is what exists, `agent/STATUS.md` is what is happening, the rules are how
 the agent behaves; the chat is disposable.
 
-## Using a ruleset in a project
+## Using a contract in a project
 
-1. **Copy** the ruleset folder (e.g. `contracts/persona/administrative/`) into the project root.
+1. **Copy** the contract folder (e.g. `contracts/persona/administrative/`) into the project root.
 2. **Open the project with any agent.** The tool's entry-point file sends it to `AGENTS.md`,
    which makes the agent read all of `rules/` before doing anything else.
 3. **First session runs bootstrap**: the agent asks about goal and scope, settles licensing,
@@ -91,10 +110,10 @@ the agent behaves; the chat is disposable.
    diagram above. (Bootstrap recognizes itself by content: no REPO-MAP, or a STATUS.md without
    a written HANDOFF, means it has not run yet.)
 
-The ruleset folder itself is read-only for agents: rule files may only change when you
+The contract folder itself is read-only for agents: rule files may only change when you
 explicitly ask for that specific change.
 
-## Editing a ruleset
+## Editing a contract
 
 This repository **runs its own contract**: the root folder is the `repo-maintainer` persona
 (`AGENTS.md`, `rules/`, `agent/`), and agents working here follow the same boot protocol they
@@ -124,7 +143,9 @@ Both must pass before committing contract or tooling changes.
 
 ## Where to read more
 
-Each ruleset explains itself in detail under `docs/agent-contract/`:
+- Want to add a persona? [CONTRIBUTING.md](CONTRIBUTING.md), then
+  [docs/authoring/persona-anatomy.md](docs/authoring/persona-anatomy.md).
+- Each contract explains itself in detail under `docs/agent-contract/`:
 
 - [IaC rationale](contracts/persona/iac/docs/agent-contract/index.md) — base contract, verification/test ladder,
   bootstrap lifecycle, tooling modules.

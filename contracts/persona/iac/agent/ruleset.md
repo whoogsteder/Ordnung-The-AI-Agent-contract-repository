@@ -1,4 +1,4 @@
-# Ruleset manifest — iac persona
+# Contract manifest — iac persona
 
 persona: iac
 version: 1.0.0

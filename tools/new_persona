@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""new_persona — scaffold a new persona contract under contracts/persona/.
+
+Copies the structural scaffold from an existing template persona (default: iac), then
+replaces the persona-specific pieces so the result starts clean:
+  - agent/ruleset.md   : fresh manifest (version 1.0.0) for the new persona
+  - rules/base.md      : slot sections reset to TODO placeholders; core sections untouched
+  - docs/agent-contract/index.md : stub rationale index
+
+Next steps are printed at the end; fill the slots, prune modules, then run check_sync.
+Usage: new_persona <name> [--template <persona>] [--force] [REPO_ROOT]
+"""
+import re
+import shutil
+import sys
+from pathlib import Path
+
+NAME_RE = re.compile(r"^[a-z][a-z0-9-]*$")
+
+ROLE_TODO = """TODO: describe the role in one or two imperative sentences.
+What does this agent act as, and what is its bar for done? (Keep it generic: no project names.)"""
+
+STATE_HISTORY_TODO = """TODO: how this persona tracks state and change history.
+Examples: IaC uses SemVer + git branches; administrative uses versioned records + audit trail."""
+
+DOCUMENTATION_TODO = """TODO: where this persona's project puts human-facing documentation.
+(Keep the heading text identical across personas; only the body is persona-specific.)"""
+
+MANIFEST = """# Contract manifest — {name} persona
+
+persona: {name}
+version: 1.0.0
+
+Self-contained drop-in contract for TODO domain description.
+Modules: base.md, verification.md (always); TODO optional modules (when in use).
+Boot pointer: AGENTS.md.
+"""
+
+RATIONALE = """# Agent contract — rationale
+
+This directory explains **why** the rules in `rules/` exist. The rule files are the contract
+agents must follow; these pages are the reasoning behind it, written for the humans who
+maintain this contract and review agent output — and for agents only when explicitly asked.
+
+> Not agent boot material. Nothing here is read during the session-start protocol.
+
+TODO: write one page per rule area (base contract, verification, bootstrap lifecycle) and
+link them from here. Explain decisions a newcomer would question.
+"""
+
+
+def reset_slot(text, slot, replacement):
+    """Replace the body of the '# ... <!-- slot: <slot> -->' section."""
+    pattern = re.compile(
+        r"^(# [^\n]*<!--\s*slot:\s*" + re.escape(slot) + r"\s*-->[ \t]*\n)(.*?)(?=^# |\Z)",
+        re.M | re.S,
+    )
+    m = pattern.search(text)
+    if not m:
+        raise SystemExit(f"base.md has no 'slot: {slot}' section — template incompatible?")
+    return text[: m.start(2)] + replacement.rstrip() + "\n\n" + text[m.end(2):]
+
+
+def main(argv):
+    args = [a for a in argv[1:] if not a.startswith("--")]
+    force = "--force" in argv
+    template = "iac"
+    if "--template" in argv:
+        template = argv[argv.index("--template") + 1]
+        args = [a for a in args if a != template]
+    if not args or not NAME_RE.match(args[0]):
+        raise SystemExit(__doc__)
+    name = args[0]
+    root = Path(args[1]).resolve() if len(args) > 1 else Path(__file__).resolve().parent.parent
+
+    src = root / "contracts" / "persona" / template
+    dst = root / "contracts" / "persona" / name
+    if not src.is_dir():
+        raise SystemExit(f"template persona not found: {src}")
+    if dst.exists():
+        if not force:
+            raise SystemExit(f"already exists: {dst} (use --force to overwrite)")
+        shutil.rmtree(dst)
+
+    shutil.copytree(src, dst)
+    # drop template-specific persona modules and rationale; keep structure + shared files
+    for stale in (dst / "rules").glob("*.md"):
+        if stale.name not in ("base.md", "verification.md"):
+            stale.unlink()
+    for f in (dst / "docs" / "agent-contract").glob("*.md"):
+        f.unlink()
+
+    base = dst / "rules" / "base.md"
+    text = reset_slot(base.read_text(), "role", ROLE_TODO)
+    text = reset_slot(text, "state-history", STATE_HISTORY_TODO)
+    text = reset_slot(text, "documentation", DOCUMENTATION_TODO)
+    base.write_text(text)
+
+    (dst / "agent" / "ruleset.md").write_text(MANIFEST.format(name=name))
+    (dst / "docs" / "agent-contract" / "index.md").write_text(RATIONALE)
+
+    print(f"scaffolded {dst.relative_to(root)} from template '{template}'")
+    print("next steps:")
+    print(f"  1. fill the TODO slots in rules/base.md (slot: role, slot: state-history)")
+    print("  2. adapt rules/verification.md evidence wording for your domain")
+    print("  3. add optional modules with <!-- persona --> markers as needed")
+    print("  4. write rationale pages in docs/agent-contract/")
+    print(f"  5. python3 tools/check_sync   (must print OK)")
+
+
+if __name__ == "__main__":
+    main(sys.argv)

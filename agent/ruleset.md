@@ -1,4 +1,4 @@
-# Ruleset manifest — repo-maintainer persona
+# Contract manifest — repo-maintainer persona
 
 persona: repo-maintainer
 version: 1.0.0

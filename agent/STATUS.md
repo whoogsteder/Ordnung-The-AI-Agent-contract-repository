@@ -1,12 +1,12 @@
 # Agent Status
 
 ## HANDOFF
-phase: Restructure — complete (approved plan fully executed)
+phase: Ordnung! rebrand — complete; repo rename pending user action on GitHub
 status: DONE
-next_action: Optional follow-ups only on request — push to origin, tag contracts-v1.0.0, or decide the fate of contracts/persona/iac/rules/zoo-dcg-bug.md (user's untracked file).
-files: README.md, docs/authoring/core-sync.md, tools/check_sync, agent/ruleset.md
-notes: Evidence 2026-10-28 — `python3 tools/check_sync` → OK; `uv run --with pytest --no-project python -m pytest tests/ -q` → 8 passed. Six commits 845a6d1..b749841 on main, not yet pushed.
+next_action: After renaming the GitHub repo to Ordnung-The-AI-Agent-Contract-Repository (Settings → General), run `git remote set-url origin https://github.com/pv-whoogsteder/Ordnung-The-AI-Agent-Contract-Repository.git && git push -u origin main`.
+files: README.md, CONTRIBUTING.md, tools/new_persona, agent/ruleset.md
+notes: Evidence 2026-10-28 — check_sync OK; pytest 8 passed; new_persona smoke test scaffolded + check_sync OK in throwaway copy. GitHub repo names cannot contain spaces, hence hyphenated name.
 
 ## Active Tasks
-- [ ] Decide: push to origin and/or tag contracts-v1.0.0
+- [ ] User: rename GitHub repo, then push (command above)
 - [ ] Decide: keep or remove contracts/persona/iac/rules/zoo-dcg-bug.md (untracked user file)

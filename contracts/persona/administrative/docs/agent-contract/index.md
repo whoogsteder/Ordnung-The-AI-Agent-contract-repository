@@ -2,7 +2,7 @@
 
 This directory explains **why** the rules in `rules/` exist. The rule files are the contract
 agents must follow; these pages are the reasoning behind it, written for the humans who
-maintain the ruleset and review agent output — and for agents only when explicitly asked.
+maintain the contract and review agent output — and for agents only when explicitly asked.
 
 > Not agent boot material. Nothing here is read during the session-start protocol;
 > `AGENTS.md` sends agents to `rules/`, never here. Keeping the "why" out of the boot path
