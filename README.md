@@ -6,7 +6,7 @@ Every AI coding agent starts your project as a brilliant amnesiac: great at the 
 of it, hopeless at remembering why you do things this way — until the next session wipes the
 slate clean. **Ordnung is the cure**: drop-in *agent contracts* that give a generic agent a
 role, a working discipline, and a memory system written to files instead of chat history. The
-agent may forget; the Ordnung does not.
+agent may forget; Ordnung does not.
 
 Each contract is a self-contained folder you copy into your project root. It turns the same
 generic agent into a specialist — an infrastructure designer, an administrative assistant —
