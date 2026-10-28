@@ -96,12 +96,31 @@ explicitly ask for that specific change.
 
 ## Editing a ruleset
 
+This repository **runs its own contract**: the root folder is the `repo-maintainer` persona
+(`AGENTS.md`, `rules/`, `agent/`), and agents working here follow the same boot protocol they
+ship. That self-hosting is deliberate — the sync problems these contracts police are the ones
+the repo would otherwise suffer itself.
+
+- Shared behavior between personas is marked with inline seams (`<!-- core -->`,
+  `<!-- slot: name -->`, `<!-- persona -->`) and enforced by `tools/check_sync` — see
+  [docs/authoring/core-sync.md](docs/authoring/core-sync.md). A commit that changes a core
+  section changes it in every persona and the root copy, in that same commit.
+- Adding a persona? Follow [docs/authoring/persona-anatomy.md](docs/authoring/persona-anatomy.md).
 - Rules are **generic** — no project-specific names, paths or numbers; those belong in each
   project's REPO-MAP/STATUS.
 - Keep the pattern: `base.md` carries what every session needs; modules stay short, imperative
   checklists for their domain; the *why* goes in `docs/agent-contract/`, never into boot material.
 - When you change a rule, update its rationale page in `docs/agent-contract/` in the same commit.
 - Keep pointer files dumb: they point at `AGENTS.md` and contain nothing else.
+
+## Checks
+
+```sh
+python3 tools/check_sync            # seam structure + core drift (personas + root copy)
+uv run --with pytest --no-project python -m pytest tests/ -q   # checker self-tests
+```
+
+Both must pass before committing contract or tooling changes.
 
 ## Where to read more
 
