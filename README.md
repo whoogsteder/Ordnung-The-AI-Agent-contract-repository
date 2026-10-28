@@ -17,6 +17,25 @@ Continue, Cursor or any tool that reads `AGENTS.md`. They were shaped against sm
 models (Qwen, DeepSeek), where explicit rules and externalized state are not a nicety but the
 only way to keep sessions coherent.
 
+## Using an existing persona 📦
+
+Using a shipped contract takes one copy and one open — no tooling required:
+
+1. **Pick** a contract from the [What is in the repo](#what-is-in-the-repo) table (e.g.
+   `contracts/persona/administrative/`) and **copy** the whole folder into your project root.
+   Rename it to something short (`contract/`) or keep the name — only its contents matter.
+2. **Open the project with any agent.** The tool's entry-point file sends it to `AGENTS.md`,
+   which makes the agent read all of `rules/` before doing anything else.
+3. **The first session runs bootstrap**: the agent asks about goal and scope, settles licensing,
+   creates the project skeleton and `agent/REPO-MAP.md`, and fills the shipped empty
+   `agent/STATUS.md` template with its first HANDOFF. Everything after that is the loop in the
+   diagram under [how the flow works](#reference-how-the-flow-works-boot--session-loop).
+   (Bootstrap recognizes itself by content: no REPO-MAP, or a STATUS.md without a written
+   HANDOFF, means it has not run yet.)
+
+From then on the contract folder is **read-only for agents**: rule files change only when you
+explicitly ask for that specific change.
+
 ## Bring your own persona 🤝
 
 Ordnung is built to grow: **your take on an agent contract is welcome here.** Maybe you have a
@@ -42,7 +61,7 @@ there and the convention matches existing projects; `contracts/persona/administr
 (`rules/dr.md`, `docs/decisions/`) — the decision discipline applies, the architecture framing
 does not.
 
-## Anatomy of a contract
+## Reference: contract anatomy
 
 ```
 <contract>/
@@ -63,7 +82,7 @@ does not.
 The pointer files (`CLAUDE.md`, `copilot-instructions.md`) contain no rules — they only send
 every tool to `AGENTS.md`, which dictates where the rules live. One contract, many entry points.
 
-## How the flow works
+## Reference: how the flow works (boot & session loop)
 
 ```mermaid
 flowchart TD
@@ -98,20 +117,6 @@ agent starts
 The design idea in one sentence: **durable state lives in files, not in conversation history** —
 `agent/REPO-MAP.md` is what exists, `agent/STATUS.md` is what is happening, the rules are how
 the agent behaves; the chat is disposable.
-
-## Using a contract in a project
-
-1. **Copy** the contract folder (e.g. `contracts/persona/administrative/`) into the project root.
-2. **Open the project with any agent.** The tool's entry-point file sends it to `AGENTS.md`,
-   which makes the agent read all of `rules/` before doing anything else.
-3. **First session runs bootstrap**: the agent asks about goal and scope, settles licensing,
-   creates the project skeleton and `agent/REPO-MAP.md`, and fills the shipped empty
-   `agent/STATUS.md` template with its first HANDOFF. Everything after that is the loop in the
-   diagram above. (Bootstrap recognizes itself by content: no REPO-MAP, or a STATUS.md without
-   a written HANDOFF, means it has not run yet.)
-
-The contract folder itself is read-only for agents: rule files may only change when you
-explicitly ask for that specific change.
 
 ## Editing a contract
 
