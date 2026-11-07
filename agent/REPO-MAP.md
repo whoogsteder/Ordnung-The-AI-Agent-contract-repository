@@ -24,6 +24,11 @@
 - `contracts/persona/administrative/rules/` — base, verification, python, documents, financial, approval, dr ✅
 - Same agent/, docs/agent-contract/, licenses/ shape as iac persona ✅
 
+## contracts/persona/game-hosting/ (persona: dedicated game server hosting) ✅
+- `contracts/persona/game-hosting/rules/` — base, verification, usability, docker_compose, steamcmd, web_frontend ✅
+- Same agent/, docs/agent-contract/, licenses/ shape as iac persona; ADRs kept (image variant/frontend choices warrant records) ✅
+- `contracts/persona/game-hosting/docs/agent-contract/` — base-contract, frontend-security, verification-and-upstream ✅
+
 ## tools/ ✅
 - `tools/check_sync` — core/slot/persona seam checker: structure, cross-persona core drift, root dogfood copy, manifest presence + SemVer (stdlib Python)
 - `tools/new_persona` — scaffold a contributor persona from the iac template: slots reset to TODO, fresh manifest + rationale stub (smoke-tested 2026-10-28; not yet covered by pytest)

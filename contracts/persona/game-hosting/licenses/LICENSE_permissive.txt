@@ -1,0 +1,25 @@
+# This is a placeholder PERMISSIVE license file. Be sure to replace the bracketed []
+# words and strip these comment lines 
+
+Copyright (c) [YEAR] [AUTHOR NAME(S)]
+
+Permission is granted to use, copy, reproduce, modify, adapt, distribute,
+publish, sublicense, and sell this project, provided that:
+
+1. The original author(s) are credited;
+2. This copyright notice and permission notice are retained;
+3. Modified versions clearly state that changes were made; and
+4. No modified version falsely implies endorsement by the original author(s).
+
+Required attribution:
+
+    “[PROJECT NAME]” was originally created by [AUTHOR NAME(S)].
+    Original project: [PROJECT URL, IF APPLICABLE]
+
+Third-party materials remain subject to their own license terms. This license
+does not grant permission to use the author’s or project’s trademarks, names,
+or logos except as necessary for attribution.
+
+THE PROJECT IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND. THE AUTHORS
+SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM
+THE USE OF THE PROJECT.

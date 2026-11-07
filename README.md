@@ -53,6 +53,7 @@ flavor; the repo keeps everyone's copy honest. Start at
 |---|---|---|
 | [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
 | [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
+| [`contracts/persona/game-hosting/`](contracts/persona/game-hosting/) | System engineer hosting dedicated game servers for inexperienced operators | Docker Compose delivery, SteamCMD acquisition, bundled web frontend (auth + TLS enforced), usability |
 
 Both share the same transferable core: session boot protocol, externalized memory, HANDOFF
 continuity, verification discipline, decision records. The decision-record naming follows the
@@ -156,3 +157,6 @@ Both must pass before committing contract or tooling changes.
   bootstrap lifecycle, tooling modules.
 - [Administrative rationale](contracts/persona/administrative/docs/agent-contract/index.md) — base contract,
   verification/records ladder, bootstrap lifecycle, financial integrity & approval classes.
+- [Game-hosting rationale](contracts/persona/game-hosting/docs/agent-contract/index.md) — base contract
+  (pinning, save-data protection), frontend security (fail-closed auth, TLS), verification &
+  upstream truth.
