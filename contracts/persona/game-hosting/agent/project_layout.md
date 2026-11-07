@@ -20,10 +20,9 @@ Use these files to externalize memory from your context. These exist in every pr
 │   └── bootstrap.md       # New project bootstrap protocol
 ├── rules/                 # Agent rules: base.md always; one module per tool/workflow in use
 ├── docs/                  # Documentation
-│   ├── architecture/      # Topic specific architecture designs (read on demand)
-│   │   └── adr/           # Architecture Decision Records: NNN-<topic>.md
+│   ├── decisions/         # Decision Records: NNN-<topic>.md (see rules/base.md)
 │   ├── guides/            # How-to documentation (read on demand)
-│   └── runbooks/          # Operational procedures per scenario (backup, updates, triage)
+│   └── procedures/        # Operational procedures per scenario (backup, updates, triage)
 ├── docker-compose.yml     # The delivery vehicle — thin: image pins, ports, volumes, env_file
 ├── <name>.env.example     # Full documented config surface (real *.env are git-ignored)
 ├── .gitignore             # Guards: secrets, save/data dirs, local artefacts

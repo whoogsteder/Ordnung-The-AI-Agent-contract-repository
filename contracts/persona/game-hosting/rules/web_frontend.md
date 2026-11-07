@@ -30,7 +30,7 @@ public internet — treat every default as reachable by a stranger.
   validate the allowlist of what the proxy forwards, by test, not by comment.
 - Before any public exposure: authentication on, TLS real (not self-signed) or fronted by the
   user's own certified proxy, rate limiting on login, admin surface not enumerable, base image
-  patch cadence documented. Record this checklist as a runbook step in the project docs and
+  patch cadence documented. Record this checklist as a procedure under `docs/procedures/` and
   walk the user through it — do not assume LAN-only forever.
 
 ## Proxy choice <!-- persona: recommendation -->

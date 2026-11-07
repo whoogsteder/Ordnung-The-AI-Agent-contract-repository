@@ -4,8 +4,9 @@ that wraps it). Requires: base.md, docker_compose.md.
 
 ## Acquisition
 - Prefer a maintained upstream image that owns steamcmd handling; build your own only with a
-  recorded reason (ADR). Where you do drive steamcmd: anonymous login first — credentialed
-  Steam logins are the user's own secret, supplied via env, never baked or committed.
+  recorded reason (DR — see `rules/base.md` → Decision Records). Where you do drive steamcmd:
+  anonymous login first — credentialed Steam logins are the user's own secret, supplied via env,
+  never baked or committed.
 - Record the game's app id and any beta/depot branch in the compose or docs; those change when
   the publisher moves branches and break silent `latest` assumptions.
 

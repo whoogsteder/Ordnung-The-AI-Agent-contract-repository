@@ -83,12 +83,40 @@ notes: <any context needed for the next action — API quirks, auth details, env
 # Documentation <!-- slot: documentation -->
 - Assume an inexperienced operator. README.md is their landing page and must carry, at minimum: prerequisites, a copy-paste quickstart that works on Linux **and** Windows, per-setting documentation of the example env file, and a troubleshooting section for every known failure mode.
 - Every deliverable ships with docs. No docs = not done.
-- Operational procedures (backup/restore, updates, log inspection) live in `docs/runbooks/` as numbered steps with expected output — written for someone who has never done the procedure.
+- Operational procedures (backup/restore, updates, log inspection) live in `docs/procedures/` as numbered steps with expected output — written for someone who has never done the procedure; how-to material lives in `docs/guides/`.
 - Code comments explain "how this line works." Docs explain "what to run and what it means."
 - **Status markers:** Use these in REPO-MAP documentation section:
   - ✅ IMPLEMENTED — Complete and working
   - 🟡 PARTIAL — In progress or incomplete
   - 📋 PLANNED — Designed but not started
+
+# Decision Records <!-- slot: decision-records -->
+Applies: when the project records decisions in `docs/decisions/`. Requires: base.md.
+
+Use for choices that outlive a single task: image or variant selection, save-data layout,
+frontend technology, port scheme, backup strategy, licensing stance.
+
+- Location: `docs/decisions/NNN-<topic>.md` (zero-padded, e.g. `001-image-variant.md`).
+- Each record has: Context / Decision / Consequences / Status.
+- Statuses:
+  - `PROPOSED` — open, not yet decided.
+  - `ACCEPTED` — decided; safe to build on.
+  - `CLOSED` — rejected or superseded (state why).
+
+## Rule
+- A record may stay `PROPOSED` while work proceeds, as long as the current task does not depend on it.
+- If a task depends on a `PROPOSED` record: drive it to a decision (`ACCEPTED`/`CLOSED`) first, or halt that work until it is resolved. Never deploy against an undecided choice.
+- Cite decisions as `DR-NNN decision N`; both must exist. A `CLOSED` record is cited only by other records and history files.
+
+## Enforcement
+- Consequences state how the decision is kept true in practice: where it is encoded (compose pin, env example, procedure, REPO-MAP register) or `- Enforced by (planned, <task-id>): <what>` while that mechanism does not exist yet.
+- An `ACCEPTED` record needs at least one concrete entry. Records without one go on a debt list in REPO-MAP; the list may only shrink.
+- Changing an accepted decision means updating its enforcement points and everything citing it in the same change — stacks or docs that silently disagree with a DR are findings (see `rules/verification.md`).
+
+## DR triggers (per module)
+- `rules/docker_compose.md`: image/vendor selection, volume layout, port scheme.
+- `rules/steamcmd.md`: building own image instead of adopting an upstream one — always a DR; recorded variant choice with its failure signature.
+- `rules/web_frontend.md`: frontend technology choice (always a DR), any widening of what the panel may do without confirmation.
 
 # Rule files <!-- core -->
 - Never create, edit, rename or delete files in `rules/`, `AGENTS.md`, `CLAUDE.md` or other agent pointer files unless the user explicitly asks for that specific change. Approval of one change does not cover others.
@@ -104,3 +132,5 @@ notes: <any context needed for the next action — API quirks, auth details, env
 Modules (each applies when in use): `docker_compose.md` (the delivery vehicle — almost always),
 `steamcmd.md` (Steam-distributed dedicated servers), `web_frontend.md` (optional bundled control
 panel), `usability.md` (always: this persona's audience is inexperienced operators).
+Decision records follow the Decision Records section above — this persona keeps that discipline
+in `base.md` instead of a separate module.

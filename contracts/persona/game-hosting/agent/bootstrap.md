@@ -30,7 +30,7 @@ You are starting from scratch. Do the following IN ORDER before any implementati
        next_action: Create project structure per the layout in agent/project_layout.md
        files: (none yet)
    - `agent/REPO-MAP.md` (directory guide — start from the core layout, add tool dirs as they appear)
-   - `docs/` and `docs/runbooks/` directories
+   - `docs/` and `docs/decisions/` directories
    - Does the open project use git?
      - add `.gitignore`, add .env, per-service `*.env` and save/data directories to gitignore.
      - Create `<name>.env.example` (and `.env.example` clone keys from .env file if present). Replace secrets with template example values.
@@ -38,7 +38,8 @@ You are starting from scratch. Do the following IN ORDER before any implementati
 
 4. **If the project involves design decisions or research** (image variant choice, frontend
    technology, save-data layout):
-   - Create ADRs under `docs/adr/` and follow the process in `rules/adr.md`.
+   - Create DRs under `docs/decisions/` and follow the process in `rules/base.md`
+     (Decision Records section).
 
 5. **Set the first real `next_action`** in `agent/STATUS.md` to the first implementation step. Then proceed as normal.
 
