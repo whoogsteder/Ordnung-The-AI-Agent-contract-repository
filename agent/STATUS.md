@@ -1,11 +1,11 @@
 # Agent Status
 
 ## HANDOFF
-phase: game-hosting persona — merged into main
+phase: Ownership transfer to personal GitHub account — complete
 status: DONE
-next_action: Optional: push to origin, tag contracts-v1.0.0 (three personas now ship in v1 shape), or start the real security persona with our own team using tools/new_persona.
-files: contracts/persona/game-hosting/, README.md, agent/REPO-MAP.md
-notes: Evidence 2026-11-07 — user approved and squash-merged (1c9f080, 24 files; feature branch deleted). Licensing drive same session: third-party licensing & distribution stance codified (self-hosting permitted; never redistribute fetched game binaries; per-game EULA flag for monetized hosting; Engine Apache-2.0 vs Desktop subscription tiers; Podman kept runnable via Compose-spec-clean artifacts, Docker stays documented default — 2026 Podman-on-Windows judged still too big an ask for the target audience). Rationale page licensing-and-distribution.md dated/verified against current texts 2026-11-07. check_sync OK, pytest 8 passed.
+next_action: Optional: tag contracts-v1.0.0 (three personas ship in v1 shape), or start the real security persona with tools/new_persona.
+files: LICENSE, CONTRIBUTING.md, agent/STATUS.md
+notes: Evidence 2026-11-07 — repo transferred pv-whoogsteder -> whoogsteder (id 353721137) and accepted; now https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository. History rewritten with git-filter-repo --mailmap: all 21 commits carry 353721137+whoogsteder@users.noreply.github.com; force-pushed (61501d1 -> aa0bc8a). Content fixes in 7ea5075 (LICENSE copyright contact + project URLs, CONTRIBUTING clone URL). Pre-rewrite backup: ~/backups/ordnung-pre-transfer-20261107-145958.bundle. Repo-local git identity set to the noreply address; GLOBAL config still company email — other repos on this host are unaffected. gh active account = whoogsteder. check_sync OK, pytest 8 passed.
 
 ## Active Tasks
 - [ ] Own security team: author the real security persona via tools/new_persona
