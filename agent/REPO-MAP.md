@@ -11,6 +11,7 @@
 ## agent/ (this repo's boot material)
 - `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.0.0; core drift against personas checked by tools/check_sync ✅
 - `agent/STATUS.md` — session state (HANDOFF lives here) ✅
+- `agent/STATUS.archive.md` — append-only history of completed/canceled tasks; do not read unless the user asks ✅
 - `agent/bootstrap.md` — new-project bootstrapping protocol adapted for authoring work ✅
 
 ## contracts/persona/iac/ (persona: infrastructure-as-code) ✅
@@ -18,7 +19,6 @@
 - `contracts/persona/iac/agent/` — bootstrap, project_layout, STATUS template ✅
 - `contracts/persona/iac/docs/agent-contract/` — rationale docs (do not read at boot) ✅
 - `contracts/persona/iac/licenses/` — license picker texts ✅
-- `contracts/persona/iac/rules/zoo-dcg-bug.md` — user's untracked file, leave in place until user decides
 
 ## contracts/persona/administrative/ (persona: administrative work) ✅
 - `contracts/persona/administrative/rules/` — base, verification, python, documents, financial, approval, dr ✅
