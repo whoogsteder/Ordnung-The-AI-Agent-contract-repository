@@ -32,6 +32,7 @@
 ## tools/ ✅
 - `tools/check_sync` — core/slot/persona seam checker: structure, cross-persona core drift, root dogfood copy, manifest presence + SemVer (stdlib Python)
 - `tools/new_persona` — scaffold a contributor persona from the iac template: slots reset to TODO, fresh manifest + rationale stub (smoke-tested 2026-10-28; not yet covered by pytest)
+- `tools/status_fresh` — memory-freshness probe for this repo's own contract: compares the HANDOFF `last_update:` in `agent/STATUS.md` against that file's mtime, exit 0 current / non-zero + warning when stale or field missing (stdlib Python; smoke-tested 2026-11-07)
 
 ## tests/ ✅
 - `tests/test_check_sync.py` — pytest incl. planted-drift fixtures and a real-repo pass test (`uv run --with pytest --no-project python -m pytest tests/ -q`)

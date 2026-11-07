@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+"""status_fresh — check that agent/STATUS.md was written after its own last_update.
+
+The frequency guard in rules/base.md is textual; this makes it one command instead of one
+judgment. Compares the `last_update:` timestamp in the STATUS.md HANDOFF block against the
+file's modification time: a write that forgot to bump last_update leaves mtime newer, which
+is exactly the staleness the guard targets.
+
+Usage: status_fresh [PATH]   (default: agent/STATUS.md under repo root inferred here)
+Exit 0 = current; exit 1 = stale, missing field, unparseable timestamp, or file not found
+(one-line warning on stdout).
+"""
+import re
+import sys
+from datetime import datetime
+from pathlib import Path
+
+FIELD = re.compile(r"^last_update:\s*(\S+)", re.M)
+
+
+def main():
+    path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent / "agent/STATUS.md"
+    if not path.is_file():
+        print(f"status_fresh: {path} not found — write the HANDOFF block now")
+        return 1
+    m = FIELD.search(path.read_text())
+    if not m:
+        print(f"status_fresh: {path} has no last_update field — add it and update STATUS.md now")
+        return 1
+    try:
+        stamp = datetime.fromisoformat(m.group(1))
+    except ValueError:
+        print(f"status_fresh: unparseable last_update {m.group(1)!r} — fix the field, then update STATUS.md")
+        return 1
+    written = datetime.fromtimestamp(path.stat().st_mtime)
+    if written > stamp.replace(tzinfo=None):
+        print(f"status_fresh: STALE — {path.name} edited at {written:%Y-%m-%dT%H:%M} "
+              f"but last_update says {stamp:%Y-%m-%dT%H:%M}; update STATUS.md now")
+        return 1
+    print(f"status_fresh: OK (last_update {stamp:%Y-%m-%dT%H:%M})")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

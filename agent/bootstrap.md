@@ -17,14 +17,18 @@ still the empty template (see base.md → Context discipline).
    `uv run --with pytest --no-project python -m pytest tests/ -q`.
 5. Continue with the task the user actually asked for; do not "fix" PLANNED items unprompted.
 
-## Dogfood note: the memory-freshness probe is not shipped here
+## Dogfood note: the memory-freshness probe lives here, not in the personas
 
 Persona bootstraps offer the agent to author a project-local freshness probe for STATUS.md
-(see `contracts/persona/*/agent/bootstrap.md` step 5). This repository deliberately does **not**
-add one to `tools/`: a script in `tools/` cannot travel with a drop-in persona folder, so it would
-be unshippable enforcement — the contract ships the *instruction*, and each project writes the
-probe that fits its own tooling. The textual guard (`last_update:` plus the frequency rule in
-`rules/base.md`) is what this repo relies on.
+(see `contracts/persona/*/agent/bootstrap.md` step 5). This repository takes that offer on its own
+contract: `tools/status_fresh` compares the HANDOFF `last_update:` against `agent/STATUS.md`'s
+mtime (run: `python3 tools/status_fresh`).
+
+What stays deliberately unshipped is a probe inside the persona folders. A script cannot travel
+with a drop-in persona copy, so it would be unshippable enforcement — the contract ships the
+*instruction*, and each project writes the probe that fits its own tooling. The textual guard
+(`last_update:` plus the frequency rule in `rules/base.md`) remains the baseline; this script is
+this project's opt-in upgrade to one command instead of one judgment.
 
 ## Authoring-work specifics
 

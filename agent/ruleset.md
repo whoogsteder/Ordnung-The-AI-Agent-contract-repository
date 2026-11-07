@@ -2,7 +2,7 @@
 
 persona: repo-maintainer
 version: 1.1.0
-core_source: contracts/persona/iac v1.0.0 (core sections), contracts/persona/administrative v1.0.0
+core_source: contracts/persona/iac v1.1.0 (core sections), contracts/persona/administrative v1.1.0
 bootstrapped: 2026-10-28
 
 This repository runs its own contract. The core sections in `rules/base.md` are copies of the
