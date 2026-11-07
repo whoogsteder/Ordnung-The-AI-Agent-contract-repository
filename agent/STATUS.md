@@ -1,12 +1,13 @@
 # Agent Status
 
 ## HANDOFF
-phase: game-hosting persona — docs structure simplified post-merge
-status: DONE
-next_action: Push main when ready (1 commit ahead of origin). Optional follow-up: align iac persona's adr.md naming with this DR style if the user wants cross-persona consistency (not requested).
-files: contracts/persona/game-hosting/rules/base.md, contracts/persona/game-hosting/agent/{project_layout.md,bootstrap.md}, contracts/persona/game-hosting/rules/{steamcmd.md,web_frontend.md}
-notes: Evidence 2026-11-07 — user found ADR/architecture refs over the top; administrative-style adopted. Decision Records section (Context/Decision/Consequences/Status, PROPOSED/ACCEPTED/CLOSED, enforcement, per-module DR triggers) lives in base.md slot decision-records — deliberately inline, not a dr.md module, so the drop-in contract stays lean; documented in Project-specific rules. Docs dirs now decisions/guides/procedures (runbooks renamed). Ownership transfer confirmed fully done: remote = github.com/whoogsteder/…, history rewritten, gh = whoogsteder (80443ea); no pv-whoogsteder references remain outside that historical note. Checks: check_sync OK, pytest 8 passed.
+phase: contract adaptation — memory-rule hardening from field feedback
+status: IN_PROGRESS
+next_action: Commit the feat_core-memory-guard-hardening working tree as one commit (core change touches all 4 base.md copies + 3 persona bootstraps + 4 manifests), then report to the user; release/tagging was explicitly canceled and stays out of scope.
+files: rules/base.md, contracts/persona/{iac,administrative,game-hosting}/rules/base.md, contracts/persona/{iac,administrative,game-hosting}/agent/bootstrap.md, agent/bootstrap.md, contracts/persona/*/agent/ruleset.md, agent/ruleset.md, contracts/persona/{iac,administrative}/docs/agent-contract/{base-contract.md,memory-and-bootstrap.md}
+notes: Evidence 2026-11-07 — `python3 tools/check_sync` prints OK; `uv run --with pytest --no-project python -m pytest tests/ -q` = 8 passed. Change set: Session continuity core rewritten (mechanical triggers incl. failing tests + probe files, observable frequency guard, resume-from-summary rule, read-back rule), Context discipline gained a read-back bullet, HANDOFF schema gained `last_update:`; all four base.md copies byte-identical in those sections (check_sync enforces). Enforcement decision: no hook/checker shipped in tools/ — unshippable with drop-in personas; instead each persona bootstrap step 5 offers the agent to author a project-local freshness probe, decline = completed step. Root agent/bootstrap.md carries the dogfood note. Versions bumped 1.0.0 → 1.1.0 (minor). Rationale prose added to iac + administrative docs/agent-contract (base-contract.md gained "Why the triggers are spelled out mechanically"; memory-and-bootstrap.md diagram + failure table updated); game-hosting ships no rationale page — it has no memory-and-bootstrap page to extend, deliberate asymmetry.
+last_update: 2026-11-07T19:05
 
 ## Active Tasks
-- None.
+- [ ] Commit the contract adaptation on branch `feat_core-memory-guard-hardening` (all core edits must land in one commit).
 

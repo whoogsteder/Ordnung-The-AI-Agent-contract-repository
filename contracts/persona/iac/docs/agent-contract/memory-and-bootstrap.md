@@ -8,12 +8,14 @@ Companions to `agent/bootstrap.md`, `agent/project_layout.md` and the memory sec
 ```mermaid
 flowchart TD
     S[Session start] --> R{REPO-MAP exists & STATUS<br/>has a written HANDOFF?}
-    R -->|no| B["bootstrap.md protocol:<br/>1 scope discussion — stop and wait<br/>2 license per component<br/>3 skeleton: docs/, CHANGELOG,<br/>REPO-MAP, empty STATUS"]
+    R -->|no| B["bootstrap.md protocol:<br/>1 scope discussion — stop and wait<br/>2 license per component<br/>3 skeleton: docs/, CHANGELOG,<br/>REPO-MAP, empty STATUS<br/>5 offer project-written STATUS probe"]
     B --> W[Work on the task]
     R -->|yes| H[Read HANDOFF, echo next_action]
     H --> W
-    W --> T{trigger fired?<br/>file created · command verified<br/>feature done · topic switch}
-    T -->|yes| U[Update STATUS / REPO-MAP<br/>in the same response]
+    R -.->|entered via compacted summary| RS[Update STATUS first<br/>before first substantive action]
+    RS --> W
+    W --> T{trigger fired?<br/>file created/rewritten · any test or<br/>check run pass/fail · topic switch}
+    T -->|yes| U[Update STATUS / REPO-MAP<br/>in the same response<br/>stamp last_update]
     T -->|no| W
     U --> D{item reached DONE?}
     D -->|yes| A["archive to STATUS.archive.md<br/>reset STATUS to next phase"]
@@ -74,5 +76,9 @@ agents will faithfully read into a virtualenv because the index said it was rele
 | Bootstrap scope question | Agent scaffolds a full framework for what was a 50-line script |
 | Empty STATUS at bootstrap | Session 2 starts blind and redoes session 1's decisions |
 | HANDOFF schema | "Notes" become essays; next session guesses the first action wrong |
+| Mechanical trigger wording | Debug edits and failing tests read as "not real progress", so no trigger ever fires outside milestones |
+| `last_update` in HANDOFF | The 5-call guard is unfalsifiable: nothing to check, so it silently starves behind "one more probe" |
+| Resume rule | Session entered via a compacted summary treats a stale STATUS as inherited debt instead of first action |
+| Read-back rule | Rules read once at boot, never re-consulted when the work gets pressurized or changes topic |
 | Archive trigger | STATUS grows to 300 lines; agent treats phase-1 tasks as live work |
 | REPO-MAP staleness rule | Agent edits a deleted file for hours because the index still lists it |
