@@ -10,7 +10,7 @@ continuity; you write the part only you know.
 ## Five-minute quickstart
 
 ```sh
-git clone https://github.com/pv-whoogsteder/Ordnung-The-AI-Agent-Contract-Repository.git
+git clone https://github.com/whoogsteder/Ordnung-The-AI-Agent-Contract-Repository.git
 cd Ordnung-The-AI-Agent-Contract-Repository
 python3 tools/new_persona <your-persona>     # scaffolds contracts/persona/<your-persona>/
 # 1. edit rules/base.md: fill the slot sections (slot: role, slot: state-history),
