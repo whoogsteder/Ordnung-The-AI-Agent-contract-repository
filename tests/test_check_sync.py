@@ -1,6 +1,9 @@
 """Tests for tools/check_sync. Includes negative fixtures (planted drift)."""
 import importlib.util
+import os
 import shutil
+import subprocess
+import sys
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
 
@@ -91,6 +94,64 @@ def test_missing_manifest_detected(tmp_path):
     shutil.rmtree(repo / "contracts" / "persona" / "iac" / "agent")
     msgs = problems(repo)
     assert any("missing manifest" in m for m in msgs), msgs
+
+
+STATUS_TOOL = ROOT / "tools" / "status_fresh"
+
+
+def run_status_fresh(path):
+    return subprocess.run(
+        [sys.executable, str(STATUS_TOOL), str(path)], capture_output=True, text=True
+    )
+
+
+def set_mtime(path, epoch):
+    os.utime(path, (epoch, epoch))
+
+
+def test_status_fresh_ok_when_mtime_not_after_stamp(tmp_path):
+    status = tmp_path / "STATUS.md"
+    status.write_text("## HANDOFF\nlast_update: 2099-01-01T00:00\n")
+    set_mtime(status, 0)
+    result = run_status_fresh(status)
+    assert result.returncode == 0, result.stdout
+
+
+def test_status_fresh_flags_write_that_missed_the_stamp(tmp_path):
+    status = tmp_path / "STATUS.md"
+    status.write_text("## HANDOFF\nlast_update: 2000-01-01T00:00\n")
+    set_mtime(status, 1_700_000_000)
+    result = run_status_fresh(status)
+    assert result.returncode == 1
+    assert "STALE" in result.stdout
+
+
+def test_status_fresh_flags_missing_field(tmp_path):
+    status = tmp_path / "STATUS.md"
+    status.write_text("## HANDOFF\nnext_action: do the thing\n")
+    result = run_status_fresh(status)
+    assert result.returncode == 1
+    assert "no last_update field" in result.stdout
+
+
+def test_status_fresh_flags_unparseable_stamp(tmp_path):
+    status = tmp_path / "STATUS.md"
+    status.write_text("## HANDOFF\nlast_update: soon-ish\n")
+    result = run_status_fresh(status)
+    assert result.returncode == 1
+    assert "unparseable" in result.stdout
+
+
+def test_status_fresh_flags_absent_file(tmp_path):
+    result = run_status_fresh(tmp_path / "nope.md")
+    assert result.returncode == 1
+    assert "not found" in result.stdout
+
+
+def test_real_repo_status_is_fresh():
+    """The repo runs its own contract: agent/STATUS.md must pass its own probe."""
+    result = run_status_fresh(ROOT / "agent" / "STATUS.md")
+    assert result.returncode == 0, result.stdout
 
 
 def test_real_repo_passes():

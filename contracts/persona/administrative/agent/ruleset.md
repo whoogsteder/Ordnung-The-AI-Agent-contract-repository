@@ -1,7 +1,7 @@
 # Contract manifest — administrative persona
 
 persona: administrative
-version: 1.0.0
+version: 1.1.0
 
 Self-contained drop-in contract for administrative work (quotes, invoices, bookkeeping,
 correspondence). Modules: base.md, verification.md (always); python.md, documents.md,

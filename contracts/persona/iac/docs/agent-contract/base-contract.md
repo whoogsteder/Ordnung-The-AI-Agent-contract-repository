@@ -40,9 +40,34 @@ of silently misdirecting the session.
 
 "You should keep STATUS.md current" fails because recency wins: after ten tool calls, the
 instruction that fired early is far away and the agent "forgets". The contract therefore
-attaches updates to **events** (file created, command verified, topic switch) plus a
+attaches updates to **events** (file created, command or test run, topic switch) plus a
 **frequency guard** (5+ tool calls since last update → update now). Redundant by design: an
 event trigger missed in the noise gets caught by the counter.
+
+## Why the triggers are spelled out mechanically
+
+Both halves of that redundancy failed in practice, in a long debugging session on a Go project.
+The event half starved because the agent read the list as *achievements*: throwaway probe files
+and failing test runs did not feel like "a file created" or "a command verified", so no trigger
+seemed owed until a milestone — and a milestone never arrives in a session that ends stuck. The
+counter half starved because nothing was counted: under context pressure the queue-depth check
+lost to "one more probe", and an agent arriving through a compacted summary inherited a stale
+STATUS it treated as somebody else's debt.
+
+The rule text now removes the judgment instead of repeating the exhortation: any test/build/check
+run is a verified command, pass or fail; any file created or rewritten counts, probes included;
+milestones are explicitly not the unit of work. Two additions close the other holes — a resume
+rule (stale STATUS is your first task, never inherited debt) and a read-back rule (re-read
+`rules/base.md` on topic switch, on conflict, and on every resume), because reading the contract
+once at boot governs the calm start and not the pressurized middle.
+
+The counter also became observable: the HANDOFF schema carries `last_update`, so an agent that
+lost count can compare it against STATUS.md's modification date with one cheap command instead of
+relying on memory. Deliberately **not** shipped is a hook or checker script in this repository: a
+file under `tools/` cannot travel with a drop-in persona folder, which would make enforcement
+unshippable. The contract ships the *instruction* and each project's bootstrap offers to have the
+agent author a probe that fits its own tooling — same reasoning bootstrap already applies to
+project skeletons: generated scaffolding reflects the generator's assumptions, not the project's.
 
 ## Archiving: forward-only STATUS
 

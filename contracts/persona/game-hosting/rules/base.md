@@ -19,6 +19,10 @@ Be direct. No filler. No restating the question.
 - If `agent/REPO-MAP.md` is missing, or `agent/STATUS.md` is missing or still the empty contract
   template (no HANDOFF block written), this is a new project — follow the bootstrap protocol in
   `agent/bootstrap.md`.
+- **Read-back at pressure points:** Re-read `rules/base.md` when you switch to a different file
+  or topic, when a rule seems to conflict with the work in front of you, and whenever you resume
+  from a summary instead of the boot sequence. Reading the contract once at boot binds the calm
+  start, not the pressurized middle of a session where shortcuts get made.
 
 # REPO-MAP maintenance (mandatory) <!-- core -->
 REPO-MAP.md is the agent's index for scoping reads and searches. It must stay current:
@@ -30,14 +34,25 @@ REPO-MAP.md is the agent's index for scoping reads and searches. It must stay cu
 # Session continuity <!-- core -->
 - If agent/STATUS.md exists: read its HANDOFF block before acting.
   Echo `next_action` back. Then proceed.
-- **Update trigger:** After any of these, update STATUS.md in the same
-  response before continuing:
-  - A file is created or substantially rewritten
-  - A command is verified (pass/fail)
+- **Update trigger — mechanical, not a judgment call.** Any test, build or check run is a
+  verified command, pass or fail; a failing run counts. Any file you create or rewrite counts,
+  including debug probes and throwaway scratch files. Milestones are not the unit of work:
+  nothing here is "too small to record", and nothing is owed until a phase ends. Update
+  STATUS.md in the same response before continuing when:
+  - A file is created, rewritten or substantially edited
+  - A command, test or check has been run (pass/fail — the result is the record)
   - A feature is complete
   - You are about to switch to a different file or topic
-- **Frequency guard:** If 5+ tool calls have occurred since the last
-  STATUS.md update, update it now before the next action.
+- **Frequency guard:** If 5+ tool calls have occurred since the last STATUS.md update, update
+  it now before the next action. Keep the `last_update` field in the HANDOFF block current: it
+  is what makes the guard checkable instead of remembered. When you lose count — mid-debug, or
+  after a context compaction — run one cheap command on STATUS.md and compare its date against
+  `last_update`; if they differ, update now. Do not talk yourself out of it with "one more probe".
+- **Resume from a summary:** If you entered this session from a compacted summary or handoff
+  rather than the boot sequence, make STATUS.md current before your first substantive action.
+  A stale STATUS.md is your first task, never another agent's debt.
+- **Read-back (Context discipline):** At each pressure point listed there — topic switch, rule
+  conflict, resume — re-read `rules/base.md` before continuing. Rules are re-checked, not remembered.
 
 # Session conclusion <!-- core -->
 - When the user indicates, or if you report to the user, that a task is complete:
@@ -56,6 +71,7 @@ status: DONE | IN_PROGRESS | PAUSED
 next_action: <single sentence describing exactly what the next session should do first>
 files: <list of files the next session needs to know about, or "none">
 notes: <any context needed for the next action — API quirks, auth details, env specifics; omit if none>
+last_update: <YYYY-MM-DDThh:mm of this STATUS.md write; keep current on every write — it is what makes the frequency guard checkable>
 ```
 
 # Archiving (mandatory) <!-- core -->
