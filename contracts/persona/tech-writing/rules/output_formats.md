@@ -37,6 +37,9 @@ extension does not match its content.
 - Round-trip the export: extract the text (`pandoc out.docx -t plain`, a `python-docx` walk, or
   `pdftotext`) and confirm headings, tables, captions and numbering survived. Report command, result.
 - Figures must exist in the exported file, not only in the source; count them.
+- The classification label survived the export: header line one, a footer on every page of rich text
+  and PDF, the banner at the top of Markdown and HTML. Count the pages carrying it; an export without
+  the label is not shippable (`rules/classification.md`).
 - Units, date format (ISO `YYYY-MM-DD`) and capitalisation follow the project style register.
 - Name outputs `<doc-id>-v<version>.<ext>` beside the source. Generated artifacts are build output:
   not indexed in REPO-MAP.

@@ -29,6 +29,16 @@ Applies: always. Requires: base.md.
   citation appears in the Sources list, shared facts match across the set, terminology follows the
   register.
 
+## Classification gate
+- Presence: every document header carries `classification:` and its distribution statement, and every
+  export carries it (footer on every page, banner at the top) - verified in the round-trip below.
+- Consistency: the set carries the most restrictive label of any member. A document labelled lower
+  than a document it quotes is a finding, and so is a derivative labelled more open than its parent.
+- Content scan for the release tier (`rules/classification.md`): reported with the release as
+  `Content scan for <tier>: clean`, or as the list of hits.
+- The distribution register matches what was sent: a send with no register entry is a finding, and so
+  is a widening with no decision record.
+
 ## Consistency across the set
 - A fact used in more than one document (product name, version, price, date, capacity figure,
   acronym) is a shared fact: it has one register entry, and a change to it updates every document

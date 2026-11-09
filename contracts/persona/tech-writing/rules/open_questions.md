@@ -32,6 +32,15 @@ and in the register kept in `agent/REPO-MAP.md`:
   answer it on the reader's behalf.
 - Say who decides, by when, and what happens if nobody decides.
 
+## The audience question
+- The label is never missing: a draft is `Internal` by default (`rules/classification.md`). Labelling
+  is therefore not the open item - an unclear audience at release is.
+- A document about to be `released` whose audience is unknown is a load-bearing open item: name it on
+  the first screen, and do not release.
+- A `Client-shareable` document with no recorded basis, or a `Restricted` document with no named
+  recipients, is an open item. Record the basis when it exists; never invent one, and never treat the
+  gap as a block on drafting.
+
 ## Wording that is banned, and what replaces it
 - "as needed", "etc.", "and so on", "several", "many", "various", "should be considered", "where
   appropriate", "best practice dictates": replace with the number, the closed list, the named

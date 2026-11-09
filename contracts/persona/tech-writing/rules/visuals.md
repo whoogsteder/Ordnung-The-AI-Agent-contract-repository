@@ -31,6 +31,10 @@ Prose suits reasoning, judgement and caveats. It is the wrong tool for counts, s
 - Every figure has a number, a caption, a source line (data source and retrieval date for graphs;
   "author's design" for designs), alt text, and at least one body sentence pointing at it ("see
   Figure 2"). A figure nothing refers to is a finding.
+- A figure exported on its own inherits the classification of its parent document and carries the
+  label in its caption line; the parent is recorded in the source register. A `Restricted` figure is
+  never rendered into a shared deck, and a figure for a `Public` document passes the content scan for
+  that tier (`rules/classification.md`).
 - One idea per figure. The caption states the conclusion ("Latency doubles above 400 users"), not
   just the subject ("Latency chart").
 - Graphs: axes labelled with units, data source and date range stated; no truncated axis that

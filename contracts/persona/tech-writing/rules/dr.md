@@ -3,7 +3,8 @@ Applies: when the project records decisions in `docs/decisions/`. Requires: base
 
 Use for choices that outlive a single task: architecture and product choices inside a design, the
 output format and toolchain, comparison criteria and their weights, terminology, the structure of the
-document set, the template set, and any widening of what the agent may do without asking.
+document set, the template set, the classification of the set and every widening of a document's
+classification, and any widening of what the agent may do without asking.
 
 - Location: `docs/decisions/NNN-<topic>.md` (zero-padded, e.g. `001-output-format-and-toolchain.md`).
 - Each record has: Context / Decision / Consequences / Status.
@@ -31,6 +32,10 @@ document set, the template set, and any widening of what the agent may do withou
 - Changing an accepted decision means updating its enforcement points and every document citing it,
   in the same change; documents that silently disagree with a DR are findings (see
   `rules/verification.md`).
+- A widening of a classification is written as a record **before** the wider label is applied
+  (`rules/classification.md`). The record names the new tier, the recipient and its basis, what the
+  content scan checked, the date and who widened it. There is no approval gate: the record is the
+  accountability, and a widening with no record is the finding.
 
 ## DR triggers (per module)
 - `rules/documents.md`: naming scheme, document-set structure, template set, lifecycle states.
@@ -38,3 +43,6 @@ document set, the template set, and any widening of what the agent may do withou
 - `rules/comparisons.md`: criteria list and weights, price basis, benchmark harness.
 - `rules/advisories.md`: the basis of a recommendation, the urgency label set.
 - `rules/open_questions.md`: any assumption the user signs off as standing policy.
+- `rules/classification.md`: widening a classification (recorded before the label is applied), the
+  named-recipient list for `Restricted`, the basis for a `Client-shareable` set, an export-control
+  marker.

@@ -54,5 +54,14 @@ and weights named beside the figure; price over time as a graph; deployment-shap
 diagram. See `rules/visuals.md`.
 
 ## Legal hygiene
-Product and vendor names as registered; no fabricated benchmarks; confirm the licence for
-third-party screenshots, logos and quoted tables before shipping them.
+Product and vendor names as registered; no fabricated benchmarks; every third-party screenshot, logo,
+table or quotation carries a `rights:` entry in the source register before shipping, because
+attribution obligations travel with the comparison at every tier (see `rules/classification.md`,
+Third-party rights).
+
+## Classification
+A comparison is `Internal` by default: the vendor claims, your weights and your price basis are your
+working papers. Sharing one with a client requires the fairness pass complete. Material bound by an
+NDA - a vendor's roadmap, a partner's price list - makes the comparison `Restricted` with named
+recipients, and a quotation from it inside a shared comparison inherits that tier
+(`rules/classification.md`).

@@ -29,26 +29,33 @@ Use these files to externalize memory from your context. These exist in every pr
 |   |-- advisories/
 |   |-- comparisons/
 |   `-- briefs/
+|-- distribution/          # Per-recipient release packages, one dir per recipient (not indexed)
+|-- restricted/            # Restricted-tier material: never exported, git-ignored by default
 |-- templates/             # Document skeletons and style references (reference.docx, md skeletons)
 |-- assets/figures/        # Figure sources (mermaid/plantuml/dot) + rendered images, named <doc-id>-<nn>
 |-- sources/               # Evidence: saved vendor pages, release notes, exports, benchmark runs
 |-- scripts/               # Generators and exporters (pandoc wrappers, python-docx, matplotlib)
 |-- build/                 # Exported .docx/.odt/.pdf: generated output, git-ignored
 |-- .env.example           # Publishing-token placeholders (real .env git-ignored)
-|-- .gitignore             # Guards: secrets, confidential material, build output
-`-- README.md              # Landing page for the document set
+|-- .gitignore             # Guards: secrets, narrower-than-Internal material, build output
+`-- README.md              # Landing page for the document set, with the set's classification
 ```
 
 ## Document-handling guards
 - `sources/` is evidence: read-only inputs, never edited in place. Name each file
   `<src-id>_<YYYY-MM-DD>.<ext>` so a source id in a document resolves to a file.
-- Material whose header `sensitivity:` is above `internal` is git-ignored unless the project declares
-  the repository private; commit a redacted sample with the same shape (base.md, State & change
-  history).
+- Material whose `classification:` is narrower than `Internal` - that is `Client-shareable` and
+  `Restricted` - is git-ignored unless the project declares the repository private; commit a redacted
+  sample with the same shape (base.md, State & change history).
+- `restricted/` holds `Restricted`-tier material and is kept out of every export and build.
+  `distribution/` holds the per-recipient release packages, one directory per recipient; it is not
+  indexed in REPO-MAP beyond the distribution register.
 - `build/` and exported rich-text files are build output: generated, never hand-edited, not indexed
   in REPO-MAP.
-- Registers (document numbers, shared facts, terminology, sources, open items) live in
-  `agent/REPO-MAP.md`; documents cite them, they do not fork them.
+- Registers (document numbers, shared facts, terminology, sources, open items, distribution) live in
+  `agent/REPO-MAP.md`; documents cite them, they do not fork them. The registers carry the set's
+  `classification:`, and for a `Restricted` set they hold titles and pointers only, never facts
+  (`rules/classification.md`).
 
 ## Tool-Specific Layouts
 Directory structures for specific tools are named by the module that owns them: `rules/documents.md`

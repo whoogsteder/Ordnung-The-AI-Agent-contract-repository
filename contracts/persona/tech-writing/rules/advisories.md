@@ -26,6 +26,10 @@ rollback - Capacity and growth - Costs - Open items - Sources.
 - Urgency labels come from a fixed set with a defined window: `Action required by <date>`,
   `Advisory - next maintenance window`, `Notice - no action`. "Critical" without a window is a
   finding.
+- Every advisory, security note and patch guidance also carries the traffic-light marking alongside
+  its urgency label (`TLP:CLEAR`, `TLP:GREEN`, `TLP:AMBER`, `TLP:AMBER+STRICT`, `TLP:RED`;
+  `rules/classification.md`). A pre-patch advisory is `TLP:AMBER` at minimum. The urgency label says
+  when to act; the TLP line says who may read it. Neither replaces the other.
 - Every recommendation is actionable: who does what, by when, what it costs, and how success is
   checked.
 - Every advisory states the window it is valid for and what would invalidate it.

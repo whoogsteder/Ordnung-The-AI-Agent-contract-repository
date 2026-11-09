@@ -97,9 +97,11 @@ last_update: <YYYY-MM-DDThh:mm of this STATUS.md write; keep current on every wr
 - Confidential material (customer data, internal pricing, unreleased roadmap details, live
   security findings) stays inside the project directory: never pasted into web searches,
   translation services, AI summarisers or third-party publishing tools.
-- Every document carries a `sensitivity:` field in its header. Anything above `internal` is
-  git-ignored unless the project declares the repository private; commit a redacted sample with
-  the same shape instead.
+- Every document carries a `classification:` field in its header: `Public`, `Client-shareable`,
+  `Internal` (the default for a draft) or `Restricted`, with the matching distribution statement
+  printed on page one. Anything narrower than `Internal` is git-ignored unless the project declares
+  the repository private; commit a redacted sample with the same shape instead. Widening a label is a
+  recorded decision - see `rules/classification.md`.
 - Credentials and tokens for publishing targets (wiki, CMS, ticketing, object storage) come from
   env vars or a vault only, never from documents, templates or defaults. `.env.example` with
   placeholders; real `.env` git-ignored.
@@ -113,7 +115,7 @@ last_update: <YYYY-MM-DDThh:mm of this STATUS.md write; keep current on every wr
   "No docs = not done" applies to the material that makes a document checkable: sources, open
   items, change notes and the export recipe - not to padding the deliverable with prose.
 - README.md at the project root is the landing page for the document set: what exists, its status,
-  its audience, and where to find it.
+  its audience, its classification, and where to find it.
 - Every template ships with a doc pairing (`docs/templates/X.md`: when to use it, what must be
   filled, what must be checked before release); every generator script pairs with
   `docs/scripts/X.md`.

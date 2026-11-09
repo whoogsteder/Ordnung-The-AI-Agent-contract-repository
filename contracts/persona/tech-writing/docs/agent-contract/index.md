@@ -19,7 +19,7 @@ flowchart TD
     D --> E
     E --> F["Boot protocol: list rules/,<br/>read every rules/*.md (base.md first)"]
     F --> G{agent/REPO-MAP.md exists &<br/>agent/STATUS.md has a HANDOFF?}
-    G -->|no - new project| H[agent/bootstrap.md:<br/>scope, license, format question,<br/>skeleton with empty registers]
+    G -->|no - new project| H[agent/bootstrap.md:<br/>scope, classification, format question,<br/>skeleton with empty registers]
     G -->|yes - existing project| I[Read STATUS.md HANDOFF,<br/>scope work with REPO-MAP]
     H --> I
     I --> J[Work: rules stay in force<br/>modules apply per document type in use]
@@ -54,6 +54,7 @@ quietly disagrees with chapter 1.
 | Page | Rules it explains |
 |---|---|
 | [base-contract.md](base-contract.md) | `rules/base.md` - the decision-support role, why the format and audience questions are mandatory, rule-file protection |
+| [classification-and-distribution.md](classification-and-distribution.md) | `rules/classification.md`, the label fields in `rules/documents.md`, `rules/dr.md`, `agent/bootstrap.md` - the four tiers and the statements, the TLP:2022 mapping, why a widening is recorded before it acts, and what remains of licensing |
 | [document-set-and-memory.md](document-set-and-memory.md) | `rules/documents.md`, `agent/bootstrap.md`, `agent/project_layout.md` - lifecycle states, and why multi-chapter work is tracked in registers instead of context |
 | [comparisons-and-advisories.md](comparisons-and-advisories.md) | `rules/comparisons.md`, `rules/advisories.md`, `rules/verification.md`, `rules/dr.md` - evidence for external claims, fairness pass, why a tick matrix is not a verdict |
 | [format-and-visuals.md](format-and-visuals.md) | `rules/output_formats.md`, `rules/visuals.md` - why the agent may not pick a format, why generated output is code, when a figure beats a sentence |

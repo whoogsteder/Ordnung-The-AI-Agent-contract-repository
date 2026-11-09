@@ -11,14 +11,21 @@ You are starting from scratch. Do the following IN ORDER before any implementati
    audience (IT manager, IT administrator, or both), the documents expected, and the decision the
    set supports. Ask if anything is missing. Wait for confirmation.
 
-2. **Set project license.** Present the three available license templates under `licenses/` and have the user choose one, or state they do not want a LICENSE file:
-   - Generic permissive (`licenses/LICENSE_permissive.txt`)
-   - Generic unpermissive (`licenses/LICENSE_unpermissive.txt`)
-   - Standard MIT (`licenses/LICENSE_MIT-license.txt`)
+2. **Set the document-set classification.** Ask who the set is for, and record the tier from
+   `rules/classification.md` in `agent/STATUS.md`, in the document map, and in the header of every
+   document:
+   - `Public` - approved for public release; distribution unlimited.
+   - `Client-shareable` - shareable with a named client and its advisers: name the client, record the
+     basis (contract clause, NDA dated, dated user statement).
+   - `Internal` - the default: intended for use by the authoring organisation only.
+   - `Restricted` - named recipients only: list them.
 
-   When a choice is made, copy the selected template to `LICENSE` at project root. If no license is wanted, skip this step. Delete the `licenses/` directory when done. Modify the copied file and follow instructions in the files` comment (#) lines.
-   Ask separately about the deliverables and the templates: documents meant for redistribution can
-   carry different terms from the generator scripts (see `rules/dr.md`).
+   Say the default out loud when asking: "default is Internal - tell me if this set is meant to go
+   wider." Do not block on the answer: the set is `Internal` until it is widened, and widening is a
+   recorded decision (`rules/dr.md`), never an approval you wait for.
+   Third-party material (code snippets, figures, screenshots, quotations, logos) is recorded with its
+   `rights:` in the source register. The license templates under `licenses/` apply to code a project
+   ships, not to its documents.
 
 3. **Ask the format question.** Offer the menu from `rules/output_formats.md` - Markdown, Word or
    LibreOffice rich text, or a user-specified target - and record the answer in `agent/STATUS.md`
@@ -33,7 +40,8 @@ You are starting from scratch. Do the following IN ORDER before any implementati
        next_action: Create project structure per the layout in agent/project_layout.md
        files: (none yet)
    - `agent/REPO-MAP.md` (directory guide, plus the register headings started empty: documents,
-     shared facts, terminology, sources, open items)
+     shared facts, terminology, sources, open items, distribution), with the set's
+     `classification:` recorded at the top of the file
    - `documents/` by type, `docs/` and `docs/decisions/`, `templates/`, `assets/figures/`, `sources/`
    - Does the open project use git?
      - add `.gitignore`, add .env, build output and obvious secrets to gitignore.

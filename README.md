@@ -54,7 +54,7 @@ flavor; the repo keeps everyone's copy honest. Start at
 | [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
 | [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
 | [`contracts/persona/game-hosting/`](contracts/persona/game-hosting/) | System engineer hosting dedicated game servers for inexperienced operators | Docker Compose delivery, SteamCMD acquisition, bundled web frontend (auth + TLS enforced), usability |
-| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | Professional document author for IT managers & IT administrators (technical designs, advisories, product and feature comparisons) | Open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
+| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | Professional document author for IT managers & IT administrators (technical designs, advisories, product and feature comparisons) | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
 
 All contracts share the same transferable core: session boot protocol, externalized memory, HANDOFF
 continuity, verification discipline, decision records. The decision-record naming follows the

@@ -1,12 +1,12 @@
 # Agent Status
 
 ## HANDOFF
-phase: v1.1.0 release (root contract version, PR #2 open)
+phase: tech-writing persona v1.1.0 - classification and distribution, on PR #2
 status: IN_PROGRESS
-next_action: On user go-ahead, create the root CHANGELOG.md (Keep a Changelog) with the contracts-v1.1.0 entry and the annotated tag contracts-v1.1.0. Merge PR #2 once reviewed (gh pr merge 2).
-files: contracts/persona/tech-writing/ (new persona, manifest 1.0.0), README.md, agent/REPO-MAP.md, agent/STATUS.archive.md (all closed phases)
-notes: The tech-writing persona is pushed on branch feat_persona-tech-writing as PR #2 (base main, state OPEN, mergeable MERGEABLE, 29 files, +1149/-12). python tools/check_sync prints OK. Release facts: all four persona manifests and the root manifest are already version 1.1.0, no git tag exists yet, and there is no root CHANGELOG.md. Core sections were not touched by the new persona, so its version stays 1.0.0 while the shared core stays 1.1.0.
-last_update: 2026-11-09T21:50:00
+next_action: Review PR #2 (gh pr view 2, gh pr diff 2) and merge once accepted (gh pr merge 2). The root v1.1.0 release (root CHANGELOG.md + annotated tag contracts-v1.1.0) still awaits the user's go-ahead.
+files: contracts/persona/tech-writing/rules/classification.md (new), rules/base.md, rules/documents.md, rules/dr.md, rules/verification.md, rules/open_questions.md, rules/output_formats.md, rules/advisories.md, rules/comparisons.md, rules/visuals.md, agent/ruleset.md (1.0.0 -> 1.1.0), agent/bootstrap.md, agent/project_layout.md, docs/agent-contract/classification-and-distribution.md (new), docs/agent-contract/index.md, README.md, agent/REPO-MAP.md, agent/STATUS.md, agent/STATUS.archive.md
+notes: The license picker in the persona's bootstrap step 2 is replaced by the classification question - four tiers (Public / Client-shareable / Internal / Restricted) with a canonical distribution statement per tier and a TLP:2022 mapping. Default is Internal and the question is non-blocking. Widening a label is recorded in a DR before the label is applied; there is no approval gate. The pre-existing `sensitivity:` field is folded into `classification:`. python tools/check_sync -> OK, exit 0.
+last_update: 2026-11-09T22:45:00
 
 ## Active Tasks
 - [ ] Merge PR #2 (tech-writing persona) after review
