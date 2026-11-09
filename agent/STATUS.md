@@ -5,8 +5,8 @@ phase: tech-writing persona v1.1.0 - classification and distribution, on PR #2
 status: IN_PROGRESS
 next_action: Review PR #2 (gh pr view 2, gh pr diff 2) and merge once accepted (gh pr merge 2). The root v1.1.0 release (root CHANGELOG.md + annotated tag contracts-v1.1.0) still awaits the user's go-ahead.
 files: contracts/persona/tech-writing/rules/classification.md (new), rules/base.md, rules/documents.md, rules/dr.md, rules/verification.md, rules/open_questions.md, rules/output_formats.md, rules/advisories.md, rules/comparisons.md, rules/visuals.md, agent/ruleset.md (1.0.0 -> 1.1.0), agent/bootstrap.md, agent/project_layout.md, docs/agent-contract/classification-and-distribution.md (new), docs/agent-contract/index.md, README.md, agent/REPO-MAP.md, agent/STATUS.md, agent/STATUS.archive.md
-notes: The license picker in the persona's bootstrap step 2 is replaced by the classification question - four tiers (Public / Client-shareable / Internal / Restricted) with a canonical distribution statement per tier and a TLP:2022 mapping. Default is Internal and the question is non-blocking. Widening a label is recorded in a DR before the label is applied; there is no approval gate. The pre-existing `sensitivity:` field is folded into `classification:`. python tools/check_sync -> OK, exit 0.
-last_update: 2026-11-09T22:45:00
+notes: The license picker in the persona's bootstrap step 2 is replaced by the classification question - four tiers (Public / Client-shareable / Internal / Restricted) with a canonical distribution statement per tier and a TLP:2022 mapping. Default is Internal and the question is non-blocking. Widening a label is recorded in a DR before the label is applied; there is no approval gate. The pre-existing `sensitivity:` field is folded into `classification:`. python tools/check_sync -> OK, exit 0. Pushed as commit e50930d (19 files, +343/-43); PR #2 head is now e50930d, 31 files, +1452/-12, body rewritten for the classification module.
+last_update: 2026-11-09T22:54:00
 
 ## Active Tasks
 - [ ] Merge PR #2 (tech-writing persona) after review
