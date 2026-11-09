@@ -56,6 +56,7 @@ specified in `rules/documents.md`.
 - Distribution register in `agent/REPO-MAP.md`:
   `DIST-NN | document + version | recipient | date | channel | label`
   Re-issuing a document to a recipient outside that register is a leak; check the register before the
+  send, not after.
 - Memory inherits the set's tier: `agent/REPO-MAP.md` and `agent/STATUS.md` carry a `classification:`
   field. For a `Restricted` set the registers hold titles and pointers only, never facts. If the
   memory files cannot carry that tier, say so - that is a hard stop, not a workaround.
@@ -92,5 +93,3 @@ document map. Never apply a marker silently, and never assume one is needed.
   set, the label inside every export, and the content scan for the release tier.
 - Naming a file `-INTERNAL` or `-CLIENT` is an optional set-level convenience, and never the only
   marker: the label must be readable inside the document.
-
-  send, not after.
