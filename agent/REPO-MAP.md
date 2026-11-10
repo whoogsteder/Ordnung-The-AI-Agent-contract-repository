@@ -2,6 +2,7 @@
 
 ## Root
 - `README.md` — landing page: logo banner (`img/ordnung_logo.png`, 800×192), Ordnung! intro, personas, contribution invite, checks ✅
+- `CHANGELOG.md` — release history in Keep a Changelog + SemVer form: one entry per `contracts-vX.Y.Z` release with `## [Unreleased]` on top; the release act is an entry here plus an annotated tag on `main` ✅
 - `img/` — project assets (logo) ✅
 - `CONTRIBUTING.md` — contributor guide: quickstart with tools/new_persona, contribution rules ✅
 - `AGENTS.md` / `CLAUDE.md` — this repo's own agent boot pointer (repo-maintainer contract) ✅
@@ -9,7 +10,7 @@
 - `rules/verification.md` — evidence and checker rules for repo work ✅
 
 ## agent/ (this repo's boot material)
-- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.0.0; core drift against personas checked by tools/check_sync ✅
+- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.1.0; core drift against personas checked by tools/check_sync ✅
 - `agent/STATUS.md` — session state (HANDOFF lives here) ✅
 - `agent/STATUS.archive.md` — append-only history of completed/canceled tasks; do not read unless the user asks ✅
 - `agent/bootstrap.md` — new-project bootstrapping protocol adapted for authoring work ✅
