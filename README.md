@@ -132,6 +132,9 @@ the repo would otherwise suffer itself.
   [docs/authoring/core-sync.md](docs/authoring/core-sync.md). A commit that changes a core
   section changes it in every persona and the root copy, in that same commit.
 - Adding a persona? Follow [docs/authoring/persona-anatomy.md](docs/authoring/persona-anatomy.md).
+- Releases: the contract set is versioned by the manifests and released as an annotated tag
+  `contracts-vX.Y.Z` on `main`; every release gets its entry in
+  [CHANGELOG.md](CHANGELOG.md), written in the same branch as the change it ships.
 - Rules are **generic** — no project-specific names, paths or numbers; those belong in each
   project's REPO-MAP/STATUS.
 - Keep the pattern: `base.md` carries what every session needs; modules stay short, imperative

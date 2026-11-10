@@ -24,6 +24,11 @@ uv run --with pytest --no-project python -m pytest tests/ -q
 
 Then open a pull request — small and focused beats big and sweeping.
 
+You do not write changelog entries and you do not pick a release number: bump the `version:` in
+every manifest you touched (patch for wording, minor for a new rule/module, major for a breaking
+workflow) and the maintainer writes the [CHANGELOG.md](CHANGELOG.md) entry and pushes the annotated
+tag `contracts-vX.Y.Z` when the set is released.
+
 ## What a contribution should be
 
 - **Generic**: rules describe behavior, not your project. No client names, paths, record
