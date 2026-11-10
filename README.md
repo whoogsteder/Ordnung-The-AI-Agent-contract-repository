@@ -54,13 +54,14 @@ flavor; the repo keeps everyone's copy honest. Start at
 | [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
 | [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
 | [`contracts/persona/game-hosting/`](contracts/persona/game-hosting/) | System engineer hosting dedicated game servers for inexperienced operators | Docker Compose delivery, SteamCMD acquisition, bundled web frontend (auth + TLS enforced), usability |
+| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | Professional document author for IT managers & IT administrators (technical designs, advisories, product and feature comparisons) | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
 
-Both share the same transferable core: session boot protocol, externalized memory, HANDOFF
+All contracts share the same transferable core: session boot protocol, externalized memory, HANDOFF
 continuity, verification discipline, decision records. The decision-record naming follows the
 persona: `contracts/persona/iac/` uses **ADRs** (`rules/adr.md`, `docs/adr/`) because "architecture" is literal
 there and the convention matches existing projects; `contracts/persona/administrative/` uses plain **DRs**
-(`rules/dr.md`, `docs/decisions/`) — the decision discipline applies, the architecture framing
-does not.
+(`rules/dr.md`, `docs/decisions/`), as does `contracts/persona/tech-writing/` — the decision discipline
+applies, the architecture framing does not.
 
 ## Reference: contract anatomy
 
@@ -160,3 +161,6 @@ Both must pass before committing contract or tooling changes.
 - [Game-hosting rationale](contracts/persona/game-hosting/docs/agent-contract/index.md) — base contract
   (pinning, save-data protection), frontend security (fail-closed auth, TLS), verification &
   upstream truth.
+- [Technical-writing rationale](contracts/persona/tech-writing/docs/agent-contract/index.md) — base
+  contract, the audience and format questions, document-set registers, comparison evidence and
+  fairness, format generation, open items and the idea roadmap.
