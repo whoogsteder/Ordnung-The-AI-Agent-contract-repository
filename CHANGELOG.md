@@ -12,6 +12,13 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
+The next entry starts when the next contract change lands on `main`.
+
+## [1.2.0] - 2026-11-10
+
+Tagged `contracts-v1.2.0`. All four persona manifests and the root dogfood manifest read
+`version: 1.2.0`.
+
 ### Added
 
 - **Document archiving rule** (all four personas + root dogfood copy, 2026-11-10) — a new
@@ -141,6 +148,7 @@ state of the contract set as published on 2026-10-28.
   README landing page; the `agent/REPO-MAP.md` + `agent/STATUS.md` memory pair with the archiving
   rule.
 
-[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.1.0...HEAD
+[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.2.0...HEAD
+[1.2.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.1.0...contracts-v1.2.0
 [1.1.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/03851d8...contracts-v1.1.0
 [1.0.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/commits/03851d8
