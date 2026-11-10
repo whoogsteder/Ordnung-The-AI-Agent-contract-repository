@@ -6,7 +6,7 @@ status: DONE
 next_action: Nothing open. Start the next contract change on a fresh <type>_<topic> branch off main, write its CHANGELOG.md entry under ## [Unreleased] in that same branch, and release it with an annotated tag contracts-vX.Y.Z on the merge commit of main.
 files: CHANGELOG.md, README.md, CONTRIBUTING.md, agent/REPO-MAP.md, agent/STATUS.md, agent/STATUS.archive.md
 notes: The release is main's PR #3 merge commit e848438 (merged 2026-11-10T08:59:58Z), tagged contracts-v1.1.0 (tag object 963dfe8) and pushed; local main is fast-forwarded to it. contracts-v1.0.0 was never tagged (proposed 2026-11-07, canceled by the user), so the 1.0.0 CHANGELOG entry is backfilled and its compare link runs from the first commit 03851d8.
-last_update: 2026-11-10T10:03:00
+last_update: 2026-11-10T10:10:00
 
 ## Active Tasks
 - (none open: the contract set is released as contracts-v1.1.0)
