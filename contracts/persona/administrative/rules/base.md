@@ -11,9 +11,11 @@ Accuracy over speed: in administrative work a plausible wrong number is worse th
 - Read `agent/STATUS.md` for the current session state before acting.
 - **Documentation index discipline:** Before reading any file under `docs/`, consult
   the documentation section of `agent/REPO-MAP.md`. Use its status markers
-  (✅ IMPLEMENTED, 🟡 PARTIAL, 📋 PLANNED) to determine relevance — only read docs marked
+  (✅ IMPLEMENTED, 🟡 PARTIAL, 📋 PLANNED, 🗄️ ARCHIVED) to determine relevance — only read docs marked
   IMPLEMENTED or PARTIAL for current operational tasks; skip PLANNED docs unless explicitly
-  working on that design. This prevents context bloat from loading irrelevant planned designs.
+  working on that design; never read ARCHIVED docs — they are frozen history (see Document
+  archiving). This prevents context bloat from loading irrelevant planned designs, and from loading
+  designs that were superseded.
 - Explore on demand. Hit something unknown mid-task? One targeted read or search, then continue.
 - If `agent/REPO-MAP.md` is missing, or `agent/STATUS.md` is missing or still the empty contract
   template (no HANDOFF block written), this is a new project — follow the bootstrap protocol in
@@ -122,6 +124,49 @@ last_update: <YYYY-MM-DDThh:mm of this STATUS.md write; keep current on every wr
   - ✅ IMPLEMENTED — Complete and working
   - 🟡 PARTIAL — In progress or incomplete
   - 📋 PLANNED — Designed but not started
+  - 🗄️ ARCHIVED — retired; superseded by a named document; never read during task work (see Document archiving)
+
+# Document archiving (mandatory) <!-- slot: documentation -->
+Applies: when the project keeps design/guide/procedure documents under `docs/`. Requires: base.md.
+
+Archiving is a reference-graph operation, not a file move. A document that leaves its directory
+invalidates every citation of its path and every instruction that points at it.
+
+- **Who decides:** the operator. An agent proposes archiving and names what supersedes the document;
+  it never archives on its own initiative — removing a document changes what future agents read.
+- **Archive, never delete.** The archive is permanent repository content. Archiving is not a way to
+  retire a secret, a wrong fact or an unwanted decision: remove those in a normal commit and say why.
+- **Move with `git mv`** into `docs/archive/<same subpath>/`, mirroring the original directory
+  (`docs/procedures/x.md` → `docs/archive/procedures/x.md`). Commit the move alone, before any content
+  edit, so rename detection keeps `git log --follow` intact.
+- **Freeze it.** First lines of the document become a banner: `ARCHIVED <date> — read-only history;
+  superseded by <path or "nothing">; <reason>.` It is not edited again; corrections live in the
+  superseding document or a decision record, never in the archive.
+- **Re-point every citation, repo-wide.** `git grep` the old path *and* the bare filename across docs,
+  script comments, agent memory and rules. Fix each hit, except history files (STATUS archive,
+  decision-record bodies describing past reasoning), which keep the path they were written with.
+- **Fix instructions that point into the archive.** Any document telling a reader to amend or write
+  into the archived file (a workflow step, a "record your decision here" line) must name its new
+  writable location in the same change. An instruction that now writes into frozen history is a
+  finding, not a leftover.
+- **Update the index in both places.** REPO-MAP carries a directory-guide row *and* a documentation-index
+  row: keep `docs/archive/` in the directory guide (contents carry no currency guarantee), move the
+  document's row to the archive path with status 🗄️ ARCHIVED and its superseded-by pointer, and rewrite
+  any directory row that still describes the moved file in place.
+- **Update the layout guide** when the archive directory is new — it is the contract's directory tree.
+- **Close the loop in STATUS.md** in the same response: an open question or task asking whether to
+  archive is resolved by the act of archiving.
+- **Verify:** `git grep` for the old path returns nothing outside the archive and history files; every
+  path cited in REPO-MAP exists; no live document cites an archived path without the 🗄️ marker.
+- **Never read the archive during task work** — same exclusion as the STATUS archive and the
+  agent-contract rationale: read it only when the user explicitly asks for project history.
+- **What is archivable here:** `docs/guides/`, `docs/procedures/` and the paired docs of a superseded
+  template or script (`docs/templates/X.md`, `docs/scripts/X.md`).
+- **Records are never archived.** `records/` is the audit trail: a final record keeps its path for its
+  retention period, and a superseded one stays where it is (`rules/documents.md`). Archiving is not a
+  filing mechanism for issued documents.
+- **Decision records are not archived.** `docs/decisions/NNN-<topic>.md` retires by `Status: CLOSED`
+  naming the superseding record (see `rules/dr.md`) and stays where it is.
 
 # Rule files <!-- core -->
 - Never create, edit, rename or delete files in `rules/`, `AGENTS.md`, `CLAUDE.md` or other agent pointer files unless the user explicitly asks for that specific change. Approval of one change does not cover others.

@@ -39,6 +39,7 @@ Example:
 | Context discipline, REPO-MAP maintenance, Session continuity, Session conclusion, HANDOFF block format, Archiving | `core` |
 | State & change history | `slot: state-history` |
 | Documentation | `slot: documentation` |
+| Document archiving | `slot: documentation` (second section carrying the same slot name; heading text must stay identical across personas, bodies differ per persona's document tree) |
 | Rule files | `core` |
 | Versioning & branches / Versioning & history | `persona` |
 | Security / Data handling & privacy | folded into `slot: state-history` (iac / administrative) |

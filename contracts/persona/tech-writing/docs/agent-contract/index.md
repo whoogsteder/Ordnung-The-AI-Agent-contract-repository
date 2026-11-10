@@ -53,7 +53,7 @@ quietly disagrees with chapter 1.
 
 | Page | Rules it explains |
 |---|---|
-| [base-contract.md](base-contract.md) | `rules/base.md` - the decision-support role, why the format and audience questions are mandatory, rule-file protection |
+| [base-contract.md](base-contract.md) | `rules/base.md` - the decision-support role, why the format and audience questions are mandatory, rule-file protection, document archiving and why a released deliverable gets no banner |
 | [classification-and-distribution.md](classification-and-distribution.md) | `rules/classification.md`, the label fields in `rules/documents.md`, `rules/dr.md`, `agent/bootstrap.md` - the four tiers and the statements, the TLP:2022 mapping, why a widening is recorded before it acts, and what remains of licensing |
 | [document-set-and-memory.md](document-set-and-memory.md) | `rules/documents.md`, `agent/bootstrap.md`, `agent/project_layout.md` - lifecycle states, and why multi-chapter work is tracked in registers instead of context |
 | [comparisons-and-advisories.md](comparisons-and-advisories.md) | `rules/comparisons.md`, `rules/advisories.md`, `rules/verification.md`, `rules/dr.md` - evidence for external claims, fairness pass, why a tick matrix is not a verdict |

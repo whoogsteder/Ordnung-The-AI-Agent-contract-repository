@@ -51,7 +51,7 @@ material, listed in REPO-MAP but never edited by agents (base.md, Rule files).
 
 | Page | Rules it explains |
 |---|---|
-| [base-contract.md](base-contract.md) | `rules/base.md` — context discipline, externalized memory, HANDOFF, archiving, rule-file protection |
+| [base-contract.md](base-contract.md) | `rules/base.md` — context discipline, externalized memory, HANDOFF, archiving (STATUS *and* `docs/archive/`), rule-file protection |
 | [verification.md](verification.md) | `rules/verification.md`, Enforcement in `rules/adr.md` — claims become checks; the IaC test ladder (static → rendered → check mode → idempotency → lab → canary) |
 | [memory-and-bootstrap.md](memory-and-bootstrap.md) | `agent/bootstrap.md`, `agent/project_layout.md`, REPO-MAP/STATUS lifecycle |
 | [tooling-and-modules.md](tooling-and-modules.md) | `rules/python.md`, `rules/terraform_tfgrunt.md`, `rules/ansible.md`, `rules/web.md` — why the per-tool modules read as checklists, and the pin / declare-intent / fail-loudly pattern underneath them |

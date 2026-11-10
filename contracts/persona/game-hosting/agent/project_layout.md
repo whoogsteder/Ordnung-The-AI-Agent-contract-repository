@@ -20,7 +20,8 @@ Use these files to externalize memory from your context. These exist in every pr
 │   └── bootstrap.md       # New project bootstrap protocol
 ├── rules/                 # Agent rules: base.md always; one module per tool/workflow in use
 ├── docs/                  # Documentation
-│   ├── decisions/         # Decision Records: NNN-<topic>.md (see rules/base.md)
+│   ├── archive/           # Frozen history of retired docs, mirroring the original subpath (docs/archive/procedures/x.md); never read at task time — see rules/base.md, Document archiving
+│   ├── decisions/         # Decision Records: NNN-<topic>.md (see rules/base.md) — retired by Status: CLOSED, never archived
 │   ├── guides/            # How-to documentation (read on demand)
 │   └── procedures/        # Operational procedures per scenario (backup, updates, triage)
 ├── docker-compose.yml     # The delivery vehicle — thin: image pins, ports, volumes, env_file

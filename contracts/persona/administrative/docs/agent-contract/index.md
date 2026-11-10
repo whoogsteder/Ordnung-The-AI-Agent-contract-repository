@@ -51,7 +51,7 @@ material, listed in REPO-MAP but never edited by agents (base.md, Rule files).
 
 | Page | Rules it explains |
 |---|---|
-| [base-contract.md](base-contract.md) | `rules/base.md` — context discipline, externalized memory, HANDOFF, archiving, rule-file protection |
+| [base-contract.md](base-contract.md) | `rules/base.md` — context discipline, externalized memory, HANDOFF, archiving (STATUS *and* `docs/archive/`), rule-file protection |
 | [verification.md](verification.md) | `rules/verification.md`, Enforcement in `rules/dr.md` — claims become checks; the records ladder (static → recomputation → round-trip → spot-check source → outside confirmation) |
 | [memory-and-bootstrap.md](memory-and-bootstrap.md) | `agent/bootstrap.md`, `agent/project_layout.md`, REPO-MAP/STATUS lifecycle |
 | [financial-and-records.md](financial-and-records.md) | `rules/financial.md`, `rules/documents.md`, `rules/approval.md`, `rules/python.md` — provenance, immutability, the approval classes; why agents may never silently balance a discrepancy |

@@ -20,7 +20,8 @@ Use these files to externalize memory from your context. These exist in every pr
 │   └── bootstrap.md       # New project bootstrap protocol
 ├── rules/                 # Agent rules: base.md always; one module per record type/tool in use
 ├── docs/                  # Documentation
-│   ├── decisions/         # Decision Records: NNN-<topic>.md
+│   ├── archive/           # Frozen history of retired docs, mirroring the original subpath (docs/archive/procedures/x.md); never read at task time — see rules/base.md, Document archiving
+│   ├── decisions/         # Decision Records: NNN-<topic>.md — retired by Status: CLOSED, never archived
 │   ├── guides/            # How-to documentation (read on demand)
 │   └── procedures/        # Step-by-step operational procedures per scenario
 ├── templates/             # Document templates (quotes, invoices, letters) — see rules/documents.md
@@ -38,6 +39,9 @@ Use these files to externalize memory from your context. These exist in every pr
 
 ## Record-handling guards
 - `data/imports/` files are evidence: read-only inputs, never edited in place.
+- `docs/archive/` is frozen history: never edited, never read during task work, cited only with the
+  🗄️ ARCHIVED marker (base.md, Document archiving). `records/` is the audit trail and is **never**
+  archived — a final record keeps its path for its retention period (`rules/documents.md`).
 - Real customer/supplier data is git-ignored unless the project declares the repository private
   (see base.md, Data handling & privacy); commit redacted samples with the same shape instead.
 - Registers (number sequences and their next free number) live in `agent/REPO-MAP.md`.

@@ -1,17 +1,18 @@
 # Agent Status
 
 ## HANDOFF
-phase: contracts-v1.1.0 released and tagged on main
-status: DONE
-next_action: Nothing open. Start the next contract change on a fresh <type>_<topic> branch off main, write its CHANGELOG.md entry under ## [Unreleased] in that same branch, and release it with an annotated tag contracts-vX.Y.Z on the merge commit of main.
-files: CHANGELOG.md, README.md, CONTRIBUTING.md, agent/REPO-MAP.md, agent/STATUS.md, agent/STATUS.archive.md
-notes: The release is main's PR #3 merge commit e848438 (merged 2026-11-10T08:59:58Z), tagged contracts-v1.1.0 (tag object 963dfe8) and pushed; local main is fast-forwarded past it to ed3ec4d, the tip of main after the two memory follow-up PRs #4 and PR #5. contracts-v1.0.0 was never tagged (proposed 2026-11-07, canceled by the user), so the 1.0.0 CHANGELOG entry is backfilled and its compare link runs from the first commit 03851d8.
-last_update: 2026-11-10T10:31:00
+phase: Document archiving rule committed on feat_docs-archiving-rule, pushed, PR #6 open against main
+status: AWAITING USER
+next_action: Operator reviews PR #6 (https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/pull/6). Merge only on their word; then the release act is a separate step: turn the ## [Unreleased] CHANGELOG entry into a versioned 1.2.0 section with a compare link and tag the merge commit of main annotated as contracts-v1.2.0, pushed. Do not merge or tag unprompted.
+files: rules/base.md, contracts/persona/*/rules/base.md, contracts/persona/*/agent/project_layout.md, contracts/persona/*/agent/ruleset.md, agent/ruleset.md, contracts/persona/*/docs/agent-contract/base-contract.md, contracts/persona/*/docs/agent-contract/index.md, docs/authoring/core-sync.md, README.md, CHANGELOG.md, agent/REPO-MAP.md, agent/STATUS.md
+notes: Commit f9abafe on feat_docs-archiving-rule (27 files, +454/-43), pushed; PR #6 open, base main, not merged. The new `# Document archiving (mandatory)` section is marked `<!-- slot: documentation -->`, so the heading text is identical in all five base.md copies while each body names that persona's document tree — check_sync's slot rule permits exactly that. The core `# Context discipline` bullet gained the ARCHIVED marker as a fourth status marker, identically in all five copies, because it is a `core` section. Manifests are at 1.2.0 (minor = new section); the CHANGELOG entry sits under ## [Unreleased]. Gates run in this session: check_sync OK, status_fresh OK; pytest not runnable here and no tools/ or tests/ file was touched. Encoding hazard: a PowerShell Get-Content/Set-Content round trip re-encoded agent/STATUS.md from UTF-8 to ANSI and mangled every em dash and emoji; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit.
+last_update: 2026-11-10T11:23:00
 
 ## Active Tasks
-- (none open: the contract set is released as contracts-v1.1.0)
+- [ ] AWAITING USER - PR #6: ship the Document archiving rule. Done: branch feat_docs-archiving-rule off main; the section in all five base.md copies plus the ARCHIVED core marker; docs/archive/ (and documents/archive/ for tech-writing) in the four layout guides with frozen-history guards; a rationale section in each of the four base-contract.md pages; rationale index rows; the core-sync.md section-map row; README bullets and rationale pointers; CHANGELOG entry under ## [Unreleased]; manifests 1.1.0 -> 1.2.0; commit f9abafe pushed; check_sync OK. Open: operator review, merge, then the 1.2.0 release act (CHANGELOG section + annotated tag on main) on their word.
 
 ## Notes
+- Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.
 - check_sync gates contract edits (OK 2026-11-10); pytest gates tools/ and tests/ edits and is not runnable in this environment (no uv, no pytest on system python 3.15.1).
 - Run python tools/status_fresh to check this file's freshness; exit 0 means current. Stamp last_update at minute granularity, then set the file's LastWriteTime to that same minute: the probe compares at second precision, so a minute-granularity stamp only passes when the mtime sits on the boundary. A branch switch or checkout rewrites the mtime, so re-stamp after one.
 - gh CLI 2.103.3 is installed and authenticated as whoogsteder (repo scope): push, PR create, PR edit --body-file, PR view and PR merge all worked this session.

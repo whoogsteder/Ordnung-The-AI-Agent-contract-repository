@@ -45,6 +45,39 @@ when the deadline is the user's. Changes go through the user, explicitly.
 ## Why the history slot is strict about sensitivity
 A document project's files are far likelier than code to contain personal data, customer names,
 internal pricing, network topology and unpatched vulnerabilities. So the header carries a
-`sensitivity:` field, material above `internal` is git-ignored by default, and nothing confidential
-is pasted into a web search, a translation service or a summariser. The rule that costs the agent
-the least is the one that protects the reader the most.
+`classification:` field, material narrower than `Internal` is git-ignored by default, and nothing
+confidential is pasted into a web search, a translation service or a summariser. The rule that costs
+the agent the least is the one that protects the reader the most.
+
+## Document archiving: superseding, not deleting
+
+Document work accumulates dead weight faster than code does: a design superseded by a redesign, a
+comparison whose vendor list moved, a template pairing that no longer matches its template. Deleting it
+destroys the trail a reviewer follows; leaving it in place hands the next session a plausible-looking
+wrong input - the exact failure the document map and the status markers exist to prevent. So retirement
+is archiving, and archiving is a reference-graph operation: a document id travels through registers,
+change notes, shared-facts rows, figures and export recipes, so the move means `git mv` in a commit of
+its own, a repo-wide grep for the old path *and* the bare filename *and* the id, registers that travel
+with the file, and a 🗄️ ARCHIVED row in the document map. Numbers are never reused, so the retired id
+stays readable as retired.
+
+Three adaptations are specific to this persona:
+
+- **Two trees, two archives.** `docs/` is material *about* the project (decisions, guides, template and
+  script pairings); `documents/` is the deliverable. Each gets an archive mirroring its subpath:
+  `docs/archive/templates/X.md`, `documents/archive/designs/014-design-x-v1.0.md`. The split is what
+  makes the read rule safe: an archived template pairing is a stale instruction, an archived deliverable
+  is a superseded finding, and neither may become an input to new work.
+- **A released document gets no banner.** The generic rule freezes the archive by writing a banner into
+  the file, and `rules/documents.md` says a `released` document is immutable. The two collide, so the
+  persona splits the record: a project document under `docs/` takes the `ARCHIVED <date> - ...` banner;
+  a released deliverable is moved and labelled in the document map, and the superseding document's change
+  note cites the original by id and archive path. Nothing is edited into an immutable file to make a move
+  visible - the register is what makes it visible.
+- **The label travels.** Archiving never widens a `classification:`. Archived material keeps its tier
+  and its distribution statement, material narrower than `Internal` stays git-ignored inside the
+  archive, and archived `restricted/` material stays out of every export and build. An archive folder is
+  not a publishing channel.
+
+Decision records are excluded: `docs/decisions/NNN-<topic>.md` retires by `Status: CLOSED` naming the
+successor (`rules/dr.md`), because the number is the citation.
