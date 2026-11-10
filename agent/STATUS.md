@@ -1,16 +1,16 @@
 # Agent Status
 
 ## HANDOFF
-phase: Release act for contracts-v1.2.0, on branch chore_release-contracts-v1.2.0
-status: IN PROGRESS
-next_action: Push this branch, open its PR against main, merge it, then create the annotated tag contracts-v1.2.0 on the resulting merge commit of main and push tag and main. Afterwards record the tag object and target commit SHAs in this file on a short-lived chore_memory branch through a PR, the way contracts-v1.1.0 was recorded.
-files: CHANGELOG.md, agent/STATUS.md
-notes: PR #6 (Document archiving rule) merged into main as 1315da7; main fast-forwarded 78f9c71 -> 1315da7 before this branch was cut. CHANGELOG: the entry moves out of ## [Unreleased] into ## [1.2.0] - 2026-11-10 with the tag/manifest line, a fresh empty ## [Unreleased] on top, and the compare links ([1.2.0]: contracts-v1.1.0...contracts-v1.2.0, [Unreleased]: contracts-v1.2.0...HEAD). The manifests already read 1.2.0 (bumped by f9abafe on feat_docs-archiving-rule), so this release carries no version change of its own. Mirrors the 1.1.0 release act: branch chore_release-contracts-v1.1.0, PR #3, annotated tag on the merge commit, checkout left on main.
-last_update: 2026-11-10T11:44:00
+phase: contracts-v1.2.0 released - the Document archiving rule is shipped and tagged
+status: DONE
+next_action: Nothing pending. The empty ## [Unreleased] on top of CHANGELOG.md awaits the next contract change; releasing that work is the same release act (versioned section, then an annotated tag on main).
+files: agent/STATUS.md
+notes: Release record - the annotated tag contracts-v1.2.0 is tag object 0846341 pointing at commit 7a97bef, the merge commit of PR #7 (the release act) on main, pushed to origin. The change it ships is the Document archiving rule: PR #6, merged as 1315da7, branch commit f9abafe. All five manifests read 1.2.0. For comparison, contracts-v1.1.0 is tag object 963dfe8 at commit e848438.
+last_update: 2026-11-10T11:52:00
 
 ## Active Tasks
 - [x] DONE - Document archiving rule shipped: the `slot: documentation` section in all five base.md copies, the ARCHIVED status marker in the core Context discipline bullet, docs/archive/ (and documents/archive/ for tech-writing) in the four layout guides with frozen-history guards, a rationale section in each of the four base-contract.md pages, rationale index rows, the core-sync.md section-map row, README bullets, CHANGELOG entry, manifests 1.1.0 -> 1.2.0. Branch feat_docs-archiving-rule, commit f9abafe, PR #6 merged into main as 1315da7.
-- [ ] IN PROGRESS - Release act for contracts-v1.2.0: CHANGELOG versioned section with the compare links (this commit), push, PR, merge, annotated tag contracts-v1.2.0 on the merge commit of main, push tag and main, record the SHAs.
+- [x] DONE - Release act for contracts-v1.2.0: CHANGELOG entry turned into ## [1.2.0] - 2026-11-10 with the tag/manifest line and the compare links, fresh empty ## [Unreleased] on top (commit 2f302ed), PR #7 merged into main as 7a97bef, annotated tag contracts-v1.2.0 (tag object 0846341) created on that merge commit and pushed. The manifests already read 1.2.0, so the release carried no version change of its own.
 
 ## Notes
 - Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.
