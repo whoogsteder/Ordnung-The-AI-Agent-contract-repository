@@ -58,3 +58,16 @@ User go-ahead: "merge done. go ahead fix the remaining v1.1.0 release action". P
 
 Notes kept for history: the release ships no rule change, so no manifest bump was due - the 1.1.0 bumps landed with the changes themselves (2026-11-07 for the core, 2026-11-09 for tech-writing). Transport: STATUS.md is ASCII with CRLF, so it is rewritten by a Python script rather than by Set-Content, which would add a BOM.
 Evidence for the tag: annotated contracts-v1.1.0 -> tag object 963dfe8 -> commit e848438 (the PR #3 merge, merged 2026-11-10T08:59:58Z). git ls-remote --tags origin lists the tag object and the peeled commit, so the tag is on the remote. Local main fast-forwarded 669a236 -> e848438; checkout left on main. The memory record of the release therefore lands after the tag, which is where release bookkeeping belongs.
+
+
+## 2026-11-10 - Branch cleanup: merged branches removed, only main left (DONE, pushed on main)
+
+User go-ahead: "clean up branches in the repo ... remove all but MAIN", then the choice to push the closing memory stamp commit straight to main. Inventory before deleting: git branch -a --merged origin/main listed all five feature branches (feat_core-memory-guard-hardening 91cd34c, feat_persona-tech-writing fa00bc0, chore_release-contracts-v1.1.0 0f761b3, chore_memory_record-the-v1.1.0-tag c8204cb, chore_memory_restamp-last-update ba1fa0b) and gh pr list --state all showed PRs #1-#5 all MERGED, so every tip was reachable from main and deletion loses no commit. A grep for those five names hit only agent/STATUS.archive.md (4 lines of historical labels), so no document resolves through a branch name.
+
+- [x] DONE - git checkout main and git merge --ff-only origin/main (41078ab -> ed3ec4d), then git branch -d on the four local branches: git accepted -d for all four, which is its own proof they were merged into HEAD. No -D needed.
+- [x] DONE - git push origin --delete on the five remote branches, then git fetch --prune; verified with git ls-remote --heads origin, which lists refs/heads/main alone.
+- [x] DONE - The annotated tag contracts-v1.1.0 (tag object 963dfe8 -> commit e848438, on main) is untouched by branch deletion: git ls-remote --tags origin still lists tag and peeled commit.
+- [x] DONE - Gates: python tools/status_fresh OK after the re-stamp, python tools/check_sync OK, both exit 0; the two-file memory commit pushed to main; working tree clean with no scratch files left.
+
+Notes kept for history: the probe went STALE the moment main was checked out and fast-forwarded, because that checkout rewrote agent/STATUS.md and pushed its mtime past the stamp - so the stamp refresh has to be the last working-tree write of a session, which is the only order that ends green. rules/base.md calls the work branches short-lived, so removing them once merged is the contract's own shape of tidiness rather than an extra policy; the tag and main's merge commits carry the whole record.
+
