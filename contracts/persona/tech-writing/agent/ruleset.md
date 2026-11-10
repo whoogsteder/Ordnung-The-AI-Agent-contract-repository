@@ -1,7 +1,7 @@
 # Contract manifest - tech-writing persona
 
 persona: tech-writing
-version: 1.1.0
+version: 1.2.0
 
 Self-contained drop-in contract for professional document authoring aimed at IT managers and IT
 administrators: technical designs, advisories, product and feature comparisons, and the briefing

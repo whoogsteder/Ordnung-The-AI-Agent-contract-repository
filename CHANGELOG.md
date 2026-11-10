@@ -12,8 +12,46 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
-Nothing staged. The contract set is released as `contracts-v1.1.0`; the next entry starts when the
-next contract change lands on `main`.
+### Added
+
+- **Document archiving rule** (all four personas + root dogfood copy, 2026-11-10) — a new
+  `# Document archiving (mandatory)` section in every `rules/base.md`, marked
+  `<!-- slot: documentation -->` so each persona names its own document tree while the heading stays
+  identical across personas. The rule treats archiving as a **reference-graph operation, not a file
+  move**: the operator decides, the agent only proposes; `git mv` into `docs/archive/<same subpath>/` in
+  a commit of its own so rename detection keeps `git log --follow` intact; an
+  `ARCHIVED <date> — read-only history; superseded by <path>; <reason>` banner freezing the file; a
+  repo-wide `git grep` for the old path *and* the bare filename, re-pointing every citation except
+  history files; instructions that tell a reader to write into the archived file re-pointed to a
+  writable location; both REPO-MAP rows (directory guide + documentation index) moved with the file;
+  🗄️ **ARCHIVED** added as a fourth documentation status marker; the archive is never read during task
+  work, the same exclusion as `STATUS.archive.md` and `docs/agent-contract/`.
+- **Persona-specific slot bodies** (the reason the section is a slot, not core):
+  - `iac` archives `docs/architecture/`, `docs/guides/`, `docs/runbooks/`; **ADRs are not archived** —
+    `ADR-NNN` is the citation and the sequence is the index, so retirement stays `Status: CLOSED`
+    (`rules/adr.md`).
+  - `administrative` archives `docs/guides/`, `docs/procedures/` and superseded template/script paired
+    docs; **`records/` is never archived** — it is the audit trail and retention is a legal clock
+    (`rules/documents.md`); Decision Records retire by `Status: CLOSED`.
+  - `game-hosting` archives superseded `docs/procedures/` and `docs/guides/`; **live operator material
+    is never archived** (`docker-compose.yml`, `*.env.example`, `README.md`) — a retired setting is
+    removed in a commit naming its decision record, so an operator is never pointed at a setting that no
+    longer exists.
+  - `tech-writing` splits the tree: `docs/archive/<subpath>/` for project documents and
+    `documents/archive/<type>/` for superseded deliverables; the document id and number are never
+    reused; the `classification:` label and git-ignore rules travel with the file; **a `released`
+    deliverable gets no banner**, because `rules/documents.md` makes it immutable — the document-map row
+    with the 🗄️ marker plus the superseding document's change note carry the record.
+- **Layout guides carry the archive**: `docs/archive/` in all four `agent/project_layout.md` trees
+  (`documents/archive/` in tech-writing), each with a frozen-history guard; the four
+  `docs/agent-contract/base-contract.md` pages gained a "Document archiving" rationale section, and
+  `docs/authoring/core-sync.md`'s section map names the new slot section.
+
+Manifests (four personas + root) go `1.1.0 → 1.2.0`: a new section is a minor bump. `tools/check_sync`
+passes: the section is a slot, its heading text is identical in all five copies, and no `core` section
+moved.
+
+The next entry starts when the next contract change lands on `main`.
 
 ## [1.1.0] - 2026-11-10
 

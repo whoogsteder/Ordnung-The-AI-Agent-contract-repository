@@ -13,9 +13,11 @@ say what is still undecided, is not finished - however well it reads.
 - Read `agent/STATUS.md` for the current session state before acting.
 - **Documentation index discipline:** Before reading any file under `docs/`, consult
   the documentation section of `agent/REPO-MAP.md`. Use its status markers
-  (✅ IMPLEMENTED, 🟡 PARTIAL, 📋 PLANNED) to determine relevance — only read docs marked
+  (✅ IMPLEMENTED, 🟡 PARTIAL, 📋 PLANNED, 🗄️ ARCHIVED) to determine relevance — only read docs marked
   IMPLEMENTED or PARTIAL for current operational tasks; skip PLANNED docs unless explicitly
-  working on that design. This prevents context bloat from loading irrelevant planned designs.
+  working on that design; never read ARCHIVED docs — they are frozen history (see Document
+  archiving). This prevents context bloat from loading irrelevant planned designs, and from loading
+  designs that were superseded.
 - Explore on demand. Hit something unknown mid-task? One targeted read or search, then continue.
 - If `agent/REPO-MAP.md` is missing, or `agent/STATUS.md` is missing or still the empty contract
   template (no HANDOFF block written), this is a new project — follow the bootstrap protocol in
@@ -124,6 +126,60 @@ last_update: <YYYY-MM-DDThh:mm of this STATUS.md write; keep current on every wr
   - IMPLEMENTED - Complete and working
   - PARTIAL - In progress or incomplete
   - PLANNED - Designed but not started
+  - 🗄️ ARCHIVED - retired; superseded by a named document; never read during task work (see Document archiving)
+
+# Document archiving (mandatory) <!-- slot: documentation -->
+Applies: when a project document under `docs/` (decisions, guides, template and script pairings) is
+retired, or a deliverable under `documents/` is superseded. Requires: base.md.
+
+Archiving is a reference-graph operation, not a file move. A document that leaves its directory
+invalidates every citation of its path, every register entry that names it, and every instruction that
+points at it.
+
+- **Who decides:** the operator. An agent proposes archiving and names what supersedes the document;
+  it never archives on its own initiative - removing a document changes what future agents read and
+  what a reviewer can check.
+- **Archive, never delete.** The archive is permanent repository content. Archiving is not a way to
+  retire a secret, a wrong fact, a withdrawn recommendation or an unwanted decision: remove those in a
+  normal commit and say why.
+- **Move with `git mv`, into the archive that mirrors the tree.** Project documents go to
+  `docs/archive/<same subpath>/` (`docs/templates/X.md` -> `docs/archive/templates/X.md`); deliverables
+  go to `documents/archive/<type>/`
+  (`documents/designs/014-design-x-v1.0.md` -> `documents/archive/designs/014-design-x-v1.0.md`).
+  Commit the move alone, before any content edit, so rename detection keeps `git log --follow` intact.
+- **Freeze it - without editing a released deliverable.** A project document under `docs/` gets the
+  banner as its first lines: `ARCHIVED <date> - read-only history; superseded by <path or "nothing">;
+  <reason>.` A `released` deliverable is immutable (`rules/documents.md`): the move, the register row
+  and the superseding document's change note carry the record, so the banner is not written into it.
+  Nothing in the archive is edited again - corrections live in the superseding document, in a later
+  version, or in a decision record.
+- **Keep the label.** An archived document keeps its `classification:` and its distribution statement;
+  the archive inherits the tier. Material narrower than `Internal` stays git-ignored inside the archive,
+  and archived material in `restricted/` stays out of every export and build (`rules/classification.md`).
+- **Re-point every citation, repo-wide.** `git grep` the old path *and* the bare filename *and* the
+  document id across documents, templates, generators, code comments, agent memory and rules. Fix each
+  hit, except history files (STATUS archive, decision-record bodies, the change notes of earlier
+  versions), which keep the path they were written with.
+- **Fix instructions that point into the archive.** Any document telling a reader to amend or write
+  into the archived file (a workflow step, a "record your decision here" line, a template pairing) must
+  name its new writable location in the same change. An instruction that now writes into frozen history
+  is a finding, not a leftover.
+- **Update the registers and the index.** The document-map row moves to the archive path with status
+  🗄️ ARCHIVED and its superseded-by pointer; a superseded deliverable keeps its id - document numbers
+  are never reused. Shared-facts entries that cited the archived document are re-pointed to the
+  superseding document. REPO-MAP carries a directory-guide row *and* a documentation-index row: keep
+  `docs/archive/` and `documents/archive/` in the directory guide (contents carry no currency
+  guarantee), and rewrite any directory row that still describes the moved file in place.
+- **Update the layout guide** when an archive directory is new - it is the contract's directory tree.
+- **Close the loop in STATUS.md** in the same response: an open item (`rules/open_questions.md`) or task
+  asking whether to archive is resolved by the act of archiving.
+- **Verify:** `git grep` for the old path returns nothing outside the archive and history files; every
+  path cited in REPO-MAP and in the document map exists; no live document cites an archived document
+  without the 🗄️ marker; no register row points at a missing file; no export recipe reads a moved
+  document.
+- **Never read the archive during task work** - a superseded document is never an input to new work
+  (`rules/documents.md`); same exclusion as the STATUS archive and the agent-contract rationale: read
+  it only when the user explicitly asks for project history.
 
 # Rule files <!-- core -->
 - Never create, edit, rename or delete files in `rules/`, `AGENTS.md`, `CLAUDE.md` or other agent pointer files unless the user explicitly asks for that specific change. Approval of one change does not cover others.

@@ -78,6 +78,33 @@ forward-looking, `STATUS.archive.md` is append-only history, and the archive tri
 `[x]` items out *in the same response* that marks them done. The 40-line size guard is the
 backstop when triggers are missed.
 
+## Document archiving: a reference-graph operation
+
+The STATUS archive has a twin problem one level down. A design doc quietly `mv`-ed into
+`docs/archive/` leaves every citation of its old path dangling, and leaves a workflow step that tells
+the next agent to "record your decision in `docs/design/x.md`" writing into frozen history. A move
+invalidates a reference graph, so the contract treats archiving as a graph operation: `git mv` in a
+commit of its own (rename detection keeps `git log --follow`), a banner naming what supersedes it, a
+repo-wide `git grep` for the old path *and* the bare filename, and index rows that travel with the
+file.
+
+Three decisions in that rule are deliberate:
+
+- **The operator decides; the agent proposes.** Archiving changes what future sessions read, which is a
+  change of behaviour — the same reason agents may not edit their own rules.
+- **Archive is not a delete.** An agent that wants a secret, a wrong fact or a retired setting gone is
+  answered by a normal commit that removes it and says why. Routing that through `docs/archive/` keeps
+  the content in the repository while making it harder to see.
+- **The archive is never read at task time.** Same exclusion as `STATUS.archive.md` and
+  `docs/agent-contract/`: a superseded design doc is a plausible-looking wrong answer, exactly the
+  failure the documentation status markers exist to prevent. Hence a fourth REPO-MAP marker,
+  🗄️ ARCHIVED, so the index can name the file without inviting a read.
+
+In this persona the archive candidates are `docs/architecture/`, `docs/guides/` and `docs/runbooks/`.
+ADRs are excluded on purpose: `ADR-NNN` *is* the citation and the sequence is the index, so a moved ADR
+breaks every reference to it and the docs-integrity test's index check. Retirement there is
+`Status: CLOSED` naming the successor (`rules/adr.md`).
+
 ## Rule-file protection: why agents may not edit the rules
 
 Left unsupervised, an agent that hits a conflicting rule will "fix" the rule — silently

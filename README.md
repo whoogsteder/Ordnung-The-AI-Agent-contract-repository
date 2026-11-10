@@ -137,6 +137,10 @@ the repo would otherwise suffer itself.
   [CHANGELOG.md](CHANGELOG.md), written in the same branch as the change it ships.
 - Rules are **generic** — no project-specific names, paths or numbers; those belong in each
   project's REPO-MAP/STATUS.
+- Retiring a document is a reference-graph operation, not a `mv`: propose it, get the operator's
+  approval, `git mv` into `docs/archive/<same subpath>/` in a commit of its own, banner it, re-point
+  every citation repo-wide, and move both REPO-MAP rows with it — see the Document archiving section
+  of `rules/base.md`. The archive is never read at task time, and it is never a way to delete.
 - Keep the pattern: `base.md` carries what every session needs; modules stay short, imperative
   checklists for their domain; the *why* goes in `docs/agent-contract/`, never into boot material.
 - When you change a rule, update its rationale page in `docs/agent-contract/` in the same commit.
@@ -158,12 +162,15 @@ Both must pass before committing contract or tooling changes.
 - Each contract explains itself in detail under `docs/agent-contract/`:
 
 - [IaC rationale](contracts/persona/iac/docs/agent-contract/index.md) — base contract, verification/test ladder,
-  bootstrap lifecycle, tooling modules.
+  bootstrap lifecycle, tooling modules, document archiving (and why ADRs retire by `Status: CLOSED`
+  instead of moving).
 - [Administrative rationale](contracts/persona/administrative/docs/agent-contract/index.md) — base contract,
-  verification/records ladder, bootstrap lifecycle, financial integrity & approval classes.
+  verification/records ladder, bootstrap lifecycle, financial integrity & approval classes, document
+  archiving (and why `records/` is never archived).
 - [Game-hosting rationale](contracts/persona/game-hosting/docs/agent-contract/index.md) — base contract
   (pinning, save-data protection), frontend security (fail-closed auth, TLS), verification &
-  upstream truth.
+  upstream truth, document archiving (and why live operator material is never archived).
 - [Technical-writing rationale](contracts/persona/tech-writing/docs/agent-contract/index.md) — base
   contract, the audience and format questions, document-set registers, comparison evidence and
-  fairness, format generation, open items and the idea roadmap.
+  fairness, format generation, open items and the idea roadmap, document archiving (two trees, and why
+  a released deliverable gets no banner).

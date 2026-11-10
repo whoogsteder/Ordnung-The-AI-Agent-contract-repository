@@ -40,3 +40,21 @@ the claim the artifact can actually keep.
 These projects are published and cloned. A token committed once is revoked, and the project's
 first lesson to its user becomes credential hygiene. Env files plus `.example` templates keep
 the config surface honest while making the safe path the only path.
+
+## Document archiving: never archive the thing the operator follows
+
+Retiring documentation by moving it is the classic way to leave a dangling pointer, and here the
+pointer is followed by a human running a backup procedure. A `mv` invalidates a reference graph: every
+citation of the old path, every README link, every compose comment that says "see docs/procedures/x.md".
+So archiving is a graph operation — `git mv` in a commit of its own, a banner naming the superseding
+procedure, a repo-wide `git grep` for the old path *and* the bare filename, index rows that travel with
+the file, and an archive nothing is read from during task work (same exclusion as `STATUS.archive.md`).
+The operator decides; the agent only proposes, because removing a document changes what future sessions
+and the operator's procedures say.
+
+The persona's own exclusion list is the long one: `docker-compose.yml`, the `*.env.example` files and
+`README.md` are the live working set. Retiring a setting means removing it in a commit naming the
+decision record that authorizes it — not relocating prose around a setting that no longer exists.
+`docs/decisions/` retires by `Status: CLOSED` for the same reason as elsewhere: the number is the
+citation. What is left to archive is superseded `docs/procedures/` and `docs/guides/`, where the banner
+and the 🗄️ ARCHIVED index marker make a stale procedure visible instead of merely older.

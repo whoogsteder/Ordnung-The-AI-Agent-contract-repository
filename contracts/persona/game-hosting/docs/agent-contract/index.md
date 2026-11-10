@@ -9,7 +9,8 @@ maintain this contract and review agent output — and for agents only when expl
 ## Pages
 
 - [base-contract.md](base-contract.md) — why an inexperienced-operator audience shapes every
-  rule: pinning, save-data protection, marked OS dependencies, confirmation before destruction.
+  rule: pinning, save-data protection, marked OS dependencies, confirmation before destruction,
+  document archiving (and why live operator material is never archived).
 - [frontend-security.md](frontend-security.md) — why auth and TLS are non-negotiable defaults on
   the web frontend: the public-exposure assumption and the fail-closed stance.
 - [verification-and-upstream.md](verification-and-upstream.md) — why container evidence is log-

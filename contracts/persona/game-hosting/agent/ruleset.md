@@ -1,7 +1,7 @@
 # Contract manifest — game-hosting persona
 
 persona: game-hosting
-version: 1.1.0
+version: 1.2.0
 
 Self-contained drop-in contract for hosting dedicated game servers: user-configurable Docker
 Compose projects, optionally with a bundled (auth + TLS enforced) web control frontend.

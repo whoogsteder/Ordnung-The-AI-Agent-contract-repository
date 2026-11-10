@@ -10,7 +10,7 @@
 - `rules/verification.md` — evidence and checker rules for repo work ✅
 
 ## agent/ (this repo's boot material)
-- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.1.0; core drift against personas checked by tools/check_sync ✅
+- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.2.0; core drift against personas checked by tools/check_sync ✅
 - `agent/STATUS.md` — session state (HANDOFF lives here) ✅
 - `agent/STATUS.archive.md` — append-only history of completed/canceled tasks; do not read unless the user asks ✅
 - `agent/bootstrap.md` — new-project bootstrapping protocol adapted for authoring work ✅
@@ -32,7 +32,7 @@
 
 ## contracts/persona/tech-writing/ (persona: professional document authoring) ✅
 - `contracts/persona/tech-writing/rules/` — base, verification, classification, documents, open_questions, output_formats, comparisons, advisories, visuals, dr ✅
-- Same agent/ shape as iac persona (bootstrap, project_layout, STATUS template, ruleset manifest v1.1.0); dr.md carries the shared `slot: decision-records` heading like administrative ✅
+- Same agent/ shape as iac persona (bootstrap, project_layout, STATUS template, ruleset manifest v1.2.0); dr.md carries the shared `slot: decision-records` heading like administrative ✅
 - `contracts/persona/tech-writing/licenses/` — kept for the code a project ships (generator/export scripts); documents carry a classification tier and distribution statement instead of a license (v1.1.0, 2026-11-09) ✅
 - `contracts/persona/tech-writing/docs/agent-contract/` — base-contract, document-set-and-memory, comparisons-and-advisories, format-and-visuals, open-items-and-ideas, classification-and-distribution ✅
 
@@ -45,5 +45,13 @@
 - `tests/test_check_sync.py` — pytest incl. planted-drift fixtures and a real-repo pass test (`uv run --with pytest --no-project python -m pytest tests/ -q`)
 
 ## docs/authoring/ ✅
-- `core-sync.md` — seam marker convention, base.md section-slot map, one-commit rule, release/version policy
+- `core-sync.md` — seam marker convention, base.md section-slot map (incl. the Document archiving slot section), one-commit rule, release/version policy
 - `persona-anatomy.md` — folder shape and steps to add a persona
+
+## docs/archive/ 📋
+- Not created yet. It is the retirement target for a superseded page of `docs/authoring/`
+  (`docs/archive/authoring/core-sync.md`), per the Document archiving section of `rules/base.md`:
+  the operator proposes and approves, `git mv` mirrors the subpath, the file gets an
+  `ARCHIVED <date>` banner, both REPO-MAP rows travel with it, and nothing here is read at task time.
+  Persona `docs/agent-contract/` pages are contract content and are retired by editing the contract,
+  never archived inside the persona folder.

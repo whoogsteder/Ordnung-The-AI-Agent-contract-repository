@@ -20,7 +20,8 @@ Use these files to externalize memory from your context. These exist in every pr
 |   `-- bootstrap.md       # New project bootstrap protocol
 |-- rules/                 # Agent rules: base.md always; one module per document type in use
 |-- docs/                  # Human-facing documentation about the project
-|   |-- decisions/         # Decision Records: NNN-<topic>.md (see rules/dr.md)
+|   |-- decisions/         # Decision Records: NNN-<topic>.md (see rules/dr.md) - retired by Status: CLOSED, never archived
+|   |-- archive/           # Frozen history of retired project docs, mirroring the subpath (docs/archive/templates/X.md); never read at task time - see rules/base.md, Document archiving
 |   |-- guides/            # How-to documentation (read on demand)
 |   |-- templates/         # docs/templates/X.md pairs with templates/X
 |   `-- scripts/           # docs/scripts/X.md pairs with scripts/X.py
@@ -28,7 +29,8 @@ Use these files to externalize memory from your context. These exist in every pr
 |   |-- designs/
 |   |-- advisories/
 |   |-- comparisons/
-|   `-- briefs/
+|   |-- briefs/
+|   `-- archive/           # Superseded deliverables, mirrored by type (documents/archive/designs/014-design-x-v1.0.md); released files stay immutable - no banner, the register carries the record
 |-- distribution/          # Per-recipient release packages, one dir per recipient (not indexed)
 |-- restricted/            # Restricted-tier material: never exported, git-ignored by default
 |-- templates/             # Document skeletons and style references (reference.docx, md skeletons)
@@ -42,6 +44,10 @@ Use these files to externalize memory from your context. These exist in every pr
 ```
 
 ## Document-handling guards
+- `docs/archive/` and `documents/archive/` are frozen history: never edited, never read during task
+  work, cited only with the 🗄️ ARCHIVED marker (base.md, Document archiving). A `released` deliverable
+  moved into the archive stays immutable - the document map and the superseding document's change note
+  carry the record, not a banner written into the file. Archived material keeps its `classification:`.
 - `sources/` is evidence: read-only inputs, never edited in place. Name each file
   `<src-id>_<YYYY-MM-DD>.<ext>` so a source id in a document resolves to a file.
 - Material whose `classification:` is narrower than `Internal` - that is `Client-shareable` and
