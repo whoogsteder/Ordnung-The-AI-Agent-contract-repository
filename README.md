@@ -54,7 +54,9 @@ flavor; the repo keeps everyone's copy honest. Start at
 | [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
 | [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
 | [`contracts/persona/game-hosting/`](contracts/persona/game-hosting/) | System engineer hosting dedicated game servers for inexperienced operators | Docker Compose delivery, SteamCMD acquisition, bundled web frontend (auth + TLS enforced), usability |
-| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | Professional document author for IT managers & IT administrators (technical designs, advisories, product and feature comparisons) | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
+| [`contracts/persona/document-writing/`](contracts/persona/document-writing/) | Technical writer for IT documents (architecture, integration how-tos, change plans, lifecycle advisories and product selections, research briefs, end-user guides) | Requirements brief as a gate, facts from a research pack or checked sources, writing style with page budgets, document-type profiles, review pass, classification at release |
+| [`contracts/persona/research/`](contracts/persona/research/) | IT researcher who answers a sharp question from primary sources and hands over a research pack | Question agreed first, source hierarchy, longlist-screen-shortlist on checked facts, missing-candidate check, fixed research-pack format, research briefs |
+| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | *Reference (1.x):* the original single-persona document author, kept for comparison. New document work uses `document-writing` + `research` | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
 
 All contracts share the same transferable core: session boot protocol, externalized memory, HANDOFF
 continuity, verification discipline, decision records. The decision-record naming follows the
@@ -174,3 +176,8 @@ Both must pass before committing contract or tooling changes.
   contract, the audience and format questions, document-set registers, comparison evidence and
   fairness, format generation, open items and the idea roadmap, document archiving (two trees, and why
   a released deliverable gets no banner).
+- [Document-writing rationale](contracts/persona/document-writing/docs/agent-contract/index.md) — what
+  the `tech-writing` field test showed, the brief gate, facts before writing, page budgets, and why
+  writing and research are two personas.
+- [Research rationale](contracts/persona/research/docs/agent-contract/index.md) — why memory steers the
+  search but never supplies facts, compatibility lists first, the fixed research-pack shape.
