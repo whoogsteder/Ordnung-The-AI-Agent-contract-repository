@@ -12,7 +12,22 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
-The next entry starts when the next contract change lands on `main`.
+### Added
+
+- **`review` persona 1.0.0** (2026-11-17). An independent reviewer for research packs, document drafts
+  and requirements briefs. It judges each artefact against its yardstick, the confirmed brief or
+  question record, and asks for the yardstick rather than reconstructing it (`review_setup.md`).
+  Independence is defined by inputs: the artefact, the yardstick, the sources and the stated reader,
+  never the author's notes. It never edits the artefact. Checklists A-F cover fit, facts re-checked at
+  the source, options (its own must-have table, a missing-candidate check, freshness, fairness), the
+  reader, open decisions and integrity (`checklists.md`). The report has three severities and a
+  verdict of pass, pass with fixes or fail (`findings.md`). It runs as a second session with any agent,
+  or as a sub-agent given its rules.
+
+### Changed
+
+- **`document-writing` and `research` 1.1.0**: the review step in `rules/verification.md` names the
+  `review` persona as the separate reviewer and says which inputs to give it.
 
 ## [1.3.0] - 2026-11-17
 

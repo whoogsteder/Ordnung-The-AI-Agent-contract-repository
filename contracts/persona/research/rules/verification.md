@@ -10,8 +10,10 @@ Applies: always. Requires: base.md.
 
 ## Review before every hand-over
 Run these checks before a pack or brief goes to the user or a writer. Report the result in one short
-block. A separate reviewer (a sub-agent or a second session) is preferred for checks 1 and 3, because
-the researcher remembers what they meant to find.
+block. A separate reviewer is preferred for checks 1 and 3, because the researcher remembers what
+they meant to find: the `review` persona, run as a second session, or as a sub-agent given its rules
+where the tool supports one. Give it the pack, the question record and the sources, and attach its
+report to the pack.
 
 1. **Fact re-check.** Re-open the source of every load-bearing fact and confirm the pack matches it:
    the value, the version or edition, and the date the source applies to.

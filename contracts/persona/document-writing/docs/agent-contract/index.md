@@ -25,7 +25,8 @@ agent starts
 `research` persona does the deep research (longlists, screening, landscape studies) and hands over a
 research pack. This persona questions the user, writes, and reviews. The two can run in separate
 sessions or projects, or the research step can run as a sub-agent where the tool supports one. The
-research pack is the contract between them.
+research pack is the contract between them. The `review` persona checks briefs, packs and drafts independently and returns a review
+report; it is the portable form of the reviewer role.
 
 ## Rationale pages
 

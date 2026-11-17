@@ -56,7 +56,8 @@ flavor; the repo keeps everyone's copy honest. Start at
 | [`contracts/persona/game-hosting/`](contracts/persona/game-hosting/) | System engineer hosting dedicated game servers for inexperienced operators | Docker Compose delivery, SteamCMD acquisition, bundled web frontend (auth + TLS enforced), usability |
 | [`contracts/persona/document-writing/`](contracts/persona/document-writing/) | Technical writer for IT documents (architecture, integration how-tos, change plans, lifecycle advisories and product selections, research briefs, end-user guides) | Requirements brief as a gate, facts from a research pack or checked sources, writing style with page budgets, document-type profiles, review pass, classification at release |
 | [`contracts/persona/research/`](contracts/persona/research/) | IT researcher who answers a sharp question from primary sources and hands over a research pack | Question agreed first, source hierarchy, longlist-screen-shortlist on checked facts, missing-candidate check, fixed research-pack format, research briefs |
-| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | *Reference (1.x):* the original single-persona document author, kept for comparison. New document work uses `document-writing` + `research` | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
+| [`contracts/persona/review/`](contracts/persona/review/) | Independent reviewer of research packs, document drafts and requirements briefs; never edits, writes a review report | Yardstick-first review, independence by inputs, facts re-checked at the source, own must-have table, missing-candidate check, reader check, three severities and a verdict; runs as a second session or a sub-agent |
+| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | *Reference (1.x):* the original single-persona document author, kept for comparison. New document work uses `document-writing` + `research` + `review` | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
 
 All contracts share the same transferable core: session boot protocol, externalized memory, HANDOFF
 continuity, verification discipline, decision records. The decision-record naming follows the
@@ -181,3 +182,5 @@ Both must pass before committing contract or tooling changes.
   writing and research are two personas.
 - [Research rationale](contracts/persona/research/docs/agent-contract/index.md) — why memory steers the
   search but never supplies facts, compatibility lists first, the fixed research-pack shape.
+- [Review rationale](contracts/persona/review/docs/agent-contract/index.md) — why review is a persona,
+  independence by inputs, the reviewer's own must-have table, the missing-candidate check.

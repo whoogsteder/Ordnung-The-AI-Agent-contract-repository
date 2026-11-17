@@ -12,8 +12,10 @@ Applies: always. Requires: base.md.
 
 ## Review before every delivered draft
 Run these four checks, in order, before handing a draft to the user, and report the results in one
-short block with the draft. A separate reviewer (a subagent or a second session) is preferred for
-checks 1 and 2, because the author reads what they meant to write rather than what is on the page.
+short block with the draft. A separate reviewer is preferred for checks 1 and 2, because the author
+reads what they meant to write rather than what is on the page: the `review` persona, run as a second
+session, or as a sub-agent given its rules where the tool supports one. Give it the draft, the
+confirmed brief, the sources and the stated reader, and attach its report to the draft.
 
 1. **Fact check.** Re-open the source of every load-bearing fact and confirm the document matches
    it. For a selection document, include the must-have check table of `rules/facts.md`.

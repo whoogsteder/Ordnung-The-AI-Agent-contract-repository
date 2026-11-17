@@ -18,6 +18,10 @@ agent starts
             |-- checkpoint STATUS at the moments in base.md; archive DONE items -> loop
 ```
 
+## Where this persona sits
+`research` hands its pack to `document-writing`. The `review` persona checks the pack before
+hand-over, against the question record and the sources.
+
 ## Rationale pages
 
 | Page | Rules it explains |
