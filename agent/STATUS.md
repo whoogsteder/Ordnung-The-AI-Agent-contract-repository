@@ -1,9 +1,17 @@
 # Agent Status
 
 ## HANDOFF
+phase: tech-writing persona v2.0.0 rework - branch feat_tech-writing-v2
+status: IN_PROGRESS
+next_action: User reviews the uncommitted tech-writing 2.0.0 changes on feat_tech-writing-v2; on approval commit, push and open a PR. Then field-test 2.0.0 by rerunning the switch selection from its requirements brief.
+files: contracts/persona/tech-writing/ (rules/, agent/, docs/agent-contract/), README.md, CHANGELOG.md, agent/REPO-MAP.md
+notes: Driver - the first real document made with v1.2.0 (a LAN switch selection) was 50 pages, hard to read, and recommended two switches that failed its own must-haves (specs written from memory, tagged unverified, recommended anyway). Rework: research/fact-check gate, confirmed requirements brief before drafting, writing style + page budget, document-type profiles, governance demoted to release time. Core sections untouched (one-commit rule); the core frequency guard is raised with the user as a cross-persona proposal, not changed here.
+Checks 2026-11-17 on the working tree: check_sync OK; pytest 14 passed (uv run --with pytest). Nothing committed yet.
+last_update: 2026-11-17T19:45
+
+## Previous release record
 phase: contracts-v1.2.0 released - the Document archiving rule is shipped and tagged
 status: DONE
-next_action: Nothing pending. The empty ## [Unreleased] on top of CHANGELOG.md awaits the next contract change; releasing that work is the same release act (versioned section, then an annotated tag on main).
 files: agent/STATUS.md
 notes: Release record - the annotated tag contracts-v1.2.0 is tag object 0846341 pointing at commit 7a97bef, the merge commit of PR #7 (the release act) on main, pushed to origin. The change it ships is the Document archiving rule: PR #6, merged as 1315da7, branch commit f9abafe. All five manifests read 1.2.0. For comparison, contracts-v1.1.0 is tag object 963dfe8 at commit e848438.
 last_update: 2026-11-10T11:52:00

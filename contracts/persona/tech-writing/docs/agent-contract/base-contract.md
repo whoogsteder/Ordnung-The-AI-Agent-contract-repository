@@ -11,7 +11,7 @@ text: can this reader decide, and can they see what is undecided?
 Naming the audience changes the vocabulary. An IT manager needs the decision, the cost, the risk, the
 timeline and the exit path. An IT administrator needs the configuration, the steps, the checks and
 the rollback. A document that addresses both without separating the layers serves neither, which is
-why `rules/advisories.md` permits dual audiences only with a decision layer and an implementation
+why the 1.x `rules/advisories.md` permitted dual audiences only with a decision layer and an implementation
 layer.
 
 ## Why the questions are asked, never guessed

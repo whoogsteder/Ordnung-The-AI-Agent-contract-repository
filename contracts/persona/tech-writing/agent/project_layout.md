@@ -16,7 +16,7 @@ Use these files to externalize memory from your context. These exist in every pr
 [project root]/
 |-- agent/                 # AI agent externalized memory
 |   |-- STATUS.md          # Session handoff + state (single source for continuity)
-|   |-- REPO-MAP.md        # Index + registers: documents, shared facts, terminology, sources, open items
+|   |-- REPO-MAP.md        # Index + registers: documents, sources, open decisions (shared facts, terminology, distribution when needed)
 |   `-- bootstrap.md       # New project bootstrap protocol
 |-- rules/                 # Agent rules: base.md always; one module per document type in use
 |-- docs/                  # Human-facing documentation about the project
@@ -25,14 +25,12 @@ Use these files to externalize memory from your context. These exist in every pr
 |   |-- guides/            # How-to documentation (read on demand)
 |   |-- templates/         # docs/templates/X.md pairs with templates/X
 |   `-- scripts/           # docs/scripts/X.md pairs with scripts/X.py
-|-- documents/             # The deliverables, by type (see rules/documents.md)
-|   |-- designs/
-|   |-- advisories/
-|   |-- comparisons/
-|   |-- briefs/
-|   `-- archive/           # Superseded deliverables, mirrored by type (documents/archive/designs/014-design-x-v1.0.md); released files stay immutable - no banner, the register carries the record
-|-- distribution/          # Per-recipient release packages, one dir per recipient (not indexed)
-|-- restricted/            # Restricted-tier material: never exported, git-ignored by default
+|-- briefs/                # Confirmed requirements briefs, one per document: <doc-id>-brief.md (rules/requirements.md)
+|-- documents/             # The deliverables, one subdirectory per type in use (rules/documents.md, Naming)
+|   |-- <type>/            # e.g. selection/, architecture/, howto/ - created when the first document of that type starts
+|   `-- archive/           # Superseded deliverables, mirrored by type (documents/archive/selection/014-selection-x-v1.0.md); released files stay immutable - no banner, the register carries the record
+|-- distribution/          # Per-recipient release packages, created at first send-out (not indexed)
+|-- restricted/            # Restricted-tier material, only when the set has any: never exported, git-ignored
 |-- templates/             # Document skeletons and style references (reference.docx, md skeletons)
 |-- assets/figures/        # Figure sources (mermaid/plantuml/dot) + rendered images, named <doc-id>-<nn>
 |-- sources/               # Evidence: saved vendor pages, release notes, exports, benchmark runs

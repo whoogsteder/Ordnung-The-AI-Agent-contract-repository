@@ -1,48 +1,30 @@
 # Decision Records <!-- slot: decision-records -->
 Applies: when the project records decisions in `docs/decisions/`. Requires: base.md.
 
-Use for choices that outlive a single task: architecture and product choices inside a design, the
-output format and toolchain, comparison criteria and their weights, terminology, the structure of the
-document set, the template set, the classification of the set and every widening of a document's
-classification, and any widening of what the agent may do without asking.
+A decision record captures a choice that outlives one document, so that later documents and agents
+do not reopen it by accident.
 
-- Location: `docs/decisions/NNN-<topic>.md` (zero-padded, e.g. `001-output-format-and-toolchain.md`).
-- Each record has: Context / Decision / Consequences / Status.
-- Statuses:
-  - `PROPOSED` - open, not yet decided.
-  - `ACCEPTED` - decided; safe to build on.
-  - `CLOSED` - rejected or superseded (state why, and by what).
+## When to write one
+- Choices about the document set: output format and toolchain, naming, templates, set classification.
+- Choices that several documents depend on: a vendor shortlist constraint, comparison weights used
+  across documents, a standing assumption the user signed off as policy.
+- Every widening of a classification, written before the wider label is applied
+  (`rules/classification.md`).
+A decision that lives inside one document (the recommendation itself, a choice between two designs)
+belongs in that document, not in a record.
 
-## Rule
-- A record may stay `PROPOSED` while work proceeds, as long as no document depends on it.
-- If a document depends on a `PROPOSED` record: drive it to `ACCEPTED`/`CLOSED` first, or halt that
-  document. Never release a design against an undecided architecture choice, and never release a
-  comparison against undecided criteria.
-- Cite decisions as `DR-NNN decision N`; both must exist. A `CLOSED` record is cited only by other
-  records and history files.
-- A document that contradicts an `ACCEPTED` record is a finding: fix the document, or supersede the
+## Shape
+- Location: `docs/decisions/NNN-<topic>.md`, zero-padded.
+- Sections: Context / Decision / Consequences / Status. Keep it under a page.
+- Status: `PROPOSED` (not yet decided), `ACCEPTED` (safe to build on), `CLOSED` (rejected or
+  superseded; say by what).
+- Consequences name where the decision is applied (template, register, generator) so it can be kept
+  true.
+
+## Rules
+- A document that depends on a `PROPOSED` record may be drafted, but not released.
+- A document that contradicts an `ACCEPTED` record is wrong: fix the document, or supersede the
   record. Never leave both standing.
-
-## Enforcement
-- Consequences state how the decision is kept true in practice: where it is encoded (template,
-  register in REPO-MAP, generator script, style guide) or `- Enforced by (planned, <task-id>): <what>`
-  while that mechanism does not exist yet.
-- An `ACCEPTED` record needs at least one concrete entry. Records without one go on a debt list in
-  REPO-MAP; the list may only shrink.
-- Changing an accepted decision means updating its enforcement points and every document citing it,
-  in the same change; documents that silently disagree with a DR are findings (see
-  `rules/verification.md`).
-- A widening of a classification is written as a record **before** the wider label is applied
-  (`rules/classification.md`). The record names the new tier, the recipient and its basis, what the
-  content scan checked, the date and who widened it. There is no approval gate: the record is the
-  accountability, and a widening with no record is the finding.
-
-## DR triggers (per module)
-- `rules/documents.md`: naming scheme, document-set structure, template set, lifecycle states.
-- `rules/output_formats.md`: output format, export toolchain, style reference document.
-- `rules/comparisons.md`: criteria list and weights, price basis, benchmark harness.
-- `rules/advisories.md`: the basis of a recommendation, the urgency label set.
-- `rules/open_questions.md`: any assumption the user signs off as standing policy.
-- `rules/classification.md`: widening a classification (recorded before the label is applied), the
-  named-recipient list for `Restricted`, the basis for a `Client-shareable` set, an export-control
-  marker.
+- Changing an accepted decision updates every document that relies on it, in the same change.
+- In a document body, refer to a decision by what it says ("the agreed four-vendor shortlist"), not by
+  its number (`rules/writing.md`).

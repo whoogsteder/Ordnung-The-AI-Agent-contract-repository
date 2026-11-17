@@ -1,58 +1,44 @@
-# Open items and ambiguity <!-- persona: module header -->
-Applies: always, in every document. Requires: base.md.
+# Open decisions and assumptions <!-- persona: module header -->
+Applies: every document. Requires: base.md, `rules/requirements.md`.
 
-## The rule
-The reader must never have to guess what the document does not know, and must never discover later
-that a stated "fact" was an assumption. Ambiguity is permitted only when it is named, numbered and
-owned. Silence about a gap is a defect, like a broken link.
+The reader must never have to guess what the document does not know, and must never find out later
+that a stated fact was an assumption. A gap is allowed when it is named and has an owner.
 
-## Open item register
-Every gap, assumption and undecided choice becomes an entry, in the document's Open items section
-and in the register kept in `agent/REPO-MAP.md`:
+## What belongs in the register
+Keep one register in `agent/REPO-MAP.md`, copied into the document's annex:
 
-`OQ-NNN | question | status | impact | owner | needed by`
+`OQ-NNN | question | status | what changes with the answer | owner | needed by`
 
-- `OPEN` - undecided; nobody has chosen yet.
-- `ASSUMED` - work proceeds on a stated assumption; sign-off outstanding.
-- `DECIDED` - settled; cite the decision record (`DR-NNN`) that settled it.
-- `NOT-APPLICABLE` - raised and dismissed, with the reason recorded.
+Statuses: `OPEN` (nobody has decided), `ASSUMED` (work proceeds on a stated assumption awaiting
+sign-off), `DECIDED` (settled, with date and who decided), `NOT-APPLICABLE` (dismissed, with the
+reason).
+
+Only two kinds of entry belong here:
+- **Decisions a person must take:** the user, a client, a manager, a supplier.
+- **Facts only a person can supply:** a site survey, an internal price, a configuration export.
+
+Lookups the agent can do itself (datasheets, lifecycle pages, compatibility lists, standards) are not
+open items. Do them (`rules/research.md`).
 
 ## Assumptions
-- An assumption is written down as an assumption, in the register, with the impact if it is wrong,
-  and said to the user. An assumption that appears only as prose ("assuming the existing firewall
-  supports this") is a finding.
-- Load-bearing assumptions - the ones that change the recommendation if false - are named at the top
-  of the document, not in a footnote.
+- Write an assumption down as an assumption, with what happens if it is wrong, and tell the user.
+- Load-bearing assumptions, the ones that would change the recommendation if wrong, are stated in plain
+  words on the first page.
 
-## Load-bearing open items
-- An item is load-bearing when the recommendation, the design, the scope, the cost or the schedule
-  depends on its answer.
-- If a load-bearing item is OPEN: ask before drafting, or deliver the document labelled
-  `not decision-ready for <topic>`, naming the item in its first screen. Never bury it, and never
-  answer it on the reader's behalf.
-- Say who decides, by when, and what happens if nobody decides.
+## In the body
+- The first page names the open decisions that matter, in plain words, with who answers them and by
+  when. Usually that is between one and five. The rest stay in the annex register.
+- Refer to an open decision by what it is about ("the 25GbE question"), not by its id.
+- If a load-bearing decision is open, either get it answered before drafting, or write the
+  recommendation per branch (`rules/requirements.md`). Never answer it on the reader's behalf.
 
-## The audience question
-- The label is never missing: a draft is `Internal` by default (`rules/classification.md`). Labelling
-  is therefore not the open item - an unclear audience at release is.
-- A document about to be `released` whose audience is unknown is a load-bearing open item: name it on
-  the first screen, and do not release.
-- A `Client-shareable` document with no recorded basis, or a `Restricted` document with no named
-  recipients, is an open item. Record the basis when it exists; never invent one, and never treat the
-  gap as a block on drafting.
+## Wording
+- Replace vague wording with the number, the closed list, or an open decision: "as needed", "etc.",
+  "several", "various", "where appropriate", "should be considered", "best practice".
+- Delete "obviously", "clearly", "simply", then check that the step they hid is written down.
+- Every action names an owner and a date. "The team will" is not an owner.
 
-## Wording that is banned, and what replaces it
-- "as needed", "etc.", "and so on", "several", "many", "various", "should be considered", "where
-  appropriate", "best practice dictates": replace with the number, the closed list, the named
-  practice plus its source, or an OQ entry.
-- "obviously", "clearly", "trivially", "simply": delete the word, then check that the omitted step
-  is actually in the document.
-- "TBD", "TODO", `<placeholder>`, `[...]` in a deliverable: every one maps to a numbered open item;
-  a bare TBD is a finding.
-- Every action names an owner and a date; "the team will" is not an owner.
-
-## Ambiguity audit (before release)
-- Search the document for the banned wording and for placeholders; map each hit to an OQ, or fix it.
-- Report the result with the document: "Open items: 3 (1 load-bearing)" or "Open items: none".
-- A document released with load-bearing OPEN items needs the user's explicit acceptance recorded in
-  `agent/STATUS.md`.
+## Before delivery
+Report with the draft: "Open decisions: 3 (1 changes the recommendation). Assumptions: 2." A document
+released while a decision that changes the recommendation is still open needs the user's explicit
+acceptance, recorded in `agent/STATUS.md`.

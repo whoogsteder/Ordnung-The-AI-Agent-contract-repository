@@ -30,11 +30,11 @@
 - Same agent/, docs/agent-contract/, licenses/ shape as iac persona; ADRs kept (image variant/frontend choices warrant records) ✅
 - `contracts/persona/game-hosting/docs/agent-contract/` — base-contract, frontend-security, verification-and-upstream ✅
 
-## contracts/persona/tech-writing/ (persona: professional document authoring) ✅
-- `contracts/persona/tech-writing/rules/` — base, verification, classification, documents, open_questions, output_formats, comparisons, advisories, visuals, dr ✅
-- Same agent/ shape as iac persona (bootstrap, project_layout, STATUS template, ruleset manifest v1.2.0); dr.md carries the shared `slot: decision-records` heading like administrative ✅
+## contracts/persona/tech-writing/ (persona: IT document research and writing, v2.0.0) ✅
+- `contracts/persona/tech-writing/rules/` — base, requirements, research, writing, doc_types, documents, open_questions, verification, classification, comparisons, output_formats, visuals, dr ✅
+- Same agent/ shape as iac persona (bootstrap, project_layout, STATUS template, ruleset manifest v2.0.0 while the other manifests read 1.2.0); dr.md carries the shared `slot: decision-records` heading like administrative ✅
 - `contracts/persona/tech-writing/licenses/` — kept for the code a project ships (generator/export scripts); documents carry a classification tier and distribution statement instead of a license (v1.1.0, 2026-11-09) ✅
-- `contracts/persona/tech-writing/docs/agent-contract/` — base-contract, document-set-and-memory, comparisons-and-advisories, format-and-visuals, open-items-and-ideas, classification-and-distribution ✅
+- `contracts/persona/tech-writing/docs/agent-contract/` — research-and-writing (2.0 rationale), base-contract, document-set-and-memory, comparisons-and-advisories, format-and-visuals, open-items-and-ideas, classification-and-distribution ✅
 
 ## tools/ ✅
 - `tools/check_sync` — core/slot/persona seam checker: structure, cross-persona core drift, root dogfood copy, manifest presence + SemVer (stdlib Python)

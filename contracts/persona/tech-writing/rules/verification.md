@@ -1,55 +1,46 @@
-# Verification <!-- persona: module header -->
+# Verification and review <!-- persona: module header -->
 Applies: always. Requires: base.md.
 
-## Checks
-- A check exercises something outside the check file. Never assert a figure, table or claim that
-  is defined only inside the check.
-- Where generators exist, checks are commands (render, extract text, compare). Where none exists
-  yet, the check is a stated procedure: input document, steps or command, expected result.
-- A task with a checkable completion criterion is done when its check passes.
+## Claims
+<!-- persona: evidence vocabulary -->
+- Never write "verified", "confirmed", "current" or "supported" about an external fact without a
+  source, product version and retrieval date behind it.
+- A fact with no traceable source is either checked (`rules/research.md`) or written as what it is:
+  "according to the user", "not yet confirmed". If it is load-bearing it may not stay unconfirmed.
+- Never invent a source, citation, figure, feature or section to make a reference resolve. Fix the
+  reference, or ask the user.
 
-## Claims <!-- persona: evidence vocabulary -->
-- Never write "verified", "current", "confirmed" or "supported" about an external fact (a product
-  feature, a version, a price, a benchmark, a clause of a standard) without the evidence record:
-  source, product and version, retrieval date, result.
-- Prefer a committed source snapshot (saved page, release note, exported table) over a bare URL:
-  links rot, snapshots do not. Keep snapshots under `sources/` and cite the file, not only the URL.
-- A figure, number or quotation with no traceable source is labelled `unverified` in the body text,
-  not softened into an adjective.
-- Vendor-authored material is cited as a vendor claim; independent measurement is cited as
-  measurement. Never mix the two in one sentence, and never let a marketing page stand in for a
-  measurement.
+## Review before every delivered draft
+Run these four checks, in order, before handing a draft to the user, and report the results in one
+short block with the draft. A separate reviewer (a subagent or a second session) is preferred for
+checks 1 and 2, because the author reads what they meant to write rather than what is on the page.
 
-## References
-- Never create a source, citation, figure, product feature or chapter to make a dangling reference
-  resolve. Fix the reference, or ask the user.
-- Before changing a documented decision, re-check everything that cites it (documents, comparison
-  matrices, registers, templates).
-- Keep a document-integrity pass: cross-references and anchors resolve, figure files exist, every
-  citation appears in the Sources list, shared facts match across the set, terminology follows the
-  register.
+1. **Fact check.** Re-open the source of every load-bearing fact and confirm the document matches
+   it. For a selection document, include the must-have check table of `rules/research.md`.
+2. **Reader check.** Read the document as its stated reader, with no prior context. After the first
+   page, can you name the decision, the recommendation and the open decisions? List every term you
+   had to look up and every sentence you had to read twice. Fix them.
+3. **Style scan** (`rules/writing.md`). Body page count against budget. In the body: no internal ids,
+   rule names, placeholders or agent narration. No sentences over 30 words.
+4. **Integrity.** Cross-references resolve, figures exist and are referred to, every cited source is in
+   the source list, facts shared with other documents in the set agree.
 
-## Classification gate
-- Presence: every document header carries `classification:` and its distribution statement, and every
-  export carries it (footer on every page, banner at the top) - verified in the round-trip below.
-- Consistency: the set carries the most restrictive label of any member. A document labelled lower
-  than a document it quotes is a finding, and so is a derivative labelled more open than its parent.
-- Content scan for the release tier (`rules/classification.md`): reported with the release as
-  `Content scan for <tier>: clean`, or as the list of hits.
-- The distribution register matches what was sent: a send with no register entry is a finding, and so
-  is a widening with no decision record.
+Example report:
+`Review: facts 14/14 checked; must-have check pass (2 options x 12 must-haves); reader check - 3 terms
+defined, 2 sentences split; body 8 pages (budget 8); integrity clean.`
 
-## Consistency across the set
-- A fact used in more than one document (product name, version, price, date, capacity figure,
-  acronym) is a shared fact: it has one register entry, and a change to it updates every document
-  citing it in the same change.
-- Restating a figure for a new document is a computation from the register, never a copy of an
-  earlier document's summary.
+## Checks are real
+- Where scripts exist (export, text extraction, id scan, link check), the check is the command and its
+  output. Where none exists, it is a stated procedure: input, steps, expected result.
+- A check exercises the document, not itself. A tidy table does not prove its numbers are current.
+- Mechanical checks are welcome. Offer a small script for any check that will be repeated, for example
+  a scan of the body for ids and long sentences, or a cross-reference check across a document set.
 
-## Verification ladder, cheapest first
-Static (header, naming, structure, links present) -> internal consistency (tables match the prose,
-contents match the headings, shared facts agree across documents) -> source spot-check (each
-load-bearing claim traced to its cited source) -> render round-trip (exported .docx/.pdf text
-matches the source) -> external confirmation (vendor, lab, pilot: opt-in, never inferred). A tier
-never certifies what only a higher tier can show: a tidy table does not prove the numbers are
-current.
+## Consistency across a set
+A fact used in more than one document (product, version, price, date, capacity) is entered once in the
+shared-facts register and every document uses that value. When it changes, every document citing it
+changes in the same edit.
+
+## Release checks
+Releasing or sending a document out adds the label checks of `rules/classification.md` and an export
+round-trip (`rules/output_formats.md`).

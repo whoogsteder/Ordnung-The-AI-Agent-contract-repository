@@ -1,67 +1,45 @@
 # Product and feature comparisons <!-- persona: module header -->
-Applies: when comparing products, editions, features, standards or vendors. Requires: base.md,
-`rules/verification.md`.
+Applies: when comparing products, editions, vendors or approaches. Requires: base.md,
+`rules/research.md`, `rules/writing.md`.
 
-## Declare the question first
-Before any matrix, state in the first screen: the decision being supported, who decides it, by when,
-and the constraints that bind (budget, existing stack, skills, licensing, compliance, timeline). A
-comparison without a question is a catalogue.
+Finding and screening the candidates is covered in `rules/research.md`. This module covers comparing
+the shortlist fairly and turning it into a recommendation.
+
+## The question first
+State in the first page: the decision, who decides, by when, and the constraints that bind it (budget,
+existing stack, skills, licensing, supplier, timeline). A comparison without a question is a
+catalogue.
 
 ## Criteria
-- List the criteria before scoring them, and say where each came from: the reader's question, a
-  standard, the RFP, a stated constraint.
-- Give every criterion a weight, or state "all criteria equal". When weights drive the
-  recommendation, the weights are a decision record (`rules/dr.md`).
-- Keep criteria countable: "supports S/MIME", not "good security". Split composite criteria
-  ("management interface") into rows that can be checked.
-- Separate must-have from nice-to-have. A product failing a must-have is out, and the table says so.
-
-## Cells
-- Every cell cites a source id and names the product edition, version and retrieval date; a shared
-  table note may cover one date for the whole table.
-- `unknown` is a legal cell value. Blank, guessed and "probably" are not. An `unknown` on a
-  must-have criterion is a finding to close, not a footnote.
-- Cells resting on vendor marketing are marked `vendor claim`.
+- Must-haves come from the confirmed brief and are applied as a screen before scoring
+  (`rules/research.md`). They are not scored.
+- Score only what separates the shortlisted options. Keep criteria countable ("supports PFC per
+  queue", not "good storage support") and few. Three to six criteria is usually enough.
+- Give each criterion a weight, or say they are equal. Agree the weights with the user before
+  scoring, not after.
 
 ## Compare like for like
-- Same edition, same deployment model (on-premises, cloud, hybrid), same unit (per user, per core,
-  per GB, per instance), same price basis (list or street, with or without support, first year or
-  steady state, currency and exchange date).
-- When editions differ across options, state the assumption and the reason in the table note.
+Same edition, same deployment model, same unit, same price basis (list or quoted, with or without
+support, first year or over the horizon). When options differ, say so in a table note.
 
-## Fairness pass
-- Same depth for every option: no option described from its marketing and another from its bug
-  tracker.
-- Steelman each option: state the conditions under which it wins. If an option wins on nothing, the
-  criteria are wrong before the writing is.
+## Fairness
+- Describe every option at the same depth and from the same kind of source.
+- For each shortlisted option, state when it would be the right choice. If an option wins on nothing,
+  it should not be on the shortlist.
 - Name what would change the recommendation.
 
-## Verdict for the reader
-- Answer fit-for-purpose, not "best": what it costs to run, who operates it, the licensing and exit
-  path, the migration effort, the risks, and the shape of total cost over the stated horizon.
-- A tick matrix with no narrative is a finding; a verdict with no conditions is a finding.
-- A recommendation that reverses an accepted DR needs a new DR superseding it.
+## The verdict
+- Answer fit for purpose, not "best": what it costs over the horizon, who operates it, the migration
+  effort, the licensing and exit path, the risks.
+- Make a recommendation. If an open decision changes the answer, give the recommendation per branch
+  ("if 10GbE: X; if 25GbE: Y") rather than none.
+- A matrix with no narrative is not a verdict. A verdict with no conditions is not one either.
 
-## Expiry
-- Every comparison carries "valid as of <date>" and its version basis. Re-check the sources before
-  reissuing: a stale comparison is superseded, never edited in place.
-- Benchmarks: state harness, workload, hardware and who ran it. Never compare numbers from two
-  harnesses in one row.
-
-## Visuals
-Feature matrix as a table; scored comparison as a weighted table plus a bar summary with the axes
-and weights named beside the figure; price over time as a graph; deployment-shape differences as a
-diagram. See `rules/visuals.md`.
-
-## Legal hygiene
-Product and vendor names as registered; no fabricated benchmarks; every third-party screenshot, logo,
-table or quotation carries a `rights:` entry in the source register before shipping, because
-attribution obligations travel with the comparison at every tier (see `rules/classification.md`,
-Third-party rights).
-
-## Classification
-A comparison is `Internal` by default: the vendor claims, your weights and your price basis are your
-working papers. Sharing one with a client requires the fairness pass complete. Material bound by an
-NDA - a vendor's roadmap, a partner's price list - makes the comparison `Restricted` with named
-recipients, and a quotation from it inside a shared comparison inherits that tier
-(`rules/classification.md`).
+## Presentation
+- In the body: a short shortlist table (options against the criteria that matter) and the reasoning
+  in prose.
+- In an annex: the full longlist with the reason each option was dropped, the must-have check with
+  sources, and any detailed matrix.
+- Every comparison states "valid as of <date>". Re-check the sources before reissuing it.
+- Product and vendor names as registered. No made-up benchmarks. Never compare numbers from two
+  different test setups in one row.

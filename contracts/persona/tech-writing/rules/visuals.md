@@ -3,12 +3,9 @@ Applies: every document that carries data, structure, comparison or flow. Requir
 
 ## The visual pass
 Every document gets one pass that asks: where would a figure, graph or table carry the information
-better than the sentence does? Record the answer in the draft as a placeholder line:
-
-`FIG-NN: <what it shows> -- <why it helps> -- <made | to-make>`
-
-A to-make figure is an open item (OQ-NNN) until it exists. Naming the spot is allowed; leaving the
-need unnamed is not.
+better than the sentences do? Keep the answer in the working notes (`agent/STATUS.md` or the outline),
+never as a placeholder in the document text. A figure that is still to be made is a task, not a line in
+the draft.
 
 ## What suits what
 - **Table:** the reader compares more than two items on more than two attributes, or looks values up

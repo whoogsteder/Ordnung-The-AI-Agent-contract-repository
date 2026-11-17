@@ -49,7 +49,7 @@ Not built - candidates, each with its own trigger and DR:
 | Security advisories | `security_advisory.md` | CVE/CVSS fields, affected version ranges, workarounds, disclosure timing |
 | Questionnaires | `vendor_questionnaires.md` | RFP/RFI/security/TPA answer library with source and date, consistent across questionnaires |
 | Cost and capacity models | `cost_models.md` | TCO and capacity as a small script with inputs in one file: computed, not typed |
-| Meetings | `meeting_docs.md` | Agenda, decision log, actions with owners and dates (grows out of advisories.md) |
+| Meetings | `meeting_docs.md` | Agenda, decision log, actions with owners and dates (grows out of the advisory profile in doc_types.md) |
 | Docs-as-code gates | `doc_as_code.md` | CI: style lints, link and anchor checks, header-field checks, figure-exists, export build |
 | Content governance | `content_governance.md` | Owner per document, review and expiry dates, sign-off matrix, deprecation policy |
 | Reader profiles | `reader_profiles.md` | Named personas (IT manager, sysadmin, CISO, procurement): their questions, vocabulary, what they skip |

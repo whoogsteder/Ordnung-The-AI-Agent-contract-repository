@@ -1,6 +1,6 @@
 # Comparisons, advisories and the evidence ladder
 
-Companion to `rules/comparisons.md`, `rules/advisories.md`, `rules/verification.md` and
+Companion to `rules/comparisons.md`, `rules/doc_types.md` (formerly `rules/advisories.md`), `rules/verification.md` and
 `rules/dr.md`. Start at [index.md](index.md).
 
 ## The failure this pair exists for

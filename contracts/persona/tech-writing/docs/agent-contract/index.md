@@ -53,10 +53,11 @@ quietly disagrees with chapter 1.
 
 | Page | Rules it explains |
 |---|---|
+| [research-and-writing.md](research-and-writing.md) | `rules/requirements.md`, `rules/research.md`, `rules/writing.md`, `rules/doc_types.md`, the review step in `rules/verification.md` - what the 1.x field test showed, why facts are checked before they are written, why the brief is a gate, why the body has a page budget and no internal ids. **Read this first: it explains the 2.0 balance.** Some 1.x rationale pages below describe rules that 2.0 shortened. |
 | [base-contract.md](base-contract.md) | `rules/base.md` - the decision-support role, why the format and audience questions are mandatory, rule-file protection, document archiving and why a released deliverable gets no banner |
 | [classification-and-distribution.md](classification-and-distribution.md) | `rules/classification.md`, the label fields in `rules/documents.md`, `rules/dr.md`, `agent/bootstrap.md` - the four tiers and the statements, the TLP:2022 mapping, why a widening is recorded before it acts, and what remains of licensing |
 | [document-set-and-memory.md](document-set-and-memory.md) | `rules/documents.md`, `agent/bootstrap.md`, `agent/project_layout.md` - lifecycle states, and why multi-chapter work is tracked in registers instead of context |
-| [comparisons-and-advisories.md](comparisons-and-advisories.md) | `rules/comparisons.md`, `rules/advisories.md`, `rules/verification.md`, `rules/dr.md` - evidence for external claims, fairness pass, why a tick matrix is not a verdict |
+| [comparisons-and-advisories.md](comparisons-and-advisories.md) | `rules/comparisons.md`, `rules/doc_types.md` (advisory profile), `rules/verification.md`, `rules/dr.md` - evidence for external claims, fairness pass, why a tick matrix is not a verdict |
 | [format-and-visuals.md](format-and-visuals.md) | `rules/output_formats.md`, `rules/visuals.md` - why the agent may not pick a format, why generated output is code, when a figure beats a sentence |
 | [open-items-and-ideas.md](open-items-and-ideas.md) | `rules/open_questions.md` - the no-silent-assumptions rule, and the list of further ideas this persona could grow into |
 

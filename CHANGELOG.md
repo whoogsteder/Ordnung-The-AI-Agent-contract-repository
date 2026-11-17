@@ -12,7 +12,49 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
-The next entry starts when the next contract change lands on `main`.
+### Changed
+
+- **`tech-writing` persona 2.0.0** (2026-11-17) — rebalanced after a field test in which a v1.2.0
+  product-selection document ran to about 50 pages, was hard to read, and recommended two models that
+  failed its own must-haves. Priorities are now explicit: right, then usable, then traceable. The
+  rationale is in `contracts/persona/tech-writing/docs/agent-contract/research-and-writing.md`.
+  Major bump: the workflow gains a brief gate and a review step.
+
+### Added (tech-writing)
+
+- `rules/requirements.md` — the questioning session and a one-to-two-page requirements brief that the
+  user confirms before drafting. Changed inputs are rewritten into the document, not appended.
+- `rules/research.md` — load-bearing facts are checked against primary sources before they are
+  written, never taken from memory. The longlist is built from current portfolios, compatibility lists
+  and reference designs. Shortlisting requires checked must-haves. A must-have check table comes with
+  every recommendation. Agent-owned lookups are not open items.
+- `rules/writing.md` — body and annex layers, a page budget agreed in the brief, a plain-language
+  sentence style, no internal ids, rule names, placeholders or agent narration in the body, and
+  rewrite-not-amend.
+- `rules/doc_types.md` — profiles (purpose, reader, questions, skeleton, page budget, checks) for
+  architecture, integration how-to, change/implementation plan, lifecycle advisory and selection,
+  research brief, end-user guide, and advisory/memo.
+
+### Changed (tech-writing)
+
+- `rules/verification.md` gains a four-step review before every delivered draft (fact, reader, style,
+  integrity), preferably run by a separate reviewer.
+- `rules/open_questions.md` holds only decisions and facts that a person must supply. The body names
+  open decisions in plain words.
+- `rules/comparisons.md` focuses on comparing a screened shortlist and gives a recommendation per
+  branch when an open decision splits the answer.
+- `rules/classification.md` is shortened. Drafts carry one label line, and the content scan and
+  distribution log apply at release or send-out.
+- `rules/documents.md` adds the workflow and the `brief` state, slims the header to eight fields,
+  starts registers only when needed, and renews the type list.
+- `rules/dr.md` and `rules/visuals.md` are shortened. Figure placeholders stay out of the draft text.
+- The `base.md` role and persona sections, `agent/bootstrap.md`, `agent/project_layout.md` and the
+  manifest are rewritten to match.
+
+### Removed (tech-writing)
+
+- `rules/advisories.md` — its skeletons, urgency labels and length guidance moved into
+  `rules/doc_types.md`.
 
 ## [1.2.0] - 2026-11-10
 
