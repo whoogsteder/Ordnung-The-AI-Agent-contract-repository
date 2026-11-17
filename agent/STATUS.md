@@ -3,16 +3,17 @@
 ## HANDOFF
 phase: contracts 1.3.0 - core checkpoint rule + digest, then new personas document-writing and research (branch feat_core-checkpoint-and-doc-personas)
 status: IN_PROGRESS
-next_action: User reviews branch feat_core-checkpoint-and-doc-personas (2 commits, local only); on approval push and open a PR. Then field-test document-writing + research on the LAN switch selection.
+next_action: User reviews and merges PR #9 (https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/pull/9); then the release act for 1.3.0 (CHANGELOG versioned section + annotated tag contracts-v1.3.0 on main), then field-test research -> document-writing on the LAN switch selection.
 files: contracts/persona/document-writing/, contracts/persona/research/, contracts/persona/*/AGENTS.md, contracts/persona/*/rules/base.md, CHANGELOG.md, README.md, agent/REPO-MAP.md
-notes: Commit 53494d2 = core checkpoint rule + digests (manifests 1.3.0). Second commit = the two new personas (1.0.0). tech-writing stays as the 1.x reference persona (core-synced only); its 2.0 rework lives on feat_tech-writing-v2 (0477e3e) and is not to be merged. Nothing pushed. Gates 2026-11-17: check_sync OK, pytest 14 passed. Previous release record (contracts-v1.2.0) is in STATUS.archive.md.
-last_update: 2026-11-17T21:00
+notes: Commit 53494d2 = core checkpoint rule + digests (manifests 1.3.0). Second commit = the two new personas (1.0.0). tech-writing stays as the 1.x reference persona (core-synced only); its 2.0 rework lives on feat_tech-writing-v2 (0477e3e) and is not to be merged. Branch pushed, PR #9 open, mergeable; the repo has no CI checks, gates are run locally. Gates 2026-11-17: check_sync OK, pytest 14 passed. Previous release record (contracts-v1.2.0) is in STATUS.archive.md.
+last_update: 2026-11-17T21:15
 
 ## Active Tasks
 - [x] document-writing persona 1.0.0
 - [x] research persona 1.0.0
 - [x] README table, REPO-MAP, CHANGELOG; check_sync + pytest
-- [ ] User review, push, PR
+- [x] Push + PR #9
+- [ ] User review and merge; release act contracts-v1.3.0
 
 ## Notes
 - Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.
