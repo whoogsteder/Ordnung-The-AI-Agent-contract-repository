@@ -12,7 +12,12 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
-All existing manifests read `version: 1.3.0`.
+The next entry starts when the next contract change lands on `main`.
+
+## [1.3.0] - 2026-11-17
+
+Tagged `contracts-v1.3.0`. The four existing persona manifests and the root dogfood manifest read
+`version: 1.3.0`. The two new personas, `document-writing` and `research`, start at `version: 1.0.0`.
 
 ### Changed
 
@@ -189,7 +194,8 @@ state of the contract set as published on 2026-10-28.
   README landing page; the `agent/REPO-MAP.md` + `agent/STATUS.md` memory pair with the archiving
   rule.
 
-[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.2.0...HEAD
+[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.3.0...HEAD
+[1.3.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.2.0...contracts-v1.3.0
 [1.2.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.1.0...contracts-v1.2.0
 [1.1.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/03851d8...contracts-v1.1.0
 [1.0.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/commits/03851d8
