@@ -52,7 +52,7 @@ You are starting from scratch. Do the following IN ORDER before any implementati
    - Create DRs under `docs/decisions/` and follow the process in `rules/dr.md`.
    - Put every gap and undecided choice into the open-items register per `rules/open_questions.md`.
 
-6. **Offer a memory-freshness check (optional, project-written).** The frequency guard in
+6. **Offer a memory-freshness check (optional, project-written).** The checkpoint fallback in
    `rules/base.md` is enforceable from the `last_update` field alone; this step only makes it
    one command instead of one judgment. Ask the user whether to add it, and build it only on a
    yes: write a small script that prints whether `agent/STATUS.md` was written after the

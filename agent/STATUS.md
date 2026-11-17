@@ -1,16 +1,17 @@
 # Agent Status
 
 ## HANDOFF
-phase: contracts-v1.2.0 released - the Document archiving rule is shipped and tagged
-status: DONE
-next_action: Nothing pending. The empty ## [Unreleased] on top of CHANGELOG.md awaits the next contract change; releasing that work is the same release act (versioned section, then an annotated tag on main).
-files: agent/STATUS.md
-notes: Release record - the annotated tag contracts-v1.2.0 is tag object 0846341 pointing at commit 7a97bef, the merge commit of PR #7 (the release act) on main, pushed to origin. The change it ships is the Document archiving rule: PR #6, merged as 1315da7, branch commit f9abafe. All five manifests read 1.2.0. For comparison, contracts-v1.1.0 is tag object 963dfe8 at commit e848438.
-last_update: 2026-11-10T11:52:00
+phase: contracts 1.3.0 - core checkpoint rule + digest, then new personas document-writing and research (branch feat_core-checkpoint-and-doc-personas)
+status: IN_PROGRESS
+next_action: Build contracts/persona/document-writing/ from the tech-writing 2.0 work (branch feat_tech-writing-v2, commit 0477e3e), then contracts/persona/research/, then README/REPO-MAP/CHANGELOG, check_sync + pytest, commit.
+files: contracts/persona/*/rules/base.md, contracts/persona/*/AGENTS.md, CHANGELOG.md; source for the new personas: git show feat_tech-writing-v2:contracts/persona/tech-writing/
+notes: Commit 43ad5d2 (amended with this STATUS) holds the core change and digests; manifests read 1.3.0. tech-writing stays as the 1.x reference persona (core-synced only); its 2.0 rework lives on feat_tech-writing-v2 and is not to be merged. Previous release record (contracts-v1.2.0, tag 0846341 at 7a97bef) is in STATUS.archive.md.
+last_update: 2026-11-17T20:05
 
 ## Active Tasks
-- [x] DONE - Document archiving rule shipped: the `slot: documentation` section in all five base.md copies, the ARCHIVED status marker in the core Context discipline bullet, docs/archive/ (and documents/archive/ for tech-writing) in the four layout guides with frozen-history guards, a rationale section in each of the four base-contract.md pages, rationale index rows, the core-sync.md section-map row, README bullets, CHANGELOG entry, manifests 1.1.0 -> 1.2.0. Branch feat_docs-archiving-rule, commit f9abafe, PR #6 merged into main as 1315da7.
-- [x] DONE - Release act for contracts-v1.2.0: CHANGELOG entry turned into ## [1.2.0] - 2026-11-10 with the tag/manifest line and the compare links, fresh empty ## [Unreleased] on top (commit 2f302ed), PR #7 merged into main as 7a97bef, annotated tag contracts-v1.2.0 (tag object 0846341) created on that merge commit and pushed. The manifests already read 1.2.0, so the release carried no version change of its own.
+- [ ] document-writing persona (rules from tech-writing 2.0 minus deep research; consumes a research pack)
+- [ ] research persona (research method, sources, research pack output, research brief)
+- [ ] README table, REPO-MAP, CHANGELOG for both; check_sync + pytest; commit
 
 ## Notes
 - Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.
