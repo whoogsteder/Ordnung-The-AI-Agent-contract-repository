@@ -1,19 +1,16 @@
 # Agent Status
 
 ## HANDOFF
-phase: contracts 1.3.0 - core checkpoint rule + digest, then new personas document-writing and research (branch feat_core-checkpoint-and-doc-personas)
+phase: release act contracts-v1.3.0 (branch chore_release-contracts-v1.3.0), then the review persona
 status: IN_PROGRESS
-next_action: User reviews and merges PR #9 (https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/pull/9); then the release act for 1.3.0 (CHANGELOG versioned section + annotated tag contracts-v1.3.0 on main), then field-test research -> document-writing on the LAN switch selection.
-files: contracts/persona/document-writing/, contracts/persona/research/, contracts/persona/*/AGENTS.md, contracts/persona/*/rules/base.md, CHANGELOG.md, README.md, agent/REPO-MAP.md
-notes: Commit 53494d2 = core checkpoint rule + digests (manifests 1.3.0). Second commit = the two new personas (1.0.0). tech-writing stays as the 1.x reference persona (core-synced only); its 2.0 rework lives on feat_tech-writing-v2 (0477e3e) and is not to be merged. Branch pushed, PR #9 open, mergeable; the repo has no CI checks, gates are run locally. Gates 2026-11-17: check_sync OK, pytest 14 passed. Previous release record (contracts-v1.2.0) is in STATUS.archive.md.
-last_update: 2026-11-17T21:15
+next_action: Merge the release PR, create the annotated tag contracts-v1.3.0 on its merge commit and push it; then build contracts/persona/review/ on a feat_ branch from main.
+files: CHANGELOG.md, agent/STATUS.md
+notes: PR #9 (core checkpoints + digest, document-writing + research) merged into main as 16941ab by the user on 2026-11-17. The user asked for the 1.3.0 release and the review persona in one request. The local clone was shallow until 2026-11-17 (git fetch --unshallow --tags); tags contracts-v1.1.0/v1.2.0 now resolve. Gates are run locally; the repo has no CI. tech-writing 2.0 rework stays on feat_tech-writing-v2 (0477e3e), not merged.
+last_update: 2026-11-17T21:40
 
 ## Active Tasks
-- [x] document-writing persona 1.0.0
-- [x] research persona 1.0.0
-- [x] README table, REPO-MAP, CHANGELOG; check_sync + pytest
-- [x] Push + PR #9
-- [ ] User review and merge; release act contracts-v1.3.0
+- [ ] Release act contracts-v1.3.0: CHANGELOG section (done on branch), PR, merge, tag, push
+- [ ] review persona 1.0.0: rules, agent files, rationale, digest; writer and research point to it
 
 ## Notes
 - Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.

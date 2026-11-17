@@ -75,3 +75,9 @@ Notes kept for history: the probe went STALE the moment main was checked out and
 ## 2026-11-10 — contracts-v1.2.0 (archived 2026-11-17)
 - [x] DONE - Document archiving rule shipped: the `slot: documentation` section in all five base.md copies, the ARCHIVED status marker in the core Context discipline bullet, docs/archive/ (and documents/archive/ for tech-writing) in the four layout guides with frozen-history guards, a rationale section in each of the four base-contract.md pages, rationale index rows, the core-sync.md section-map row, README bullets, CHANGELOG entry, manifests 1.1.0 -> 1.2.0. Branch feat_docs-archiving-rule, commit f9abafe, PR #6 merged into main as 1315da7.
 - [x] DONE - Release act for contracts-v1.2.0: CHANGELOG entry turned into ## [1.2.0] - 2026-11-10 with the tag/manifest line and the compare links, fresh empty ## [Unreleased] on top (commit 2f302ed), PR #7 merged into main as 7a97bef, annotated tag contracts-v1.2.0 (tag object 0846341) created on that merge commit and pushed. The manifests already read 1.2.0, so the release carried no version change of its own.
+
+## 2026-11-17 — contracts 1.3.0: core checkpoints + digest, document-writing and research personas (PR #9, merged as 16941ab)
+- [x] document-writing persona 1.0.0
+- [x] research persona 1.0.0
+- [x] README table, REPO-MAP, CHANGELOG; check_sync + pytest
+- [x] Push + PR #9
