@@ -84,3 +84,10 @@ Notes kept for history: the probe went STALE the moment main was checked out and
 
 ## 2026-11-17 — release act contracts-v1.3.0
 - [x] DONE - Release act contracts-v1.3.0: CHANGELOG [1.3.0] section + compare links (68c6f41), PR #10 merged as d26ce72, annotated tag contracts-v1.3.0 (tag object b022339) on d26ce72, pushed.
+
+
+## 2026-11-17 — review persona 1.0.0 (PR #11, merged as 224c4df) + repo git repair
+- [x] DONE - review persona 1.0.0: rules, agent files, rationale, digest; document-writing and research bumped to 1.1.0 so their review step names the review persona.
+- [x] DONE - Push, PR #11, user merged it into main as 224c4df; the review persona now sits under ## [Unreleased] in CHANGELOG.md and ships with the next release act.
+- [x] DONE - Git repair 2026-11-17: the working copy looked like it had lost its git tracking data, but .git was intact. Cause: remote.origin.fetch was pinned to `+refs/heads/main:refs/remotes/origin/main`, so fetch could only ever refresh origin/main and no other remote-tracking ref appeared. Restored `+refs/heads/*:refs/remotes/origin/*`, ran `git fetch --prune --tags origin` (6 branches + 3 tags), `git checkout main`, `git merge --ff-only origin/main` (d26ce72 -> 224c4df). Verified: `git diff origin/main` empty, `git status -sb` clean, `tools/check_sync` OK, `tools/status_fresh` OK, all exit 0.
+- [x] DONE - Deleted the three merged local branches with `git branch -d` (chore_release-contracts-v1.3.0, feat_core-checkpoint-and-doc-personas, feat_persona-review); -d accepting each is its own proof of merge. feat_tech-writing-v2 (0477e3e) kept: unmerged by the user's choice. The six merged branches on origin were left in place — the user declined remote cleanup this round.
