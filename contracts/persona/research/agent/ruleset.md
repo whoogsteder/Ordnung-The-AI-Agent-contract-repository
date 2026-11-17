@@ -1,7 +1,7 @@
 # Contract manifest - research persona
 
 persona: research
-version: 1.0.0
+version: 1.1.0
 
 Self-contained drop-in contract for IT research: agreeing a sharp question, finding the answer in
 primary sources, screening options against must-haves, and handing over a versioned research pack that

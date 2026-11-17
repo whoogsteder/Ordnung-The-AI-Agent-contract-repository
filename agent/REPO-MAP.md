@@ -40,6 +40,11 @@
 - agent/ (bootstrap, project_layout with research/<topic>/pack.md + sources/, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
 - The research pack (`rules/research_pack.md`) is the hand-over format consumed by document-writing ✅
 
+## contracts/persona/review/ (persona: independent review, v1.0.0) ✅
+- `contracts/persona/review/rules/` — base, review_setup, checklists, findings, verification, classification ✅
+- agent/ (bootstrap, project_layout with reviews/<artefact>/inputs + review-<version>.md, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
+- Referenced from the review step of document-writing and research `rules/verification.md` (both 1.1.0) ✅
+
 ## contracts/persona/tech-writing/ (persona: professional document authoring, 1.x reference) ✅
 - Kept as the reference persona; new document work uses document-writing + research. Only core-synced, not reworked ✅
 - `contracts/persona/tech-writing/rules/` — base, verification, classification, documents, open_questions, output_formats, comparisons, advisories, visuals, dr ✅

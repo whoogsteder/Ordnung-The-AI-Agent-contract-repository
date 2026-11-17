@@ -81,3 +81,6 @@ Notes kept for history: the probe went STALE the moment main was checked out and
 - [x] research persona 1.0.0
 - [x] README table, REPO-MAP, CHANGELOG; check_sync + pytest
 - [x] Push + PR #9
+
+## 2026-11-17 — release act contracts-v1.3.0
+- [x] DONE - Release act contracts-v1.3.0: CHANGELOG [1.3.0] section + compare links (68c6f41), PR #10 merged as d26ce72, annotated tag contracts-v1.3.0 (tag object b022339) on d26ce72, pushed.

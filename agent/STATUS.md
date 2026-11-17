@@ -1,16 +1,16 @@
 # Agent Status
 
 ## HANDOFF
-phase: release act contracts-v1.3.0 (branch chore_release-contracts-v1.3.0), then the review persona
+phase: review persona 1.0.0 (branch feat_persona-review)
 status: IN_PROGRESS
-next_action: Merge the release PR, create the annotated tag contracts-v1.3.0 on its merge commit and push it; then build contracts/persona/review/ on a feat_ branch from main.
-files: CHANGELOG.md, agent/STATUS.md
-notes: PR #9 (core checkpoints + digest, document-writing + research) merged into main as 16941ab by the user on 2026-11-17. The user asked for the 1.3.0 release and the review persona in one request. The local clone was shallow until 2026-11-17 (git fetch --unshallow --tags); tags contracts-v1.1.0/v1.2.0 now resolve. Gates are run locally; the repo has no CI. tech-writing 2.0 rework stays on feat_tech-writing-v2 (0477e3e), not merged.
-last_update: 2026-11-17T21:40
+next_action: User reviews and merges the review-persona PR; it lands under ## [Unreleased] and ships with the next release act. Then field-test research -> document-writing -> review on the LAN switch selection.
+files: contracts/persona/review/, contracts/persona/document-writing/rules/verification.md, contracts/persona/research/rules/verification.md, README.md, CHANGELOG.md, agent/REPO-MAP.md
+notes: contracts-v1.3.0 released 2026-11-17 (tag object b022339 on merge commit d26ce72, pushed). document-writing and research bumped to 1.1.0 because their review step now names the review persona. Gates are run locally; the repo has no CI. tech-writing 2.0 rework stays on feat_tech-writing-v2 (0477e3e), not merged.
+last_update: 2026-11-17T22:05
 
 ## Active Tasks
-- [ ] Release act contracts-v1.3.0: CHANGELOG section (done on branch), PR, merge, tag, push
-- [ ] review persona 1.0.0: rules, agent files, rationale, digest; writer and research point to it
+- [x] review persona 1.0.0: rules, agent files, rationale, digest; writer and research point to it
+- [ ] Push, PR, user merge
 
 ## Notes
 - Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10; repaired by `git checkout HEAD -- agent/STATUS.md` plus a re-edit). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.
