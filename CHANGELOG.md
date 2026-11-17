@@ -12,7 +12,48 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
-The next entry starts when the next contract change lands on `main`.
+All existing manifests read `version: 1.3.0`.
+
+### Changed
+
+- **Session continuity: checkpoints instead of a counter** (core, all personas + root copy,
+  2026-11-17). The "5+ tool calls since the last update" frequency guard is replaced by moments an
+  agent can recognise: before a long run of tool work (write the plan and `next_action` first), after
+  files and checks, when something is learned that the next session needs, and before a topic switch
+  or reporting back. The redundancy stays as a fallback: "if you cannot say when you last updated
+  STATUS.md, update it now". The HANDOFF schema's `last_update` is now described as what makes
+  staleness checkable. The bootstrap freshness-check step is re-worded to match. Rationale is in the
+  `base-contract.md` pages of `iac` and `administrative`.
+
+### Added
+
+- **Contract digest in every `AGENTS.md`** (all personas + root, 2026-11-17). This is a short list of
+  the non-negotiables placed in the entry point, which tools inject themselves and some keep through
+  context compaction. Items 1-5 are shared and a few lines are per persona. The first line tells an
+  agent that remembers only the digest to re-read `rules/base.md` and `agent/STATUS.md`. Each
+  `.github/copilot-instructions.md` gains one reload line pointing at the digest.
+  `docs/authoring/persona-anatomy.md` tells authors to rewrite the persona lines of the digest.
+- **`document-writing` persona 1.0.0** (2026-11-17). The writing half of document work. It questions
+  the user into a one-to-two-page requirements brief that the user confirms before drafting
+  (`requirements.md`). It takes facts from a research pack, the user's material or checked lookups,
+  never from memory, and puts a must-have check table with every recommendation (`facts.md`). It writes
+  a readable body within an agreed page budget with detail in annexes, and no internal ids, rule names
+  or agent narration in the text (`writing.md`). It has profiles for seven document types
+  (`doc_types.md`) and a four-step review before hand-over (`verification.md`). Classification checks
+  apply at release.
+- **`research` persona 1.0.0** (2026-11-17). The research half. It agrees a sharp question first
+  (`question.md`) and follows a source hierarchy in which memory decides where to look but never what is
+  true. It builds a longlist from current portfolios, compatibility lists and reference designs, then
+  screens it on checked must-haves (`method.md`). Every fact carries a saved source (`sources.md`). It
+  hands over a versioned research pack in a fixed shape (`research_pack.md`) and, on request, a plain
+  research brief (`reporting.md`). Its review includes a missing-candidate check.
+
+### Notes
+
+- `tech-writing` stays in the repository as the 1.x reference persona and is only core-synced. Its
+  2.0 rework, the source of the two new personas, is kept on branch `feat_tech-writing-v2` and is not
+  merged. The field test that drove the change is summarised in
+  `contracts/persona/document-writing/docs/agent-contract/design.md`.
 
 ## [1.2.0] - 2026-11-10
 

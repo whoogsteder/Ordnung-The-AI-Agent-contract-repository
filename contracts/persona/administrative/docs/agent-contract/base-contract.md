@@ -131,3 +131,25 @@ convention in the tool modules makes documentation a completion criterion rather
 afterthought. SemVer + short-lived branches exist so that "the agent committed directly to
 main" is always a visible contract violation — the branch discipline doubles as an audit
 mechanism for agent work.
+
+## From a counter to checkpoints, plus a digest in the entry point (contracts 1.3.0)
+
+The "5+ tool calls" counter caught missed events, but it had two costs. Agents that honoured it
+wrote STATUS at arbitrary moments instead of useful ones: in research-heavy work, a dozen saves of
+nothing during one search burst. And it never addressed the deeper failure it was aimed at: a
+compaction that drops the contract itself. A perfectly current STATUS.md does not bring `rules/`
+back into context.
+
+1.3.0 replaces the counter with **moments an agent can recognise**: before a long run of tool
+work (write the plan and `next_action` first), after files and checks, when something is learned
+that the next session needs, and before switching topic or reporting back. The redundancy remains
+as a **fallback**: "if you cannot say when you last updated STATUS.md, update it now". That is a
+question an agent can answer without counting.
+
+The other half is the **contract digest** in `AGENTS.md`. Rule files read with tool calls are
+summarised away during compaction. Entry-point files (`CLAUDE.md`, `.github/copilot-instructions.md`,
+and `AGENTS.md` for tools that load it) are injected by the tool itself on every session, and some
+tools keep them through compaction. The digest is a short list of the non-negotiables in the place
+most likely to survive, and its first line tells an agent that remembers only the digest to re-read
+`rules/base.md` and `agent/STATUS.md`. It remains tool-agnostic: where no tool injects the file, the
+digest is still read at boot like the rest of `AGENTS.md`.

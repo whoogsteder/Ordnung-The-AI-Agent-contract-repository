@@ -7,7 +7,7 @@ that a user can copy into a project root and use as-is. No build step, no shared
 
 ```
 contracts/persona/<name>/
-├── AGENTS.md              # boot pointer: read all of rules/ first (copy verbatim from iac)
+├── AGENTS.md              # boot pointer + contract digest (copy from iac, rewrite the persona lines of the digest)
 ├── CLAUDE.md              # one line: @AGENTS.md
 ├── .github/copilot-instructions.md
 ├── agent/
@@ -33,6 +33,9 @@ contracts/persona/<name>/
 3. Keep, adapt or delete optional modules; add persona modules with `<!-- persona -->`
    markers as needed. Every top-level heading gets a marker (see core-sync.md).
 4. Write `agent/ruleset.md` with `persona: <name>` and `version: 1.0.0`.
+   Rewrite the "Persona:" lines of the contract digest in `AGENTS.md`: two or three of this
+   persona's non-negotiables, the ones an agent must still honour if the digest is all it remembers
+   after a context compaction. Items 1-5 of the digest are shared and stay identical.
 5. Rewrite `docs/agent-contract/index.md` to point at the rationale for this persona's rules.
 6. Run `python3 tools/check_sync` — it must pass; unmarked headings or missing manifests fail.
 7. Add the persona to the README table and `agent/REPO-MAP.md`.

@@ -1,0 +1,22 @@
+# This is a placeholder UNPERMISSIVE license file. Be sure to replace the bracketed []
+# words and strip these comment lines 
+
+Copyright (c) [YEAR] [AUTHOR NAME(S)]
+
+All rights reserved.
+
+No permission is granted to use, copy, reproduce, modify, adapt, distribute,
+publish, sublicense, sell, or create derivative works from this project or any
+part of its contents without the prior explicit written consent of the
+applicable copyright holder.
+
+Any authorized use must retain this notice and acknowledge the original
+author(s). Third-party materials remain subject to the rights and licenses of
+their respective authors or rights holders.
+
+Nothing in this notice waives any rights available under applicable law,
+including copyright, moral rights, database rights, design rights, trademark
+rights, or patent rights. Statutory exceptions and limitations remain
+unaffected.
+
+Permission requests: [EMAIL ADDRESS]
