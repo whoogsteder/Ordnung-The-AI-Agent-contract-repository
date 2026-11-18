@@ -30,20 +30,20 @@
 - Same agent/, docs/agent-contract/, licenses/ shape as iac persona; ADRs kept (image variant/frontend choices warrant records) ✅
 - `contracts/persona/game-hosting/docs/agent-contract/` — base-contract, frontend-security, verification-and-upstream ✅
 
-## contracts/persona/document-writing/ (persona: IT document writing, v1.0.0) ✅
+## contracts/persona/document-writing/ (persona: IT document writing, v1.2.0) ✅
 - `contracts/persona/document-writing/rules/` — base, requirements, facts, writing, doc_types, documents, open_questions, verification, classification, comparisons, output_formats, visuals, dr ✅
 - agent/ (bootstrap, project_layout with research/ for received packs, STATUS template, manifest), docs/agent-contract/ (index, design, classification-and-distribution, comparisons-and-advisories, format-and-visuals), licenses/ ✅
 - Built from the tech-writing 2.0 rework kept on branch `feat_tech-writing-v2` (commit 0477e3e, not merged) ✅
 
-## contracts/persona/research/ (persona: IT research, v1.0.0) ✅
+## contracts/persona/research/ (persona: IT research, v2.0.0) ✅
 - `contracts/persona/research/rules/` — base, question, method, sources, research_pack, verification, open_questions, classification, comparisons, reporting, dr ✅
-- agent/ (bootstrap, project_layout with research/<topic>/pack.md + sources/, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
+- agent/ (bootstrap, project_layout with topics/<topic>/pack.md + sources/, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
 - The research pack (`rules/research_pack.md`) is the hand-over format consumed by document-writing ✅
 
-## contracts/persona/review/ (persona: independent review, v1.0.0) ✅
+## contracts/persona/review/ (persona: independent review, v1.1.0) ✅
 - `contracts/persona/review/rules/` — base, review_setup, checklists, findings, verification, classification ✅
 - agent/ (bootstrap, project_layout with reviews/<artefact>/inputs + review-<version>.md, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
-- Referenced from the review step of document-writing and research `rules/verification.md` (both 1.1.0) ✅
+- Referenced from the review step of document-writing and research `rules/verification.md` ✅
 
 ## contracts/persona/tech-writing/ (persona: professional document authoring, 1.x reference) ✅
 - Kept as the reference persona; new document work uses document-writing + research. Only core-synced, not reworked ✅

@@ -1,7 +1,7 @@
 # Contract manifest - document-writing persona
 
 persona: document-writing
-version: 1.1.0
+version: 1.2.0
 
 Self-contained drop-in contract for writing IT documents that a busy reader can use to decide or act:
 architecture documents, integration how-tos, change and implementation plans, lifecycle advisories and

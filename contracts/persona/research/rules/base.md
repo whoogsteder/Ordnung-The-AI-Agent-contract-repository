@@ -27,7 +27,8 @@ In order of priority:
 - Explore on demand. Hit something unknown mid-task? One targeted read or search, then continue.
 - If `agent/REPO-MAP.md` is missing, or `agent/STATUS.md` is missing or still the empty contract
   template (no HANDOFF block written), this is a new project — follow the bootstrap protocol in
-  `agent/bootstrap.md`.
+  `agent/bootstrap.md`. A HANDOFF with `phase: bootstrap` means bootstrap started and did not
+  finish: resume it at that block's `next_action`.
 - **Read-back at pressure points:** Re-read `rules/base.md` when you switch to a different file
   or topic, when a rule seems to conflict with the work in front of you, and whenever you resume
   from a summary instead of the boot sequence. Reading the contract once at boot binds the calm
@@ -52,10 +53,16 @@ REPO-MAP.md is the agent's index for scoping reads and searches. It must stay cu
   - A command, test or check has been run (pass or fail: the result is the record)
   - You learn something the next session needs (a decision, a quirk, a dead end)
   - You are about to switch to a different file or topic, or report back to the user
+- **Before bootstrap finishes:** a checkpoint moment before the bootstrap protocol has created the
+  skeleton is still a checkpoint. Write a HANDOFF with `phase: bootstrap`, `status: IN_PROGRESS`
+  and the bootstrap step to resume as `next_action`. Save any brief or requirements the user
+  supplied, verbatim, to `agent/intake.md`. Bootstrap sets the real phase when it completes.
 - **Fallback:** if you cannot say when you last updated STATUS.md, update it now. Do not postpone a
   checkpoint for "one more probe". Keep the `last_update` field in the HANDOFF block current: it is
-  what makes staleness checkable. Where the project has a freshness check (offered at bootstrap),
-  run it when in doubt; where it has none, compare the file's date against `last_update`.
+  what makes staleness checkable. Read it from the system clock at the moment of writing (for
+  example `date +%Y-%m-%dT%H:%M`); never estimate it. Where the project has a freshness check
+  (offered at bootstrap), run it when in doubt; where it has none, compare the file's date against
+  `last_update`. A stamp earlier than the write is stale; a stamp later than the write is invalid.
 - **Resume from a summary:** If you entered this session from a compacted summary or handoff
   rather than the boot sequence, make STATUS.md current before your first substantive action.
   A stale STATUS.md is your first task, never another agent's debt.
@@ -79,7 +86,7 @@ status: DONE | IN_PROGRESS | PAUSED
 next_action: <single sentence describing exactly what the next session should do first>
 files: <list of files the next session needs to know about, or "none">
 notes: <any context needed for the next action — API quirks, auth details, env specifics; omit if none>
-last_update: <YYYY-MM-DDThh:mm of this STATUS.md write; keep current on every write — it is what makes staleness checkable>
+last_update: <YYYY-MM-DDThh:mm of this STATUS.md write, read from the system clock, never estimated; keep current on every write — it is what makes staleness checkable>
 ```
 
 # Archiving (mandatory) <!-- core -->
@@ -132,7 +139,7 @@ Requires: base.md.
 - **The operator decides.** The agent proposes archiving and names what supersedes the material. It
   never archives on its own initiative. Archive, never delete.
 - **Move with `git mv`** into the mirrored archive path (`docs/archive/<subpath>/`,
-  `research/archive/<topic>/`), as a commit of its own, before any content edit.
+  `topics/archive/<topic>/`), as a commit of its own, before any content edit.
 - **Freeze it.** A project document under `docs/` gets a first-line banner: `ARCHIVED <date> -
   read-only history; superseded by <path or "nothing">; <reason>.` A pack that was handed over is not
   edited, not even for a banner: the superseding pack's change note carries the record. Archived
@@ -141,6 +148,10 @@ Requires: base.md.
   scripts, REPO-MAP, instructions). History files keep their paths.
 - **Update** REPO-MAP and, for a new archive directory, `agent/project_layout.md`. Close any related
   task in `agent/STATUS.md`.
+- **Without git:** where the project does not use git, move with a plain move, find citations with
+  a recursive text search (`grep -rn`, `Select-String`), and record the move, the search command
+  and its hits in `agent/STATUS.md`. That entry stands in for the commit of its own. Every other
+  step applies unchanged.
 - **Verify:** no live file cites the old path; every path in REPO-MAP exists.
 - **Never read the archive during task work.** A superseded pack is never an input to new research
   unless the user asks for history.

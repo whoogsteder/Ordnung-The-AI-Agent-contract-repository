@@ -20,9 +20,25 @@ seven per round.
 7. **Output**: a research pack for a writer, a research brief for a person, or both
    (`rules/research_pack.md`, `rules/reporting.md`).
 
+## Terms that can be read two ways
+A must-have that names a product, family, feature or technology can often be read two ways: a
+marketing name that is also an operating system, a feature name shared by two product lines. Name each
+such term in the question record with the reading you will search for, and ask the user to confirm
+it. A term you cannot pin down is an open question, never a silent choice.
+
 ## The question record
 Write the agreed question into the pack's first section (`rules/research_pack.md`) and show it to the
-user. Searching starts after the user confirms it. Record the confirmation in `agent/STATUS.md`.
+user. Searching starts after the user confirms it.
+
+**What counts as confirmation:** the user says so in words ("confirmed", "go ahead"), or answers every
+open item in the record and raises no objection to the rest. Do not ask a second time when the second
+form applies. Record the confirmation in the question record and in `agent/STATUS.md`: the date, and
+the user's own words, quoted. A reviewer reads that quote as the user's statement, not the author's.
+
+**Scale the gate to the depth.** For a quick scan, ask one round of questions at most and then show the
+record. Should-haves and comparison criteria the user did not settle may go ahead as ASSUMED, each
+named in the pack's "Answer in short". Must-haves are never assumed: an option screen on a guessed
+must-have is the failure this gate exists to prevent.
 
 ## When the question moves
 - If the findings show the question is wrong (it rests on a false premise, or the must-haves rule out

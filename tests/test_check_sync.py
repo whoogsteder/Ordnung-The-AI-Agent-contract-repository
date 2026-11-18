@@ -3,6 +3,7 @@ import importlib.util
 import os
 import shutil
 import subprocess
+from datetime import datetime
 import sys
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
@@ -109,12 +110,22 @@ def set_mtime(path, epoch):
     os.utime(path, (epoch, epoch))
 
 
-def test_status_fresh_ok_when_mtime_not_after_stamp(tmp_path):
+def test_status_fresh_ok_when_mtime_matches_stamp(tmp_path):
     status = tmp_path / "STATUS.md"
-    status.write_text("## HANDOFF\nlast_update: 2099-01-01T00:00\n")
-    set_mtime(status, 0)
+    status.write_text("## HANDOFF\nlast_update: 2026-01-01T12:00\n")
+    set_mtime(status, datetime(2026, 1, 1, 12, 0).timestamp())
     result = run_status_fresh(status)
     assert result.returncode == 0, result.stdout
+
+
+def test_status_fresh_flags_future_stamp(tmp_path):
+    """A stamp later than the write was estimated, not read from the clock."""
+    status = tmp_path / "STATUS.md"
+    status.write_text("## HANDOFF\nlast_update: 2026-01-01T12:07\n")
+    set_mtime(status, datetime(2026, 1, 1, 12, 0, 30).timestamp())
+    result = run_status_fresh(status)
+    assert result.returncode == 1
+    assert "INVALID" in result.stdout
 
 
 def test_status_fresh_flags_write_that_missed_the_stamp(tmp_path):

@@ -1,17 +1,17 @@
 # Agent Status
 
 ## HANDOFF
-phase: post-PR #11 hygiene (main == origin/main == 224c4df)
+phase: field-test fixes (branch feat_field-test-fixes, off main 1c397b2)
 status: IN_PROGRESS
-next_action: Field-test the research -> document-writing -> review chain on the LAN switch selection; the review persona is merged and waits under ## [Unreleased] for the next release act.
-files: contracts/persona/review/, contracts/persona/document-writing/, contracts/persona/research/, feat_tech-writing-v2 (unmerged, 0477e3e)
-notes: contracts-v1.3.0 is the newest tag (tag object b022339 on d26ce72). Working tree is byte-identical to GitHub: `git diff origin/main` is empty. Gates run locally; the repo has no CI.
-last_update: 2026-11-17T20:15
+next_action: Wait for the user to review and merge the field-test-fixes PR; then field-test round 2 (corrected pack v0.6, then document-writing).
+files: rules/base.md + contracts/persona/*/rules/base.md (core), contracts/persona/{research,review,document-writing}/, tools/status_fresh, tests/test_check_sync.py, CHANGELOG.md
+notes: Source of the fixes: F-001..F-014 in the user's field-test log (outside this repo) plus two research gaps (lifecycle from vendor lifecycle record; ambiguous must-have terms). Rejected: F-013 item 5 (two-round bound) and F-014 reviewer error-rate counting. research bumped to 2.0.0 (pack dir research/ -> topics/).
+last_update: 2026-11-18T13:07
 
 ## Active Tasks
-- [ ] Field-test research -> document-writing -> review on the LAN switch selection
+- [ ] Field-test round 1 done (research + review); fixes on feat_field-test-fixes. Round 2: corrected pack v0.6, then document-writing
 - [ ] Decide the fate of feat_tech-writing-v2 (0477e3e): rework it, merge it, or drop it
-- [ ] Next release act: turn the ## [Unreleased] review-persona entry into ## [1.4.0] and tag it
+- [ ] Next release act: turn ## [Unreleased] (review persona + field-test fixes) into ## [1.4.0] and tag it
 - [ ] Optional, declined for now: delete the six merged branches still on origin
 
 ## Notes

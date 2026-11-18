@@ -46,11 +46,12 @@ You are starting from scratch. Do the following IN ORDER before any implementati
    one command instead of one judgment. Ask the user whether to add it, and build it only on a
    yes: write a small script that prints whether `agent/STATUS.md` was written after the
    `last_update:` timestamp in its HANDOFF block — exit 0 when current, non-zero plus a one-line
-   warning when it is older or the field is missing. Choose the language and location for the
-   tooling this project actually has (shell with `stat`, Python, PowerShell); register the script
-   in `agent/REPO-MAP.md` and record its run command in `agent/STATUS.md` notes. If the user
-   declines, or the environment makes a file-timestamp check awkward, record that decision as a
-   note and move on: declining is a completed step, and the textual guard still applies.
+   warning when it is older, later than the write (an estimated stamp), or the field is missing.
+   Choose the language and location for the tooling this project actually has (shell with `stat`,
+   Python, PowerShell); register the script in `agent/REPO-MAP.md` and record its run command in
+   `agent/STATUS.md` notes. If the user declines, or the environment makes a file-timestamp check
+   awkward, record that decision as a note and move on: declining is a completed step, and the
+   textual guard still applies.
 
 6. **Set the first real `next_action`** in `agent/STATUS.md` to the first implementation step. Then proceed as normal.
 

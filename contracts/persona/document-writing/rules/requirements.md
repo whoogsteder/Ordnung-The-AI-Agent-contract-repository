@@ -32,8 +32,10 @@ the body. It holds:
 6. **Open decisions.** Only questions a human must answer, each with who answers it and what changes
    with the answer.
 
-**Show the brief to the user and get it confirmed before drafting.** Record the confirmation (date,
-and any changes) in `agent/STATUS.md`. An unconfirmed brief means drafting has not started.
+**Show the brief to the user and get it confirmed before drafting.** Confirmation is the user saying
+so in words, or answering every open item with no objection to the rest; do not ask twice when the
+second form applies. Record it in the brief and in `agent/STATUS.md`: the date, any changes, and the
+user's words, quoted. An unconfirmed brief means drafting has not started.
 
 ## When something changes
 - A changed requirement or fact goes into the brief first, with the date. Then rewrite every section

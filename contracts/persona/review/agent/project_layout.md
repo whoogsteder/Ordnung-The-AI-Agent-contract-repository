@@ -7,7 +7,8 @@ Use these files to externalize memory from your context. They exist in every pro
 | File | Purpose | When to update |
 |------|---------|----------------|
 | `STATUS.md` | Forward-looking session state, the HANDOFF block, the review in progress | At the checkpoint moments in `rules/base.md` |
-| `REPO-MAP.md` | File index plus the review register: artefact, version, verdict, report path | Any time a file is added, moved or removed, or a review completes |
+| `REPO-MAP.md` | File index plus the review register: artefact, version, verdict, status (`awaiting author` / `closed`), report path | Any time a file is added, moved or removed, or a review completes or closes |
+| `intake.md` | The user's opening request, verbatim (only when one was given) | Once, at bootstrap; never edited afterwards |
 | `project_layout.md` | Directory structure guide (this file) | When the directory layout changes |
 
 ## Universal Structure (review projects)
@@ -22,6 +23,8 @@ Use these files to externalize memory from your context. They exist in every pro
 |-- reviews/
 |   |-- <artefact>/        # One directory per reviewed artefact (document id or research topic)
 |   |   |-- inputs/        # Read-only copies or links: artefact, yardstick, sources
+|   |   |-- evidence/      # Sources the reviewer opened that the artefact did not cite: E-NN_<date>.<ext>
+|   |   |-- derived/       # Regenerable text extracts of sources; not indexed, never cited
 |   |   `-- review-<artefact-version>.md   # One report per reviewed version
 |   `-- archive/           # Closed reviews, mirrored; never read at task time
 |-- docs/scripts/          # docs/scripts/X.md pairs with scripts/X.py
@@ -32,6 +35,7 @@ Use these files to externalize memory from your context. They exist in every pro
 
 ## Guards
 - `inputs/` is read-only. The reviewer never edits an artefact, here or at its origin.
+- `evidence/` is saved like sources: never edited in place. `derived/` can be deleted and rebuilt.
 - A report that was handed over is never edited. A re-review is a new report.
 - Material narrower than `Internal` is git-ignored unless the repository is declared private.
 
