@@ -3,10 +3,10 @@
 ## HANDOFF
 phase: field-test fixes (branch feat_field-test-fixes, off main 1c397b2)
 status: IN_PROGRESS
-next_action: Commit the field-test fixes on feat_field-test-fixes, then push and open a PR when the user asks.
+next_action: Wait for the user to review and merge the field-test-fixes PR; then field-test round 2 (corrected pack v0.6, then document-writing).
 files: rules/base.md + contracts/persona/*/rules/base.md (core), contracts/persona/{research,review,document-writing}/, tools/status_fresh, tests/test_check_sync.py, CHANGELOG.md
 notes: Source of the fixes: F-001..F-014 in the user's field-test log (outside this repo) plus two research gaps (lifecycle from vendor lifecycle record; ambiguous must-have terms). Rejected: F-013 item 5 (two-round bound) and F-014 reviewer error-rate counting. research bumped to 2.0.0 (pack dir research/ -> topics/).
-last_update: 2026-11-18T12:00
+last_update: 2026-11-18T13:07
 
 ## Active Tasks
 - [ ] Field-test round 1 done (research + review); fixes on feat_field-test-fixes. Round 2: corrected pack v0.6, then document-writing
