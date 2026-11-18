@@ -27,6 +27,12 @@ When the question asks for options (products, approaches, suppliers):
    and the preferred supplier's current equivalent. Record where each candidate came from.
 2. **Screen** every candidate against every must-have, with a source per cell. A candidate that fails
    a must-have, or is end-of-sale or announced end-of-sale, is out, with a one-line reason.
+   **Lifecycle status comes from the vendor's lifecycle record**: its end-of-sale or end-of-life
+   notices, product lifecycle page, or warranty and support-dates table. A current datasheet, a recent
+   spec-sheet revision, or finding no notice in a search is not evidence that a product is on sale.
+   Where hardware and operating system have separate dates (two OS options on the same box, for
+   example), check each combination you screen. Where no lifecycle record is found, the status is
+   `not established`, and the candidate cannot be shortlisted on it.
 3. **Shortlist**: only candidates that pass every must-have on checked facts. A candidate whose status
    cannot be established stays on the longlist with the reason. It is never shortlisted "pending
    verification".

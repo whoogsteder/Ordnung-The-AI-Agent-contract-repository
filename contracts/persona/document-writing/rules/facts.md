@@ -10,7 +10,9 @@ wrong product is worse than no document.
 In this order of preference:
 1. **A research pack** produced by the `research` persona (or by a person) in the agreed pack format:
    question, findings, facts table with sources, longlist and screening, must-have check. Use its
-   facts as given and cite its sources. Do not re-derive or "improve" them from memory.
+   facts as given and cite its sources. Do not re-derive or "improve" them from memory. Use a pack
+   only with its review report. A pack whose separate review returned `fail` is not used until a
+   corrected version passes; tell the user, and draft nothing that rests on it.
 2. **The user and the user's own material**: inventory exports, configurations, policies, statements.
    Record which is which.
 3. **Primary sources the writer checks itself** for a small number of lookups: a datasheet, a

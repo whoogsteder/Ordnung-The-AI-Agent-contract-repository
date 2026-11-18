@@ -37,3 +37,19 @@ as plainly as a found fact, removes the pressure to guess.
 A researcher who has just searched for something remembers what they meant to find. A reviewer with
 no prior context re-opens the sources and spots a missing candidate or a mismatched version. Where the
 tool supports sub-agents, the review runs as one. Otherwise it runs as a second session.
+
+## Lessons from the first field test (2.0.0)
+The first run, a top-of-rack switch selection, produced a pack whose shortlist held up on ports,
+standards and the attached system's compatibility list. An independent review still failed it, for two
+reasons the rules now cover:
+- **Lifecycle status was read from a datasheet.** A spec sheet revised last month says nothing about
+  whether the product can still be bought, and one vendor dated its OS options on the same hardware
+  apart. Lifecycle status now comes from the vendor's lifecycle record, per hardware and OS
+  combination, or is `not established`.
+- **A must-have term had two readings.** The pack picked one without saying so. Ambiguous terms are now
+  pinned down while the question is agreed.
+The same run showed the question gate costing about as much as a quick scan: five rounds before the
+first search. Confirmation is now defined, so it is not asked for twice. For a quick scan the gate
+takes one round, and only should-haves may go ahead as assumptions. Must-haves never do. The pack
+directory moved from `research/` to `topics/`, because a project root called `research` produced
+`research/research/<topic>`.

@@ -9,6 +9,7 @@ Use these files to externalize memory from your context. These exist in every pr
 | `STATUS.md` | Forward-looking session state + HANDOFF block | After file creation, command verification, feature completion, or topic switch |
 | `REPO-MAP.md` | Stable file index, plus the registers: document map, shared facts, terminology, sources, open items | Use it and update it any time a file is added/moved/removed, a fact changes, or an open item moves |
 | `project_layout.md` | Directory structure guide (this file) | Use it and update it when core directory layout changes |
+| `intake.md` | The user's opening brief, verbatim (only when one was given) | Once, at bootstrap; never edited afterwards |
 
 ## Universal Structure (document projects)
 
@@ -17,6 +18,7 @@ Use these files to externalize memory from your context. These exist in every pr
 |-- agent/                 # AI agent externalized memory
 |   |-- STATUS.md          # Session handoff + state (single source for continuity)
 |   |-- REPO-MAP.md        # Index + registers: documents, sources, open decisions (shared facts, terminology, distribution when needed)
+|   |-- intake.md          # Optional: the user's opening brief, verbatim
 |   `-- bootstrap.md       # New project bootstrap protocol
 |-- rules/                 # Agent rules: base.md always; one module per document type in use
 |-- docs/                  # Human-facing documentation about the project

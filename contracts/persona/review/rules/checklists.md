@@ -11,6 +11,8 @@ Work through each applicable list. Every item produces either "pass" or a findin
 - Is every must-have from the yardstick addressed? Did requirements change without the yardstick being
   updated?
 - Is anything the yardstick ruled out back in?
+- Can every term in the must-haves be read only one way? If a term has two plausible readings, does the
+  artefact name the reading it took, and is that reading the user's?
 
 ## B. Facts (every artefact that states facts)
 - Re-open the source of every load-bearing fact: a fact that decides a must-have, puts an option in
@@ -23,12 +25,16 @@ Work through each applicable list. Every item produces either "pass" or a findin
 
 ## C. Options and recommendations (selections, comparisons, research packs with options)
 - **Must-have check:** for every recommended or shortlisted option, every must-have has a pass and a
-  source. Build the table yourself from the sources. Do not copy the author's table.
+  source. Build the table yourself from the sources. Do not copy the author's table. Shortlisted means
+  any option the artefact tells the reader to buy, quote, test or deploy, including a secondary or
+  "reference only" list. Such a list may carry a shorter table with `not established` as a value; it
+  never carries none.
 - **Missing candidates:** check the systems the option must work with (compatibility and validated
   lists, vendor reference designs), the incumbent vendor's named successor, and the preferred
   supplier's current equivalent. Name any obvious candidate that is absent, and whether it would pass.
 - **Freshness:** is any recommended option end-of-sale, announced end-of-sale, or a previous
-  generation?
+  generation? Check the vendor's lifecycle record (end-of-sale notices, lifecycle or warranty dates
+  page), not the datasheet, and each hardware and OS combination where the vendor dates them apart.
 - **Fairness:** same depth and same kind of source for every option. Is the recommendation conditional
   on an open decision, and if so, is it given per branch?
 

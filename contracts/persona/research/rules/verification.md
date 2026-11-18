@@ -22,8 +22,9 @@ report to the pack.
 3. **Missing-candidate check.** Look at the longlist against the vendors' reference designs, the
    compatibility lists of the attached systems, the incumbent's successor and the preferred supplier's
    range. Name anything missing and why.
-4. **Freshness.** No shortlisted option is end-of-sale or announced end-of-sale. Sources older than the
-   current product generation are flagged.
+4. **Freshness.** No shortlisted option is end-of-sale or announced end-of-sale, checked against the
+   vendor's lifecycle record (`rules/method.md`), not its datasheet. Sources older than the current
+   product generation are flagged.
 5. **Integrity.** Every source id in the pack resolves to the source list and to a file under
    `sources/` for load-bearing facts. Conclusions are marked as conclusions.
 

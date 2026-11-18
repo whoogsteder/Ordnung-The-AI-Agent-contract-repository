@@ -1,7 +1,7 @@
 # Contract manifest - review persona
 
 persona: review
-version: 1.0.0
+version: 1.1.0
 
 Self-contained drop-in contract for independent review of IT research packs, document drafts and
 requirements briefs. It checks each artefact against its yardstick (the confirmed brief or question),

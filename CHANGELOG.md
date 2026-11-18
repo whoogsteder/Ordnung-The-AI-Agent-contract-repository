@@ -26,6 +26,40 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ### Changed
 
+- **Bootstrap, timestamps and archiving without git** (core, all personas + root copy, 2026-11-18;
+  from the first field test of the research and review personas). A checkpoint that falls before the
+  bootstrap skeleton exists is written as a HANDOFF with `phase: bootstrap`, which also means "resume
+  bootstrap". A brief the user opens with is saved verbatim to `agent/intake.md`. `last_update` is read
+  from the system clock, never estimated, and a stamp later than the write is invalid, not fresh.
+  `tools/status_fresh` reports such a stamp as INVALID, with a test. The Document archiving slot of
+  every persona except `tech-writing` gains a fallback for projects without git: plain move, recursive
+  search, both logged in STATUS. Bootstrap freshness checks flag future stamps. Manifests:
+  administrative, game-hosting, iac, tech-writing and root 1.4.0.
+- **`research` 2.0.0** (breaking: pack directory). Packs live in `topics/<topic>/`, not
+  `research/<topic>/`; a project root named `research` produced `research/research/<topic>`. The
+  receiving writer project still files them under `research/<topic>/`. Also:
+  - lifecycle status comes from the vendor's lifecycle record (end-of-sale notices, lifecycle or
+    warranty dates), per hardware and OS combination, never from a datasheet (`method.md`,
+    `verification.md`);
+  - must-have terms that can be read two ways are pinned down when the question is agreed;
+  - confirmation is defined (in words, or every open item answered with no objection) and quoted in the
+    user's words; a quick scan gets one question round, and only should-haves may go ahead as ASSUMED
+    (`question.md`);
+  - any option the pack says to buy, quote, test or deploy gets a must-have table, reference lists
+    included; a `fail` from a separate review blocks or recalls the hand-over (`research_pack.md`);
+  - bootstrap does steps 1 and 2 in one message when the opening brief is complete.
+- **`review` 1.1.0**: an author's self-review is not an input and is not read; an embedded yardstick
+  is accepted only with the user's quoted confirmation; `derived/` for text extracts and `evidence/` for
+  sources the reviewer opened itself (`review_setup.md`). List A checks for ambiguous must-have terms,
+  list C defines "shortlisted" and checks lifecycle at the vendor's record (`checklists.md`). New
+  verdict `blocked - cannot review`; a new "After the verdict" section covers who receives the report,
+  how a `fail` blocks the hand-over, disputes (`rejected`, with both texts), and when a review is closed.
+  Re-reviews re-run every row a changed fact or must-have touches, and can withdraw the reviewer's own
+  errors (`findings.md`). Contract defects go to a findings log, default `agent_findings.md`
+  (`base.md`). The review register gains a status column.
+- **`document-writing` 1.2.0**: brief confirmation is defined as for research and quoted; a research
+  pack is used only with its review report, and never while its review is `fail` (`requirements.md`,
+  `facts.md`); `agent/intake.md` and the merged bootstrap step as for research.
 - **`document-writing` and `research` 1.1.0**: the review step in `rules/verification.md` names the
   `review` persona as the separate reviewer and says which inputs to give it.
 

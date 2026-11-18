@@ -9,6 +9,7 @@ Use these files to externalize memory from your context. They exist in every pro
 | `STATUS.md` | Forward-looking session state, the HANDOFF block, and the current search plan | At the checkpoint moments in `rules/base.md` |
 | `REPO-MAP.md` | File index plus the registers: topics and pack versions, open questions | Any time a file is added, moved or removed, or a question moves |
 | `project_layout.md` | Directory structure guide (this file) | When the directory layout changes |
+| `intake.md` | The user's opening brief, verbatim (only when one was given) | Once, at bootstrap; never edited afterwards |
 
 ## Universal Structure (research projects)
 
@@ -17,9 +18,10 @@ Use these files to externalize memory from your context. They exist in every pro
 |-- agent/                 # AI agent externalized memory
 |   |-- STATUS.md          # Session handoff + state + search plan
 |   |-- REPO-MAP.md        # Index + registers: topics and pack versions, open questions
+|   |-- intake.md          # Optional: the user's opening brief, verbatim
 |   `-- bootstrap.md       # New project bootstrap protocol
 |-- rules/                 # Agent rules: base.md always; modules per rules/ listing
-|-- research/              # One directory per research topic
+|-- topics/                # One directory per research topic
 |   |-- <topic>/
 |   |   |-- pack.md        # The research pack (rules/research_pack.md), versioned
 |   |   |-- brief.md       # Optional research brief for a person (rules/reporting.md)
@@ -35,13 +37,13 @@ Use these files to externalize memory from your context. They exist in every pro
 ```
 
 ## Guards
-- `research/<topic>/sources/` is evidence: never edited in place. A newer copy of a source is a new
+- `topics/<topic>/sources/` is evidence: never edited in place. A newer copy of a source is a new
   file with a new date.
 - A pack that was handed over is not edited. A re-check produces a new pack version.
-- `research/archive/` is frozen history, never read during task work.
+- `topics/archive/` is frozen history, never read during task work.
 - Material narrower than `Internal` is git-ignored unless the repository is declared private.
 
 ## Hand-over to a writer
-The receiving `document-writing` project copies or links `research/<topic>/` into its own
+The receiving `document-writing` project copies or links `topics/<topic>/` into its own
 `research/<topic>/`. The pack is read-only on the receiving side. Corrections go back to the research
 project as a new pack version.

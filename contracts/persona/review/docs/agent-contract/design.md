@@ -34,3 +34,20 @@ the page. They need a deliberate look at where candidates should come from.
 The owner needs to know in one line whether the artefact may be used. "Fail" is reserved for blocking
 findings, so a pile of style notes cannot sink a sound document, and a single wrong must-have cannot
 hide among them.
+
+## Lessons from the first field test (1.1.0)
+The first independent review was run by a different agent from the author's. It caught what the
+author's self-review had passed: a lead option past its vendor's end-of-sale date, and an option
+whose OS identity the vendor's own documentation contradicted. That is the case for this persona. The
+run also showed where the rules stopped short:
+- **Inputs.** The rules did not say whether a self-review next to the artefact may be read (it may
+  not), what to do with a yardstick embedded in the artefact (accept it only with the user's quoted
+  confirmation), or where text extracts and the reviewer's own evidence go (`derived/`, `evidence/`).
+- **What counts.** A "reference" list escaped the must-have screen because "shortlisted" was undefined.
+  It now means anything the reader is told to buy, quote, test or deploy.
+- **What a verdict does.** A `fail` produced a document but no state change. The verdict now has an
+  owner, blocks the hand-over, and can be disputed on the record, and a review is either awaiting the
+  author or closed. A fourth verdict covers a review that could not be run. Re-reviews re-check every
+  row a changed fact touches, because a fix can move a defect sideways.
+- **Feedback into the contracts.** Contract defects found while reviewing go to a findings log, not
+  the report. That is where these lessons came from.

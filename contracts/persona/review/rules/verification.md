@@ -10,7 +10,8 @@ Applies: always. Requires: base.md.
 - If a source cannot be reached, the fact is "not checked" in the report. It is never marked as passed.
 
 ## Checking the reviewer
-- The verdict follows from the findings: `fail` exactly when there is a blocking finding.
+- The verdict follows from the findings: `fail` exactly when there is a blocking finding;
+  `blocked - cannot review` only when the review could not be run, never as a softer `fail`.
 - Every blocking finding carries evidence that someone else can reproduce.
 - Before handing the report over, re-read the yardstick once more and confirm the review answered it.
   It is easy to drift into reviewing what the artefact chose to talk about.
