@@ -157,7 +157,9 @@ invalidates every citation of its path and every instruction that points at it.
 - **Never read the archive during task work** — same exclusion as the STATUS archive and the
   agent-contract rationale: read it only when the user explicitly asks for project history.
 - **What is archivable here:** `docs/architecture/`, `docs/guides/` and `docs/runbooks/` — a runbook
-  superseded by a new one is archived, and the superseding runbook names it.
+  superseded by a new one is archived, and the superseding runbook names it. An archived architecture
+  design keeps its `ADR-NNN` citations: the records themselves live in `docs/adr/` and never travel
+  into the archive with the design that links them.
 - **ADRs are not archived.** `docs/adr/NNN-<topic>.md` retires by `Status: CLOSED` naming the
   superseding ADR (see `rules/adr.md`) and stays where it is: the number *is* the citation, so a moved
   ADR breaks every `ADR-NNN decision N` reference and the docs-integrity test's index check.

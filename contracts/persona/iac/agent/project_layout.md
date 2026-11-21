@@ -20,9 +20,9 @@ Use these files to externalize memory from your context. These exist in every pr
 │   └── bootstrap.md       # New project bootstrap protocol
 ├── rules/                 # Agent rules: base.md always; one module per language/tool in use
 ├── docs/                  # Documentation
+│   ├── adr/               # Architecture Decision Records: NNN-<topic>.md (rules/adr.md) — the only place ADRs live; retired by Status: CLOSED, never archived
+│   ├── architecture/      # Topic specific architecture designs (read on demand); they link to the ADRs in docs/adr/, they never hold them
 │   ├── archive/           # Frozen history of retired docs, mirroring the original subpath (docs/archive/guides/x.md); never read at task time — see rules/base.md, Document archiving
-│   ├── architecture/      # Topic specific architecture designs (read on demand)
-│   │   └── adr/           # Architecture Decision Records: NNN-<topic>.md — retired by Status: CLOSED, never archived
 │   ├── guides/            # How-to documentation (read on demand)
 │   └── runbooks/          # Operational procedures per scenario
 ├── .env.example           # Secret placeholders (real .env is git-ignored, if applicable)

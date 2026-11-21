@@ -26,6 +26,15 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ### Changed
 
+- **`iac` 1.5.0** (ADR location, 2026-11-21). The layout guide nested ADRs at `docs/architecture/adr/`
+  while `rules/adr.md`, `rules/base.md`, `agent/bootstrap.md` and `AGENTS.md` all said `docs/adr/`.
+  `docs/adr/` is the single location: ADRs land there and stay there. `docs/architecture/` stays for
+  design write-ups, which now link the records that decided them (`ADR-NNN decision N`,
+  `../adr/NNN-<topic>.md`) instead of holding them, and an archived design keeps its citations while the
+  records never travel into `docs/archive/`. Rationale:
+  `contracts/persona/iac/docs/agent-contract/base-contract.md`. Audited the other personas for the same
+  mismatch: administrative, document-writing, game-hosting and research use `docs/decisions/`
+  consistently across layout guide, rules and bootstrap; `review` ships no decision records.
 - **`game-hosting` 2.0.0** (breaking: delivery model, 2026-11-21). The web panel is part of every
   delivery; the operator's choice is local-only or internet-exposed, and game servers never depend on
   the panel being up (by test). One panel may manage several servers: game servers are compose services
