@@ -26,6 +26,16 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ### Changed
 
+- **`game-hosting` 2.0.0** (breaking: delivery model, 2026-11-21). The web panel is part of every
+  delivery; the operator's choice is local-only or internet-exposed, and game servers never depend on
+  the panel being up (by test). One panel may manage several servers: game servers are compose services
+  or panel-owned containers by DR, ownership is exclusive, created containers are labelled and
+  reconciled from a desired-state file, host ports come from an env-declared range, and a many-server
+  panel shows per-container resource usage from the runtime's own statistics. The env file is the
+  stack's surface only; game settings live in each game's native config, written through the panel's
+  per-game definition. New `python.md` module (uv lock, strict typing, commit-blocking gate). Bootstrap
+  asks exposure, server count and panel language instead of "plain compose or frontend". Rationale:
+  `docs/agent-contract/panel-platform.md`.
 - **Bootstrap, timestamps and archiving without git** (core, all personas + root copy, 2026-11-18;
   from the first field test of the research and review personas). A checkpoint that falls before the
   bootstrap skeleton exists is written as a HANDOFF with `phase: bootstrap`, which also means "resume

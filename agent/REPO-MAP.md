@@ -26,9 +26,9 @@
 - Same agent/, docs/agent-contract/, licenses/ shape as iac persona ✅
 
 ## contracts/persona/game-hosting/ (persona: dedicated game server hosting) ✅
-- `contracts/persona/game-hosting/rules/` — base, verification, usability, docker_compose, steamcmd, web_frontend ✅
+- `contracts/persona/game-hosting/rules/` — base, verification, usability, docker_compose, steamcmd, web_frontend, python (v2.0.0: panel always bundled, many-server, panel-owned containers) ✅
 - Same agent/, docs/agent-contract/, licenses/ shape as iac persona; ADRs kept (image variant/frontend choices warrant records) ✅
-- `contracts/persona/game-hosting/docs/agent-contract/` — base-contract, frontend-security, verification-and-upstream ✅
+- `contracts/persona/game-hosting/docs/agent-contract/` — index, base-contract, frontend-security, panel-platform, verification-and-upstream, licensing-and-distribution ✅
 
 ## contracts/persona/document-writing/ (persona: IT document writing, v1.2.0) ✅
 - `contracts/persona/document-writing/rules/` — base, requirements, facts, writing, doc_types, documents, open_questions, verification, classification, comparisons, output_formats, visuals, dr ✅

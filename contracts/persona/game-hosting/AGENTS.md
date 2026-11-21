@@ -29,4 +29,5 @@ The full rules in `rules/` win over this digest wherever they say more.
 
 Persona:
 6. The operator is inexperienced: the quickstart works as written, and defaults are safe.
-7. A bundled web frontend fails closed: authentication and TLS are never optional.
+7. The bundled web panel fails closed: authentication and TLS are never optional.
+8. Game servers never depend on the panel: stopping or upgrading it leaves every server running.

@@ -13,6 +13,9 @@ maintain this contract and review agent output — and for agents only when expl
   document archiving (and why live operator material is never archived).
 - [frontend-security.md](frontend-security.md) — why auth and TLS are non-negotiable defaults on
   the web frontend: the public-exposure assumption and the fail-closed stance.
+- [panel-platform.md](panel-platform.md) — why the panel is always bundled while the game never
+  depends on it, why panel-owned containers are exclusively owned, why a many-server panel must
+  show resource usage, why the env file covers only the stack, and why a Python module.
 - [verification-and-upstream.md](verification-and-upstream.md) — why container evidence is log-
   and query-based, and why upstream (vendor/game) documentation is trusted last.
 - [licensing-and-distribution.md](licensing-and-distribution.md) — why self-hosting is permitted
