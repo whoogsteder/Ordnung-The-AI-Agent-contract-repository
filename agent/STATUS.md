@@ -1,14 +1,15 @@
 # Agent Status
 
 ## HANDOFF
-phase: field-test fixes (branch feat_field-test-fixes, off main 1c397b2)
+phase: game-hosting platform amendments (branch feat_game-hosting-platform, off main 72c3c28)
 status: IN_PROGRESS
-next_action: Wait for the user to review and merge the field-test-fixes PR; then field-test round 2 (corrected pack v0.6, then document-writing).
-files: rules/base.md + contracts/persona/*/rules/base.md (core), contracts/persona/{research,review,document-writing}/, tools/status_fresh, tests/test_check_sync.py, CHANGELOG.md
-notes: Source of the fixes: F-001..F-014 in the user's field-test log (outside this repo) plus two research gaps (lifecycle from vendor lifecycle record; ambiguous must-have terms). Rejected: F-013 item 5 (two-round bound) and F-014 reviewer error-rate counting. research bumped to 2.0.0 (pack dir research/ -> topics/).
-last_update: 2026-11-18T13:07
+next_action: On the operator's go-ahead, commit the uncommitted game-hosting 2.0.0 amendments on feat_game-hosting-platform and open the PR; the persona is already copied into /home/whoogsteder/development/Game-Commons (diff -r identical).
+files: contracts/persona/game-hosting/{rules/base.md,rules/web_frontend.md,rules/docker_compose.md,rules/python.md (new),agent/bootstrap.md,agent/ruleset.md,AGENTS.md,docs/agent-contract/panel-platform.md (new),docs/agent-contract/index.md}, README.md, agent/REPO-MAP.md, CHANGELOG.md. check_sync OK; pytest 15/15 after re-stamp
+notes: Operator-approved 2026-11-21 (all four, explicitly): (1) web panel always part of the delivery, optional only local vs internet-exposed, game keeps running when the panel stops; (2) python.md module for panel/probe tooling; (3) env file = stack settings only, game settings in native config files the panel writes via a profile; (4) one panel manages many servers and may create/own game containers itself; the operator added that a many-server panel must show the project containers' resource usage. First consumer: the Game Commons project (/home/whoogsteder/development/Game-Commons). The field-test-fixes PR (#13) is merged.
+last_update: 2026-11-21T11:53
 
 ## Active Tasks
+- [ ] game-hosting 2.0.0 amendments: written, checks green, copied to Game-Commons; commit + PR await the operator
 - [ ] Field-test round 1 done (research + review); fixes on feat_field-test-fixes. Round 2: corrected pack v0.6, then document-writing
 - [ ] Decide the fate of feat_tech-writing-v2 (0477e3e): rework it, merge it, or drop it
 - [ ] Next release act: turn ## [Unreleased] (review persona + field-test fixes) into ## [1.4.0] and tag it

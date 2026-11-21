@@ -11,8 +11,13 @@ You are starting from scratch. Do the following IN ORDER before any implementati
    Ask if anything is missing. Wait for confirmation. Then settle, explicitly:
    - **Which game server(s)** — and their platform (Steam today; other distribution
      platforms get their own section in `rules/steamcmd.md` when they enter use).
-   - **Plain compose or + web frontend?** Plain is the default; the frontend only on explicit
-     user request (see `rules/web_frontend.md`).
+   - **Local-only or internet-exposed panel?** The web panel is always part of the delivery;
+     local-only is the default, and internet exposure adds the public-exposure procedure (see
+     `rules/web_frontend.md`).
+   - **One game server or several?** Several means one panel manages them all; decide whether
+     game servers are compose services or panel-owned containers (`rules/docker_compose.md`).
+   - **Panel language** — when the panel or its tooling is Python, `rules/python.md` applies;
+     record the choice as a DR.
    - **Target hosts** — Linux, Windows, or both (both is the default expectation).
 
 2. **Set project license.** Present the three available license templates under `licenses/` and have the user choose one, or state they do not want a LICENSE file:

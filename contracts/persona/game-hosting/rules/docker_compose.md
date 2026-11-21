@@ -2,8 +2,11 @@
 Applies: always — compose is this persona's delivery vehicle. Requires: base.md.
 
 ## Composition rules
-- One service per dedicated server; keep `docker-compose.yml` thin — image, ports, volumes,
-  restart policy, `env_file`. All tunables live in the env file, not the compose file.
+- The compose file ships the platform: the panel, its proxy and any control-plane helper. Game
+  servers are either compose services or containers the panel creates and owns (see
+  Panel-owned game containers) — choose per project and record the choice as a DR.
+- Keep `docker-compose.yml` thin — image, ports, volumes, restart policy, `env_file`. Stack
+  tunables live in the env file, not the compose file.
 - Pin every image by tag **and** digest. Record where and when the digest was verified.
 - Name a generous `stop_grace_period` for servers that need to flush saves on shutdown;
   set `restart: unless-stopped` unless there is a documented reason not to.
@@ -12,14 +15,36 @@ Applies: always — compose is this persona's delivery vehicle. Requires: base.m
 - Save data lives in a host-mounted directory or named volume declared in the compose file —
   never inside the container filesystem, which an image bump throws away.
 
+## Panel-owned game containers
+Applies: when the panel creates game-server containers itself instead of compose.
+- Every composition rule above binds a panel-created container too: image pinned by tag and
+  digest, restart policy, stop grace period, only the needed ports published, save data outside
+  the container filesystem. The panel's container spec is the compose file's equivalent and is
+  reviewed like one.
+- Ownership is exclusive. Compose never manages a panel-created container and the panel never
+  adopts a compose service: compose recreates any container it did not create itself.
+- Label every created container with the project and the server it belongs to, so the operator
+  can find, inspect and stop them with the container runtime's CLI and no panel
+  (`web_frontend.md` → Scope).
+- The panel keeps the desired state of every server (image, ports, volumes, limits) in a file
+  under the project's data directory. On start it reconciles against what is running; it never
+  recreates a running server only because the panel itself restarted.
+- Host ports come from a range declared in the env file; the panel refuses a collision with a
+  plain-language error instead of letting the runtime fail.
+- Tearing down the platform stack (`docker compose down`) never deletes game containers or their
+  data. Removing a server is a panel action with explicit confirmation, after a backup
+  (`base.md` → destructive operations).
+
 ## Env-file config model
-- The env file is the product's configuration surface: every supported setting appears in
-  `<name>.env.example`, grouped and annotated with allowed values, defaults and source.
+- The env file is the **stack's** configuration surface — ports and port ranges, paths, exposure,
+  credentials, resource limits. Every variable appears in `<name>.env.example`, grouped and
+  annotated with allowed values, defaults and source.
+- Game settings are not env variables: they live in each game's native config (JSON, INI, XML,
+  launch arguments) and the panel writes them through its per-game definition. Tell the operator,
+  per game, which file is authoritative and whether a hand-edit survives the panel's next write.
 - Compose `env_file` values are taken literally — quotes become part of the value, types come
   from the text. Document these traps in the example file itself where they bite.
-- The container regenerates its native config (JSON/INI) from env at start: tell the user which
-  file is authoritative and that hand-edits to generated files are transient unless a key is
-  left unmanaged. Applying changes usually needs recreate (`up -d`), not just `restart`.
+- State what applying each change needs: a restart, a recreate (`up -d`), or nothing.
 
 ## Portability
 - The portable artifact is the **compose file**, not a vendor product: any Compose-spec runtime
