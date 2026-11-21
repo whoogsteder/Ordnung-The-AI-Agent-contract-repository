@@ -105,6 +105,11 @@ ADRs are excluded on purpose: `ADR-NNN` *is* the citation and the sequence is th
 breaks every reference to it and the docs-integrity test's index check. Retirement there is
 `Status: CLOSED` naming the successor (`rules/adr.md`).
 
+The same reasoning sets the location: `docs/adr/` sits *beside* `docs/architecture/`, not inside it. A
+record filed under the design it belongs to moves or disappears with that design, and a design doc that
+carries its own decisions can be rewritten freely while the record nobody linked stays in place. So the
+design doc describes the design and links to `docs/adr/`, and the ADR stays put and keeps its number.
+
 ## Rule-file protection: why agents may not edit the rules
 
 Left unsupervised, an agent that hits a conflicting rule will "fix" the rule — silently
