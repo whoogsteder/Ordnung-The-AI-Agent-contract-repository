@@ -45,6 +45,11 @@
 - agent/ (bootstrap, project_layout with reviews/<artefact>/inputs + review-<version>.md, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
 - Referenced from the review step of document-writing and research `rules/verification.md` ✅
 
+## contracts/persona/knowledge-base/ (persona: knowledge base, v1.0.0) ✅
+- `contracts/persona/knowledge-base/rules/` — base, verification, python, adr, provenance, corpus, retrieval, eval, capture, interfaces, resource_discipline, scope ✅
+- agent/ (bootstrap, project_layout, STATUS template, manifest), docs/agent-contract/ (index, retrieval-and-capture, corpus-and-interfaces), licenses/ ✅
+- Built for a markdown→vector-index tool serving agents over MCP; the persona is generic and names no project. Scaffolded from `iac` with `tools/new_persona` ✅
+
 ## contracts/persona/tech-writing/ (persona: professional document authoring, 1.x reference) ✅
 - Kept as the reference persona; new document work uses document-writing + research. Only core-synced, not reworked ✅
 - `contracts/persona/tech-writing/rules/` — base, verification, classification, documents, open_questions, output_formats, comparisons, advisories, visuals, dr ✅
