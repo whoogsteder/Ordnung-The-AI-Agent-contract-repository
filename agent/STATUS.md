@@ -1,18 +1,16 @@
 # Agent Status
 
 ## HANDOFF
-phase: iac ADR location fix (branch fix_iac-adr-location, off main b53958f)
+phase: final v1 release (contracts-v1.4.0); v1 frozen, Ordnung-Zwei becomes main at 2.0.0-rc.1
 status: DONE
-next_action: Wait for the operator to review and merge PR #15 (iac 1.5.0); then return to field-test round 2 (corrected pack v0.6, then document-writing).
-files: contracts/persona/iac/{agent/project_layout.md,rules/adr.md,rules/base.md,docs/agent-contract/base-contract.md,agent/ruleset.md}, CHANGELOG.md
-notes: Operator-reported conflict, fixed on their explicit request. `agent/project_layout.md` had nested ADRs at `docs/architecture/adr/` while `rules/adr.md`, `rules/base.md`, `agent/bootstrap.md` and `AGENTS.md` all said `docs/adr/`. End state the operator chose: ADRs land in `docs/adr/` and stay there; `docs/architecture/` remains for design write-ups, which cite `ADR-NNN decision N` and link `../adr/NNN-<topic>.md` instead of holding records; an archived design keeps its citations and the records never travel into `docs/archive/`. iac manifest 1.4.0 -> 1.5.0. Other personas audited: administrative, document-writing, game-hosting and research use `docs/decisions/` consistently across layout guide, rules and bootstrap; `review` ships no decision records — no change needed there. Checks: `python3 tools/check_sync` OK, `python3 tools/status_fresh` OK, pytest 15/15. Pushed to origin and opened PR #15 (open, awaiting the operator) on 2026-11-21.
-last_update: 2026-11-21T14:21
+next_action: None in v1 — work continues under the Ordnung-Zwei contract on main (its own agent/STATUS.md).
+files: CHANGELOG.md
+notes: Operator decision 2026-11-27: freeze v1 under a tag and make Ordnung-Zwei the leading content as a 2.0.0 release candidate. knowledge-base 1.0.0 merged (PR #16) before the freeze. feat_tech-writing-v2 (0477e3e) not merged — local only, conflicts with main, superseded by document-writing; kept as tag archive/tech-writing-v2. Checks: `python3 tools/check_sync` OK, pytest 15/15.
+last_update: 2026-11-27T11:45
 
 ## Active Tasks
 - [ ] iac 1.5.0: committed 3aba410, PR #15 open; merge awaits the operator
 - [ ] Field-test round 1 done (research + review); fixes on feat_field-test-fixes. Round 2: corrected pack v0.6, then document-writing
-- [ ] Decide the fate of feat_tech-writing-v2 (0477e3e): rework it, merge it, or drop it
-- [ ] Next release act: turn ## [Unreleased] (review persona + field-test fixes + game-hosting 2.0.0 + iac 1.5.0) into ## [1.5.0] and tag it
 - [ ] Optional, declined for now: delete the merged branches still on origin
 
 ## Notes

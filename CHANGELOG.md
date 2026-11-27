@@ -12,6 +12,14 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-27
+
+The final v1 release. From 2.0.0 the repository carries Ordnung-Zwei: a short kernel in
+`AGENTS.md` that harnesses reload, skills loaded on demand, and checks run by a script instead of
+remembered rules. This tag freezes v1 as the reference that Zwei's `docs/lineage.md` links into.
+The unmerged tech-writing 2.0.0 rework, superseded by document-writing, is kept as the tag
+`archive/tech-writing-v2`.
+
 ### Added
 
 - **`knowledge-base` persona 1.0.0** (2026-11-22). For projects that capture knowledge and serve it
@@ -279,7 +287,8 @@ state of the contract set as published on 2026-10-28.
   README landing page; the `agent/REPO-MAP.md` + `agent/STATUS.md` memory pair with the archiving
   rule.
 
-[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.3.0...HEAD
+[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.4.0...HEAD
+[1.4.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.3.0...contracts-v1.4.0
 [1.3.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.2.0...contracts-v1.3.0
 [1.2.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.1.0...contracts-v1.2.0
 [1.1.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/03851d8...contracts-v1.1.0
