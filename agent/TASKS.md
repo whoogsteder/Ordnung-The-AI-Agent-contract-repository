@@ -9,6 +9,12 @@ The section is the status: move the line, never copy it. IDs are never reused.
 
 ## NOW
 
+- [T-07] Port the knowledge-base persona from v1 — owner: both — ref: REQ-06
+    Operator picked knowledge-base first from the remaining v1 personas (split: the rest are T-12).
+    Source: `contracts/persona/knowledge-base/` at tag `contracts-v1.4.0`, condensed into skills.
+    done: `personas/knowledge-base/` with persona.md + skills, `docs/lineage.md` and README rows
+    added, CHANGELOG entry under [Unreleased], `pytest tests/` and `agent/ordnung_check` green.
+    Pushed as PR #20; closes on merge.
 
 ## NEXT
 
@@ -29,8 +35,14 @@ The section is the status: move the line, never copy it. IDs are never reused.
 
 - [T-06] Port iac-web from v1 web.md — owner: agent
     When field project B starts its web scaffold.
-- [T-07] Port the remaining v1 personas (administrative, research, review, knowledge-base) — owner: both
+- [T-12] Port the remaining v1 personas (administrative, review) — owner: both
     Operator picks the order; research and document-writing are already folded into advisory.
+    knowledge-base was split out as T-07 and ported first.
+- [T-13] Eval cases for the kb-* persona skills — owner: agent — ref: REQ-06
+    after: T-07
+    One case per kb skill, run with and without the skill; the kb-retrieval case must fail a
+    baseline that treats an endpoint answering 200 as proof of quality.
+    done: one case per kb skill with a discriminating assertion, graded into grading.json.
 - [T-08] Description optimisation for the core skills (skill-creator) — owner: agent
     after: T-02
 - [T-11] Retire met/dropped REQs: checker flag after ~14 days, ledger review step — owner: agent

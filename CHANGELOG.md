@@ -11,6 +11,15 @@ contract set is an annotated tag `contracts-vX.Y.Z` on `main`; release candidate
 
 ## [Unreleased]
 
+### Added
+
+- **`knowledge-base` persona 0.1.0-draft** (`personas/knowledge-base/`): nine skills for projects
+  that capture knowledge and serve it back — `kb-provenance`, `kb-corpus`, `kb-scope`,
+  `kb-retrieval`, `kb-eval`, `kb-capture`, `kb-interfaces`, `kb-resource-discipline`, `kb-python`.
+  Ported from the v1 persona of the same name (frozen at `contracts-v1.4.0`), whose always-loaded
+  rule files are recast as triggered skills. Eval cases are not part of this change; they are
+  tracked separately on the board.
+
 ## [2.0.0-rc.1] - 2026-11-27
 
 Ordnung-Zwei replaces the v1 contract set. Same principle (durable state lives in files), new
