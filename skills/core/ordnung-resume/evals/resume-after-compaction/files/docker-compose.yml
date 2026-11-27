@@ -1,0 +1,4 @@
+services:
+  enshrouded:
+    image: example/enshrouded:1.0@sha256:0000
+    env_file: enshrouded.env

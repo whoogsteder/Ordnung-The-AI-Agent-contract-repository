@@ -1,78 +1,38 @@
-# REPO-MAP — Ordnung! (repo-maintainer persona)
+# REPO-MAP — where things live (≤ 120 lines; split detail into agent/maps/<area>.md)
 
-## Root
-- `README.md` — landing page: logo banner (`img/ordnung_logo.png`, 800×192), Ordnung! intro, personas, contribution invite, checks ✅
-- `CHANGELOG.md` — release history in Keep a Changelog + SemVer form: one entry per `contracts-vX.Y.Z` release with `## [Unreleased]` on top; the release act is an entry here plus an annotated tag on `main` ✅
-- `img/` — project assets (logo) ✅
-- `CONTRIBUTING.md` — contributor guide: quickstart with tools/new_persona, contribution rules ✅
-- `AGENTS.md` / `CLAUDE.md` — this repo's own agent boot pointer (repo-maintainer contract) ✅
-- `rules/base.md` — repo-maintainer contract core (marked `<!-- core -->` / `<!-- slot: -->` / `<!-- persona -->`) ✅
-- `rules/verification.md` — evidence and checker rules for repo work ✅
+## Directory guide
+| Path | What it holds |
+|---|---|
+| `AGENTS.md` | This repo's own kernel, rendered from `kernel/AGENTS.md.tmpl` + `personas/contract-authoring` (`tools/install . --persona contract-authoring --dev --force`); never hand-edited |
+| `CLAUDE.md`, `.github/copilot-instructions.md` | Pointers to `AGENTS.md` |
+| `.agents/skills/` | Symlinks (dev install) to `skills/core/*` and `personas/contract-authoring/skills/*`; `.claude/skills` links here |
+| `kernel/` | `AGENTS.md.tmpl` (the kernel every project gets) and `licenses/` (offered at bootstrap) |
+| `skills/core/<name>/` | Core skills shipped to every project: resume, checkpoint, board, ledger, delegate, bootstrap; `evals/<case>/` per skill |
+| `personas/<p>/` | `persona.md` (frontmatter, kernel rules 9-12, skills rows, bootstrap questions) + `skills/`: game-hosting (`gh-*`), advisory (`adv-*`), iac (`iac-*`), contract-authoring (`ca-*`, this repo) |
+| `templates/agent/` | PROJECT, TASKS, STATUS, REPO-MAP templates copied into projects at bootstrap |
+| `tools/` | `ordnung_check` (the contract gate, stdlib) and `install` (puts a contract into a project; `--dev` for this repo) |
+| `tests/test_tools.py` | Tests for the checker, the installer and repo integrity (`uv run --with pytest --no-project python -m pytest tests/ -q`) |
+| `agent/` | This repo's memory: PROJECT, TASKS, STATUS, REPO-MAP; `ordnung.toml`; symlinks `ordnung_check`, `templates`, `persona.md` |
+| `docs/decisions/` | Decision records DR-NNN (`ordnung-ledger`) |
+| `*-workspace/` | Eval run outputs (git-ignored); never read them during other work |
 
-## agent/ (this repo's boot material)
-- `agent/ruleset.md` — manifest: persona=repo-maintainer, version 1.2.0; core drift against personas checked by tools/check_sync ✅
-- `agent/STATUS.md` — session state (HANDOFF lives here) ✅
-- `agent/STATUS.archive.md` — append-only history of completed/canceled tasks; do not read unless the user asks ✅
-- `agent/bootstrap.md` — new-project bootstrapping protocol adapted for authoring work ✅
+## Documentation index
+<!-- path — one line — ✅ IMPLEMENTED | 🟡 PARTIAL | 📋 PLANNED | 🗄️ ARCHIVED -->
+| Document | Status | Read when |
+|---|---|---|
+| `README.md` | ✅ | Landing page: what Zwei is, install, personas |
+| `CHANGELOG.md` | ✅ | Releasing; what changed since v1 (v1 history below the 2.0 entries) |
+| `docs/design.md` | 🟡 PARTIAL — the design as drafted 2026-11-25; DR-001..006 supersede where they differ | Questions about why the contract is shaped this way |
+| `docs/harness-matrix.md` | 🟡 PARTIAL — desk research, Tested column empty | Any claim about how a harness loads skills (kernel rule 10) |
+| `docs/lineage.md` | ✅ | Porting from v1, or looking up what v1 did; links into tag contracts-v1.4.0 |
+| `docs/field-tests/feedback.md` | ✅ | Operator reports from field projects and their outcomes |
+| `docs/decisions/001-kernel-plus-skills.md` | ✅ ACCEPTED | Kernel size, what goes in a skill, skill location |
+| `docs/decisions/002-three-memory-layers.md` | ✅ ACCEPTED | STATUS/PROJECT/TASKS roles, caps, the checker |
+| `docs/decisions/003-task-board-is-core.md` | ✅ ACCEPTED | The board, NOW cap |
+| `docs/decisions/004-project-lists-open-decisions-only.md` | ✅ ACCEPTED | What PROJECT.md lists; decision scheme per project |
+| `docs/decisions/005-batching-low-effort-development-tasks.md` | 📋 PROPOSED | Batching tasks into one PR; agent/estimates.md |
+| `docs/decisions/006-v1-frozen-under-a-tag.md` | ✅ ACCEPTED | v1 reference, versioning, dogfooding |
 
-## contracts/persona/iac/ (persona: infrastructure-as-code) ✅
-- `contracts/persona/iac/rules/` — base, verification, python, terraform_tfgrunt, ansible, web, adr ✅
-- `contracts/persona/iac/agent/` — bootstrap, project_layout, STATUS template ✅
-- `contracts/persona/iac/docs/agent-contract/` — rationale docs (do not read at boot) ✅
-- `contracts/persona/iac/licenses/` — license picker texts ✅
-
-## contracts/persona/administrative/ (persona: administrative work) ✅
-- `contracts/persona/administrative/rules/` — base, verification, python, documents, financial, approval, dr ✅
-- Same agent/, docs/agent-contract/, licenses/ shape as iac persona ✅
-
-## contracts/persona/game-hosting/ (persona: dedicated game server hosting) ✅
-- `contracts/persona/game-hosting/rules/` — base, verification, usability, docker_compose, steamcmd, web_frontend, python (v2.0.0: panel always bundled, many-server, panel-owned containers) ✅
-- Same agent/, docs/agent-contract/, licenses/ shape as iac persona; ADRs kept (image variant/frontend choices warrant records) ✅
-- `contracts/persona/game-hosting/docs/agent-contract/` — index, base-contract, frontend-security, panel-platform, verification-and-upstream, licensing-and-distribution ✅
-
-## contracts/persona/document-writing/ (persona: IT document writing, v1.2.0) ✅
-- `contracts/persona/document-writing/rules/` — base, requirements, facts, writing, doc_types, documents, open_questions, verification, classification, comparisons, output_formats, visuals, dr ✅
-- agent/ (bootstrap, project_layout with research/ for received packs, STATUS template, manifest), docs/agent-contract/ (index, design, classification-and-distribution, comparisons-and-advisories, format-and-visuals), licenses/ ✅
-- Built from the tech-writing 2.0 rework kept on branch `feat_tech-writing-v2` (commit 0477e3e, not merged) ✅
-
-## contracts/persona/research/ (persona: IT research, v2.0.0) ✅
-- `contracts/persona/research/rules/` — base, question, method, sources, research_pack, verification, open_questions, classification, comparisons, reporting, dr ✅
-- agent/ (bootstrap, project_layout with topics/<topic>/pack.md + sources/, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
-- The research pack (`rules/research_pack.md`) is the hand-over format consumed by document-writing ✅
-
-## contracts/persona/review/ (persona: independent review, v1.1.0) ✅
-- `contracts/persona/review/rules/` — base, review_setup, checklists, findings, verification, classification ✅
-- agent/ (bootstrap, project_layout with reviews/<artefact>/inputs + review-<version>.md, STATUS template, manifest), docs/agent-contract/ (index, design), licenses/ ✅
-- Referenced from the review step of document-writing and research `rules/verification.md` ✅
-
-## contracts/persona/knowledge-base/ (persona: knowledge base, v1.0.0) ✅
-- `contracts/persona/knowledge-base/rules/` — base, verification, python, adr, provenance, corpus, retrieval, eval, capture, interfaces, resource_discipline, scope ✅
-- agent/ (bootstrap, project_layout, STATUS template, manifest), docs/agent-contract/ (index, retrieval-and-capture, corpus-and-interfaces), licenses/ ✅
-- Built for a markdown→vector-index tool serving agents over MCP; the persona is generic and names no project. Scaffolded from `iac` with `tools/new_persona` ✅
-
-## contracts/persona/tech-writing/ (persona: professional document authoring, 1.x reference) ✅
-- Kept as the reference persona; new document work uses document-writing + research. Only core-synced, not reworked ✅
-- `contracts/persona/tech-writing/rules/` — base, verification, classification, documents, open_questions, output_formats, comparisons, advisories, visuals, dr ✅
-- Same agent/ shape as iac persona (bootstrap, project_layout, STATUS template, ruleset manifest); dr.md carries the shared `slot: decision-records` heading like administrative ✅
-- `contracts/persona/tech-writing/licenses/` — kept for the code a project ships (generator/export scripts); documents carry a classification tier and distribution statement instead of a license (v1.1.0, 2026-11-09) ✅
-- `contracts/persona/tech-writing/docs/agent-contract/` — base-contract, document-set-and-memory, comparisons-and-advisories, format-and-visuals, open-items-and-ideas, classification-and-distribution ✅
-
-## tools/ ✅
-- `tools/check_sync` — core/slot/persona seam checker: structure, cross-persona core drift, root dogfood copy, manifest presence + SemVer (stdlib Python)
-- `tools/new_persona` — scaffold a contributor persona from the iac template: slots reset to TODO, fresh manifest + rationale stub (smoke-tested 2026-10-28 and 2026-11-09, used to scaffold tech-writing; not covered by pytest)
-- `tools/status_fresh` — memory-freshness probe for this repo's own contract: compares the HANDOFF `last_update:` in `agent/STATUS.md` against that file's mtime, exit 0 current / non-zero + warning when stale or field missing (stdlib Python; smoke-tested 2026-11-07)
-
-## tests/ ✅
-- `tests/test_check_sync.py` — pytest incl. planted-drift fixtures and a real-repo pass test (`uv run --with pytest --no-project python -m pytest tests/ -q`)
-
-## docs/authoring/ ✅
-- `core-sync.md` — seam marker convention, base.md section-slot map (incl. the Document archiving slot section), one-commit rule, release/version policy
-- `persona-anatomy.md` — folder shape and steps to add a persona
-
-## docs/archive/ 📋
-- Not created yet. It is the retirement target for a superseded page of `docs/authoring/`
-  (`docs/archive/authoring/core-sync.md`), per the Document archiving section of `rules/base.md`:
-  the operator proposes and approves, `git mv` mirrors the subpath, the file gets an
-  `ARCHIVED <date>` banner, both REPO-MAP rows travel with it, and nothing here is read at task time.
-  Persona `docs/agent-contract/` pages are contract content and are retired by editing the contract,
-  never archived inside the persona folder.
+## Area maps
+<!-- agent/maps/<area>.md — when to read it -->
+- none yet

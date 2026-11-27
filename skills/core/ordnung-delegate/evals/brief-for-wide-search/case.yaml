@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: brief-for-wide-search
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  brief.md is a self-contained brief: the persona role, the Non-negotiables copied verbatim from
+  AGENTS.md, the task and an observable done-criterion, the binding IDs (REQ-01, REQ-02) by
+  reference, the gh-compose skill to load, fences (no live save data, no commits, no files outside
+  scope, env file as the only port source), and a short fixed report shape that includes evidence
+  and decisions-needed. No subagent is launched.

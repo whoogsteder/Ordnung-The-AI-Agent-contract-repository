@@ -3,14 +3,52 @@
 All notable changes to the Ordnung! agent-contract set are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
-adheres to [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html). The version string
-lives in each persona manifest (`contracts/persona/*/agent/ruleset.md`) and in the root
-repo-maintainer manifest (`agent/ruleset.md`). A release of the contract set is an annotated tag
-`contracts-vX.Y.Z` on `main`. Bumps follow the rule in
-[docs/authoring/core-sync.md](docs/authoring/core-sync.md): patch for wording inside a core/slot
-section, minor for a new rule, section or module, major for an incompatible workflow change.
+adheres to [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html). A release of the
+contract set is an annotated tag `contracts-vX.Y.Z` on `main`; release candidates are
+`contracts-vX.Y.Z-rc.N`. From 2.0.0 each persona carries its own `version` in
+`personas/<p>/persona.md` (`ca-release`). Entries for 1.x describe the v1 layout
+(`contracts/persona/*`), browsable at tag `contracts-v1.4.0`.
 
 ## [Unreleased]
+
+## [2.0.0-rc.1] - 2026-11-27
+
+Ordnung-Zwei replaces the v1 contract set. Same principle (durable state lives in files), new
+shape: a short kernel that harnesses reload, skills loaded on demand, and the memory discipline
+enforced by a script instead of remembered. Decision records DR-001..006 in `docs/decisions/`.
+
+### Added
+- **Kernel** `kernel/AGENTS.md.tmpl`: core rules 1-8, persona rules 9-12, skills table, resume
+  instruction for after every summary or compaction (DR-001). Rendered per persona by
+  `tools/install`; 53-57 lines.
+- **Core skills** `ordnung-resume`, `-checkpoint`, `-board`, `-ledger`, `-delegate`, `-bootstrap`
+  (`skills/core/`), canonical in a project's `.agents/skills/` with a `.claude/skills` symlink.
+- **Three memory files** (DR-002): `agent/PROJECT.md` (requirements, open decisions only,
+  questions, tracks; 80 lines), `agent/TASKS.md` (the board, DR-003; at most 2 agent tasks in
+  NOW), `agent/STATUS.md` (HANDOFF with task, skills, constraints, evidence; 40 lines).
+- **`tools/ordnung_check`**: caps, HANDOFF schema and freshness, board rules, ID resolution,
+  configurable decision scheme via `agent/ordnung.toml` (DR-004), `[hook] run` commands, and
+  `--install-hook` for the pre-commit hook.
+- **`tools/install`**: renders the kernel, installs skills, checker, templates; `--dev` for this
+  repository's own contract.
+- **Personas** (all `0.1.0-draft`): `game-hosting` (`gh-*`), `advisory` (`adv-*`, v1
+  document-writing + research in one flow), `iac` (`iac-*`), `contract-authoring` (`ca-*`, runs
+  this repository).
+- **Docs**: `docs/design.md`, `docs/harness-matrix.md` (how each harness finds skills),
+  `docs/lineage.md` (where each v1 piece went, linked into the v1 tag),
+  `docs/field-tests/feedback.md`.
+- **Evals** for resume, checkpoint and delegate (`skills/core/*/evals/`, skill-creator format).
+
+### Removed
+- The v1 tree: `contracts/persona/*`, root `rules/`, `tools/check_sync`, `tools/new_persona`,
+  `tools/status_fresh`, `docs/authoring/`. Frozen at tag `contracts-v1.4.0` (DR-006).
+
+### Breaking — migrating a v1 project
+Install a persona with `tools/install <project> --persona <p>` (AGENTS.md is written as
+`AGENTS.md.ordnung-new` when one exists; `--force` to replace), remove the project's `rules/`,
+then let the first session run `ordnung-bootstrap`, whose *Migrating from Ordnung v1* section
+sorts the v1 STATUS.md into PROJECT.md, the board and a new HANDOFF. An existing `agent/TASKS.md`
+board is kept. Point references to `rules/*.md` at the skills that replace them.
 
 ## [1.4.0] - 2026-11-27
 
@@ -287,7 +325,8 @@ state of the contract set as published on 2026-10-28.
   README landing page; the `agent/REPO-MAP.md` + `agent/STATUS.md` memory pair with the archiving
   rule.
 
-[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.4.0...HEAD
+[Unreleased]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v2.0.0-rc.1...HEAD
+[2.0.0-rc.1]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.4.0...contracts-v2.0.0-rc.1
 [1.4.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.3.0...contracts-v1.4.0
 [1.3.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.2.0...contracts-v1.3.0
 [1.2.0]: https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/compare/contracts-v1.1.0...contracts-v1.2.0

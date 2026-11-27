@@ -1,0 +1,46 @@
+# TASKS
+
+The work board. Every open task lives here and nowhere else (`ordnung-board`). STATUS.md holds
+the one task in hand (`task: T-NN`); PROJECT.md holds what must stay true across tasks.
+
+One task per line: `- [T-NN] title — owner: agent|owner|both — ref: <REQ/decision IDs>`, then
+indented detail: `after: T-NN`, `done: <checkable criterion>`, at most a few lines of context.
+The section is the status: move the line, never copy it. IDs are never reused.
+
+## NOW
+
+- [T-01] Release contracts-v2.0.0-rc.1: Zwei replaces v1 on main — owner: both — ref: DR-006
+    done: PR merged on the public repo, tag contracts-v2.0.0-rc.1 pushed, pre-release published.
+
+## NEXT
+
+- [T-02] Eval iteration 2 for resume/checkpoint/delegate — owner: agent — ref: REQ-06
+    Fixtures to the TASKS.md / open-decisions format; companion skills installed; harder
+    checkpoint case (a durable fact not phrased "from now on"); delegate report-length assertion.
+    done: iteration-2 benchmark with at least one discriminating assertion per case.
+- [T-03] Test skill discovery per harness (Claude Code, OpenCode first) — owner: both — ref: REQ-02
+    The four-step probe in docs/harness-matrix.md; record results in its Tested column.
+    done: Tested column filled for at least two harnesses.
+- [T-04] Eval cases for adv-* from field test A — owner: agent — ref: REQ-06
+    done: one case per adv skill, run with and without the skill.
+- [T-05] Eval cases for ordnung-board and iac-* from field test B — owner: agent — ref: REQ-06
+    after: T-02
+    done: cases for claim, split and close on a board; one iac-live safety case.
+
+## LATER
+
+- [T-06] Port iac-web from v1 web.md — owner: agent
+    When field project B starts its web scaffold.
+- [T-07] Port the remaining v1 personas (administrative, research, review, knowledge-base) — owner: both
+    Operator picks the order; research and document-writing are already folded into advisory.
+- [T-08] Description optimisation for the core skills (skill-creator) — owner: agent
+    after: T-02
+- [T-11] Retire met/dropped REQs: checker flag after ~14 days, ledger review step — owner: agent
+    Watch item from feedback 2026-11-26; build only if field use shows the gap.
+
+## WAITING
+
+- [T-09] Implement batching (DR-005) and agent/estimates.md — owner: both — ref: DR-005
+    decision: the operator accepts DR-005 after more field use ("actual use will tell").
+- [T-10] Release contracts-v2.0.0 (final) — owner: both — ref: DR-006
+    waits: field feedback from A and B on the rc; personas to 1.0.0 at that point.

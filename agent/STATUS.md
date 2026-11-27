@@ -1,22 +1,24 @@
-# Agent Status
+# STATUS — the task in hand (≤ 40 lines; strategic facts go to PROJECT.md)
 
 ## HANDOFF
-phase: final v1 release (contracts-v1.4.0); v1 frozen, Ordnung-Zwei becomes main at 2.0.0-rc.1
-status: DONE
-next_action: None in v1 — work continues under the Ordnung-Zwei contract on main (its own agent/STATUS.md).
-files: CHANGELOG.md
-notes: Operator decision 2026-11-27: freeze v1 under a tag and make Ordnung-Zwei the leading content as a 2.0.0 release candidate. knowledge-base 1.0.0 merged (PR #16) before the freeze. feat_tech-writing-v2 (0477e3e) not merged — local only, conflicts with main, superseded by document-writing; kept as tag archive/tech-writing-v2. Checks: `python3 tools/check_sync` OK, pytest 15/15.
-last_update: 2026-11-27T11:45
+task: T-01 Release contracts-v2.0.0-rc.1: Zwei replaces v1 on main
+status: IN_PROGRESS
+next_action: Merge the replacement PR, then tag contracts-v2.0.0-rc.1 on the merge commit and publish it as a pre-release.
+skills: [ordnung-checkpoint, ordnung-board, ca-release]
+constraints:
+  - The repo is public: nothing from field project B's internals goes out, history included (kernel rule 11).
+  - The local ~/development/Ordnung-Zwei checkout is superseded by this repo from the merge on.
+  - v1 stays frozen at contracts-v1.4.0; nothing from it returns to the tree (DR-006).
+files: CHANGELOG.md, README.md, docs/lineage.md, docs/field-tests/
+evidence: on branch chore_ordnung_zwei_main — pytest tests/ and agent/ordnung_check (see PR)
+last_update: 2026-11-27T12:24
 
-## Active Tasks
-- [ ] iac 1.5.0: committed 3aba410, PR #15 open; merge awaits the operator
-- [ ] Field-test round 1 done (research + review); fixes on feat_field-test-fixes. Round 2: corrected pack v0.6, then document-writing
-- [ ] Optional, declined for now: delete the merged branches still on origin
+## Plan
+- [x] Freeze v1 (contracts-v1.4.0, GitHub release)
+- [x] Decision records DR-001..006, feedback log, dogfood persona and self-install
+- [x] CHANGELOG 2.0.0-rc.1, README, lineage links to the tag; public-name guard test
+- [x] Field-test drafts dropped; Zwei brought in as one squashed commit (operator, 2026-11-27)
+- [ ] Replacement PR on the public repo; merge; tag; pre-release
 
-## Notes
-- Git config hazard: `remote.origin.fetch` had been narrowed to main only, which made this clone look like it had lost its git tracking data. It now reads `+refs/heads/*:refs/remotes/origin/*`; do not narrow it again.
-- Environment moved to linux/bash: commands chain normally. `python3 tools/check_sync` and `python3 tools/status_fresh` both run here.
-- Never rewrite a repo file's content through PowerShell: a Get-Content/Set-Content round trip decodes UTF-8 as the ANSI code page and mangles every em dash and emoji (hit agent/STATUS.md on 2026-11-10). Edit content with the editor tool; stamp the memory file by setting LastWriteTime only, never by rewriting it.
-- Stamp discipline: `python3 tools/status_fresh`, exit 0 means current. Write `last_update` at minute granularity, then set the file's mtime to that same minute (`touch -t YYYYMMDDhhmm.00`) — the probe fails when mtime is newer than the stamp, and a checkout rewrites mtime, so re-stamp after one.
-- gh CLI is authenticated as whoogsteder (repo scope): push, PR create, PR edit --body-file, PR view and PR merge all work. main is not branch-protected, but contract commits ride a `<type>_<topic>` branch through a PR by default.
-- Release discipline (README "Editing a contract" bullet and CONTRIBUTING.md): contributors bump the manifests they touched, the maintainer writes the CHANGELOG.md entry and pushes the tag.
+## Notes for the next action
+- Zwei's local commits stay local (they hold the dropped drafts); never push that checkout.
