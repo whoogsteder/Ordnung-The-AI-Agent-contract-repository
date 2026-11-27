@@ -14,6 +14,23 @@ section, minor for a new rule, section or module, major for an incompatible work
 
 ### Added
 
+- **`knowledge-base` persona 1.0.0** (2026-11-22). For projects that capture knowledge and serve it
+  back — a markdown-to-vector tool, an agent-facing search index. Built around the failure mode the
+  other personas do not cover: a retrieval system that is fully operational and wrong. The
+  repository is the source of truth and the index a rebuildable derivative, so a bad day is
+  recoverable (`slot: state-history`). Provenance is a schema requirement, not a convention —
+  source, evidence and date, or the item is a draft (`provenance.md`). Inclusion is declared in
+  configuration and exclusion is enforced by the indexer, so archived or ignored material cannot be
+  smuggled back into a caller's context through a search result (`corpus.md`, `scope.md`). Retrieval
+  reports scores and citations, may answer "no result", announces every degraded stage, and treats a
+  200 as no evidence of quality (`retrieval.md`). A committed golden question set is the merge gate
+  for anything that can affect retrieval, and each new failure mode adds a question (`eval.md`).
+  Capture is propose-then-approve with a lint gate on evidence, and an explicit anti-trigger for
+  restating what the sources already say (`capture.md`). Tool names and CLI flags are a public
+  surface: SemVer, additive first, read-only before write, distinguishable errors (`interfaces.md`).
+  Shared CPU-bound backends get batching, content-hash caching, bounded retries and checkpointed
+  rebuilds (`resource_discipline.md`). Rationale in
+  [contracts/persona/knowledge-base/docs/agent-contract/](contracts/persona/knowledge-base/docs/agent-contract/).
 - **`review` persona 1.0.0** (2026-11-17). An independent reviewer for research packs, document drafts
   and requirements briefs. It judges each artefact against its yardstick, the confirmed brief or
   question record, and asks for the yardstick rather than reconstructing it (`review_setup.md`).
