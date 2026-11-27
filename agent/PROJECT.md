@@ -17,7 +17,7 @@ tactical and strategic work. Personas specialise it; this repository runs its ow
 
 ## Decisions
 <!-- Open decisions only (DR-NNN in docs/decisions/, DR-004). Accepted ones: REPO-MAP index. -->
-- DR-005: Batching low-effort development tasks + agent/estimates.md — PROPOSED — gates T-09
+- none
 
 ## Waiting on the user
 <!-- Q-NN: the question — options — blocking what — since YYYY-MM-DD -->

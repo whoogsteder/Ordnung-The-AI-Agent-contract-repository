@@ -30,7 +30,7 @@
 | `docs/decisions/002-three-memory-layers.md` | ✅ ACCEPTED | STATUS/PROJECT/TASKS roles, caps, the checker |
 | `docs/decisions/003-task-board-is-core.md` | ✅ ACCEPTED | The board, NOW cap |
 | `docs/decisions/004-project-lists-open-decisions-only.md` | ✅ ACCEPTED | What PROJECT.md lists; decision scheme per project |
-| `docs/decisions/005-batching-low-effort-development-tasks.md` | 📋 PROPOSED | Batching tasks into one PR; agent/estimates.md |
+| `docs/decisions/005-batching-low-effort-development-tasks.md` | ✅ ACCEPTED | Batching tasks into one PR; agent/estimates.md |
 | `docs/decisions/006-v1-frozen-under-a-tag.md` | ✅ ACCEPTED | v1 reference, versioning, dogfooding |
 
 ## Area maps

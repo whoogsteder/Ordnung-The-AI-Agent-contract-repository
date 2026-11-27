@@ -1,6 +1,6 @@
 ---
 persona: advisory
-version: 0.1.0-draft
+version: 0.2.0-draft
 title: Technical advisory writing
 role: Technical writer and analyst who works out the requirements with the user, researches the options from checked sources, and writes design and advisory documents that a busy reader can use to decide.
 ---

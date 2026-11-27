@@ -211,7 +211,7 @@ def test_well_formed_board_passes(tmp_path):
     (BOARD.replace(" — decision: UTC or local", ""), "WAITING but"),
     (BOARD.replace("after: T-1", "after: T-9"), "neither on the board"),
     (BOARD.replace("## NEXT\n", "- [T-5] a — owner: agent\n- [T-6] b — owner: both\n"
-                   "\n## NEXT\n"), "agent tasks in NOW > 2"),
+                   "\n## NEXT\n"), "agent slots in NOW > 2"),
 ])
 def test_board_findings(tmp_path, board, expect):
     code, out = run(with_board(tmp_path, board))
@@ -352,3 +352,37 @@ def test_field_name_guard_catches_a_planted_name():
     assert not _field_name_hits("an IaC firewall-management tool, project B")
     planted = "".join(chr(c) for c in (100, 107, 102, 109))  # a banned word, never spelled out
     assert _field_name_hits(f"notes about {planted} go here")
+
+
+# ---- batching (DR-005) ----------------------------------------------------------------------------
+def test_a_batch_takes_one_now_slot(tmp_path):
+    batch = "    batch: chore_small_fixes (operator 2026-11-27)\n"
+    board = BOARD.replace("## NEXT\n", "- [T-5] a — owner: agent\n" + batch + "- [T-6] b — owner: agent\n"
+                          + batch + "- [T-7] c — owner: agent\n" + batch + "\n## NEXT\n")
+    assert run(with_board(tmp_path, board, task="T-5, T-6, T-7 (batch chore_small_fixes)")) == (0, [])
+    board2 = board.replace("## NEXT\n", "- [T-8] d — owner: agent\n\n## NEXT\n")
+    code, out = run(with_board(tmp_path, board2))
+    assert code == 1 and any("agent slots in NOW > 2" in o for o in out), out
+
+
+def test_every_handoff_task_of_a_batch_sits_in_now(tmp_path):
+    code, out = run(with_board(tmp_path, task="T-1, T-2 (batch x)"))
+    assert code == 1 and any("T-2 is NEXT" in o for o in out), out
+
+
+def test_a_task_leaves_its_batch_when_it_leaves_now(tmp_path):
+    board = BOARD.replace("    after: T-1\n", "    after: T-1\n    batch: chore_small_fixes\n")
+    code, out = run(with_board(tmp_path, board))
+    assert code == 1 and any("still carries a batch: line" in o for o in out), out
+
+
+def test_estimates_lines_follow_the_format(tmp_path):
+    with_board(tmp_path)
+    good = ("- 2026-11-27 · T-63 · opencode/qwen3.8-flash · predicted: low effort, low risk · "
+            "found: container name also hard-coded in two docs and CI · why: grep was scoped to "
+            "scripts/ · then: out of the batch, back to NEXT\n")
+    (tmp_path / "agent/estimates.md").write_text("# Estimates\n\n" + good)
+    assert run(tmp_path) == (0, [])
+    (tmp_path / "agent/estimates.md").write_text("# Estimates\n\n" + good + "- T-64 took longer\n")
+    code, out = run(tmp_path)
+    assert code == 1 and any("estimates.md line 4" in o for o in out), out

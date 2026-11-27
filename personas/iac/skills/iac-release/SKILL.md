@@ -1,6 +1,6 @@
 ---
 name: iac-release
-description: Branching, versioning and release rules for infrastructure-as-code projects — SemVer with one version source, short-lived typed branches off an always-releasable main, one change batch per branch and PR, squash merge, Keep a Changelog, annotated tags and pre-release tags, bundles built from tags, environments upgraded from tags in order (acceptance then production), declared stable surfaces and live-smoke rules. Use this whenever you create a branch, commit, open or update a PR, bump a version, edit CHANGELOG.md, tag, build a release bundle, or upgrade an environment.
+description: Branching, versioning and release rules for infrastructure-as-code projects — SemVer with one version source, short-lived typed branches off an always-releasable main, one change batch per branch and PR (one task, or an operator-approved batch of tasks), squash merge, Keep a Changelog, annotated tags and pre-release tags, bundles built from tags, environments upgraded from tags in order (acceptance then production), declared stable surfaces and live-smoke rules. Use this whenever you create a branch, propose or ship a batch of tasks, commit, open or update a PR, bump a version, edit CHANGELOG.md, tag, build a release bundle, or upgrade an environment.
 ---
 
 # Branches and releases
@@ -8,11 +8,31 @@ description: Branching, versioning and release rules for infrastructure-as-code 
 ## Branches
 - `main` is always releasable. Work happens on short-lived branches off `main`, named
   `<type>_<topic>` with type `feat`, `fix`, `docs` or `chore` and a snake_case topic.
-- One change batch per branch, which is one PR. Unrelated work found on the way goes on the
-  board (`ordnung-board`), not into this branch.
+- One change batch per branch, which is one PR. A change batch is one task, or a batch of
+  tasks the operator approved (`ordnung-board`, Batches). Unrelated work found on the way goes
+  on the board, not into this branch.
 - Before you branch, pull `main` and delete merged local branches only with the owner's go.
 - Commit only when the user or the release flow asks for it. Push only to your own branch. Never
   force-push a shared branch.
+
+## Batches: what may share a PR
+**Batching is for development work only.** A task is never batched, and keeps its own branch,
+PR and review, when it:
+- is ops work (deploying, upgrading an environment, a schema step, host maintenance);
+- touches a live system. The exceptions are a development host, a test host, and an acceptance
+  system when the operator says so for that batch. **Production, never.**
+- changes a stable surface, needs a decision (an ADR), or carries a release.
+
+In a batch PR:
+- **One commit per task,** `<type>: <what> (T-NN)`, in board order. A rejected task's commit can
+  then be fixed or dropped on its own.
+- **Run the full suite once on the batch tip** before opening the PR, as well as each task's own
+  check while you work.
+- **The PR description is a checklist,** one line per task: what changed, impact, risk, and how
+  it was checked. Your reviewer can then review item by item.
+- **One version bump and one changelog entry** for the batch, if it ships anything a user sees.
+  A docs-only batch gets no bump.
+- **A rejection holds the whole merge** (`ordnung-board`).
 
 ## Versions
 - SemVer 2.0. The version string lives in exactly one file (`iac-python`: `pyproject.toml`).

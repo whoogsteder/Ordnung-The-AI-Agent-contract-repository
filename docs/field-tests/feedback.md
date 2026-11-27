@@ -36,8 +36,10 @@ generic on purpose: this repository is public. Field projects:
   it works too well": low-effort tasks each get their own branch, PR and reviewed merge. The
   operator has instructed the agent several times to do a set in one go.
 - **The pain is the merge:** every merge to main needs a second reviewer on the company GitHub.
-- **Outcome:** DR-005 (PROPOSED). It includes `agent/estimates.md`, so that misjudged estimates
-  leave a record that feeds the improvement process.
+- **Outcome:** DR-005, PROPOSED and then ACCEPTED the same day, so it can be field-tested in
+  project B. It is implemented in `ordnung-board`, `iac-release` and the checker. It includes
+  `agent/estimates.md`, so that misjudged estimates leave a record that feeds the improvement
+  process.
 
 ## What to watch (from the 2026-11-26 hand-over)
 - **Resume after a compaction or a new session.** Does the agent reload the HANDOFF `skills:` and

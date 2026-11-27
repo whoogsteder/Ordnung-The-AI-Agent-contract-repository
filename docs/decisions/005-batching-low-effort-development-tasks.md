@@ -7,7 +7,7 @@ operator's company GitHub, every merge to main needs a second reviewer, which be
 a heavy development cycle. The operator has several times told the agent to handle a set of small
 tasks in one go and review them afterwards.
 
-## Decision (proposed)
+## Decision
 1. The task stays the unit of tracking. Each task keeps its board line, its `done:` criterion, its
    own evidence and its own archive line.
 2. At claim time the agent may propose a batch of tasks that are low in both effort and risk, and
@@ -33,8 +33,14 @@ tasks in one go and review them afterwards.
 ## Consequences
 - This would touch `ordnung-board` (proposing and closing a batch), `iac-release` (the batch PR),
   the templates (`agent/estimates.md`) and the checker (the estimates line format).
-- Enforced by (planned, after the operator accepts): a checker rule for the format of
-  `agent/estimates.md` lines, and an eval case where a batch member proves bigger than predicted.
+- A batch takes one NOW slot: tasks carrying the same `batch:` line count once against the cap
+  of 2 (DR-003).
+- Enforced by: `tools/ordnung_check` (`check_board`: batch slots; `check_estimates`: line format)
+  with `tests/test_tools.py::test_a_batch_takes_one_now_slot` and
+  `tests/test_tools.py::test_estimates_lines_follow_the_format`.
+- Enforced by (planned, T-05): an eval case where a member of a batch proves bigger than
+  predicted (`skills/core/ordnung-board/evals/batch-member-grows`, written but not yet run).
 
 ## Status
-PROPOSED (2026-11-27). The operator asked not to change anything yet: "Actual use will tell."
+ACCEPTED (2026-11-27, operator: "implement the earlier proposed changes", to field-test in
+project B the same day). It was PROPOSED earlier that day with "actual use will tell".

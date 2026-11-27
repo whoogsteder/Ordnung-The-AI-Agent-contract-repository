@@ -9,6 +9,10 @@ The section is the status: move the line, never copy it. IDs are never reused.
 
 ## NOW
 
+- [T-09] Implement batching (DR-005) and agent/estimates.md — owner: both — ref: DR-005
+    Operator accepted DR-005 2026-11-27 to field-test in project B today. Branch feat_dr005_batching.
+    done: PR merged; checker counts a batch as one NOW slot and checks estimates lines;
+    ordnung-board and iac-release describe proposing, shipping and breaking up a batch.
 
 ## NEXT
 
@@ -38,7 +42,5 @@ The section is the status: move the line, never copy it. IDs are never reused.
 
 ## WAITING
 
-- [T-09] Implement batching (DR-005) and agent/estimates.md — owner: both — ref: DR-005
-    decision: the operator accepts DR-005 after more field use ("actual use will tell").
 - [T-10] Release contracts-v2.0.0 (final) — owner: both — ref: DR-006
     waits: field feedback from A and B on the rc; personas to 1.0.0 at that point.
