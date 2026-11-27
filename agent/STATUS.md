@@ -1,18 +1,30 @@
 # STATUS — the task in hand (≤ 40 lines; strategic facts go to PROJECT.md)
 
 ## HANDOFF
-task: none
-status: DONE
-next_action: At the next session, claim T-02 (eval iteration 2) from NEXT unless the operator names another task.
-skills: [ordnung-checkpoint, ordnung-board]
+task: T-07 — port the knowledge-base persona from v1
+status: IN_PROGRESS
+next_action: Extract `contracts/persona/knowledge-base/rules/*.md` from the frozen v1 tag and condense each module into a persona skill.
+skills: [ordnung-checkpoint, ordnung-board, ca-skill-authoring, ca-release, ca-evals]
 constraints:
-  - none
-files: agent/TASKS.md
-evidence: contracts-v2.0.0-rc.1 published as a GitHub pre-release on merge d2d3ebb (2026-11-27)
-last_update: 2026-11-27T12:47
+  - Public repository: no field-project names, hostnames or account names in anything committed; the reranker anecdote stays generic (ca-release, kernel rule 11).
+  - Link v1 material by tag URL at `contracts-v1.4.0`, never by branch (DR-006).
+  - Pushing, PRs and tags need the operator's go for that release (kernel rule 7).
+files: personas/knowledge-base/, docs/lineage.md, README.md, CHANGELOG.md
+evidence: `agent/ordnung_check` → ok; `pytest tests/ -q` → 44 passed (2026-11-27)
+last_update: 2026-11-27T13:04
 
 ## Plan
-- [ ] Claim the next task
+- [x] Claimed T-07, split the remaining ports to T-12, eval cases to T-13
+- [x] persona.md + 9 kb-* skills under `personas/knowledge-base/`
+- [x] lineage rows with v1 tag links, README persona row, CHANGELOG [Unreleased]
+- [x] `pytest tests/` 44 passed, `agent/ordnung_check` ok, committed on this branch
+- [ ] Operator's go before push / PR
 
 ## Notes for the next action
-- The local ~/development/Ordnung-Zwei checkout is superseded by this repo; never push it (its history holds dropped field-test drafts).
+A drafted port exists in a retired local checkout (branch `feat_knowledge-base-persona`, commit
+`4eb9e5c` in `~/development/Ordnung-Zwei_old`): persona.md plus nine kb-* skills, written against the
+pre-rc.1 layout. Treat it as a draft to review against `ca-skill-authoring`, not to cherry-pick —
+that checkout is superseded and must never be pushed.
+Kernel rule 9 wants an eval case per behaviour change; the port ships with T-13 filed for the cases,
+the same way advisory and iac shipped before T-04/T-05. Say that plainly in the PR rather than
+implying the skills are proven.
