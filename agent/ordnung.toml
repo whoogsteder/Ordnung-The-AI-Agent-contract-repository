@@ -1,0 +1,4 @@
+# Ordnung-Zwei project settings, read by agent/ordnung_check
+[decisions]
+prefix = "DR"
+dir = "docs/decisions"

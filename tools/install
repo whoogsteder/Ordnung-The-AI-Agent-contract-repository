@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""install — put an Ordnung-Zwei contract into a project.
+
+    tools/install <target-dir> --persona <name> [--link .claude/skills ...] [--force] [--dev]
+
+Writes into the target:
+  AGENTS.md                       kernel rendered with the persona's lines (never overwritten
+                                  without --force; otherwise written as AGENTS.md.ordnung-new)
+  CLAUDE.md, .github/copilot-instructions.md   pointers to AGENTS.md (only if absent)
+  .agents/skills/<name>/          core + persona skills (canonical location)
+  <link>  -> .agents/skills       one symlink per --link (default: .claude/skills)
+  agent/ordnung_check, agent/templates/, agent/persona.md, agent/ordnung.toml (kept if present)
+  licenses/                       only when the project is not bootstrapped yet
+It never touches agent/PROJECT.md, STATUS.md, REPO-MAP.md or any project file.
+
+--dev (only for this repository installing its own contract, "eat your own dogfood"): skills,
+the checker, the templates and persona.md become relative symlinks into the source tree instead
+of copies, so the contract this repo runs on is always the one it ships, with no copy to drift.
+"""
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import shutil
+import sys
+from pathlib import Path
+
+ZWEI = Path(__file__).resolve().parent.parent
+POINTER = "@AGENTS.md\n"
+COPILOT = "Follow the agent contract in AGENTS.md at the repository root before anything else.\n"
+
+
+def read_persona(name: str) -> tuple[dict[str, str], str, str]:
+    p = ZWEI / "personas" / name / "persona.md"
+    text = p.read_text(encoding="utf-8")
+    m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    if not m:
+        raise SystemExit(f"{p}: missing frontmatter")
+    meta = dict(re.findall(r"^(\w+):\s*(.+)$", m.group(1), re.M))
+    body = text[m.end():]
+
+    def sec(h: str) -> str:
+        s = re.search(rf"^## {h}\s*$(.*?)(?=^## |\Z)", body, re.M | re.S)
+        return re.sub(r"<!--.*?-->\n?", "", s.group(1), flags=re.S).strip() if s else ""
+
+    return meta, sec("Kernel rules"), sec("Skills")
+
+
+def decision_scheme(meta: dict[str, str]) -> tuple[str, str]:
+    """Persona frontmatter `decisions: <PREFIX> <dir>`; default DR in docs/decisions."""
+    parts = meta.get("decisions", "DR docs/decisions").split()
+    return parts[0], parts[1].rstrip("/")
+
+
+def render_agents(name: str) -> str:
+    meta, rules, skills = read_persona(name)
+    tmpl = (ZWEI / "kernel/AGENTS.md.tmpl").read_text(encoding="utf-8")
+    return (tmpl.replace("{{PERSONA_TITLE}}", meta["title"])
+                .replace("{{PERSONA_ROLE}}", meta["role"])
+                .replace("{{PERSONA_RULES}}", rules)
+                .replace("{{PERSONA_SKILLS}}", skills)
+                .replace("{{DECISIONS_DIR}}", decision_scheme(meta)[1]))
+
+
+def copy_tree(src: Path, dst: Path) -> None:
+    if dst.exists():
+        shutil.rmtree(dst)
+    shutil.copytree(src, dst, ignore=shutil.ignore_patterns("evals", "*-workspace", "__pycache__"))
+
+
+def place(src: Path, dst: Path, dev: bool) -> None:
+    """Copy src to dst, or in dev mode make dst a relative symlink to src."""
+    if dst.is_symlink() or dst.is_file():
+        dst.unlink()
+    elif dst.exists():
+        shutil.rmtree(dst)
+    if dev:
+        dst.symlink_to(os.path.relpath(src, dst.parent))
+    elif src.is_dir():
+        copy_tree(src, dst)
+    else:
+        shutil.copy2(src, dst)
+
+
+def install(target: Path, persona: str, links: list[str], force: bool, dev: bool = False) -> list[str]:
+    done: list[str] = []
+    target.mkdir(parents=True, exist_ok=True)
+
+    agents = target / "AGENTS.md"
+    out = agents if (force or not agents.exists()) else target / "AGENTS.md.ordnung-new"
+    out.write_text(render_agents(persona), encoding="utf-8")
+    done.append(str(out.relative_to(target)))
+
+    for rel, content in (("CLAUDE.md", POINTER), (".github/copilot-instructions.md", COPILOT)):
+        p = target / rel
+        if not p.exists():
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(content, encoding="utf-8")
+            done.append(rel)
+
+    skills = target / ".agents/skills"
+    skills.mkdir(parents=True, exist_ok=True)
+    for src in [*(ZWEI / "skills/core").iterdir(), *(ZWEI / "personas" / persona / "skills").iterdir()]:
+        if (src / "SKILL.md").is_file():
+            place(src, skills / src.name, dev)
+            done.append(f".agents/skills/{src.name}")
+
+    for rel in links:
+        link = target / rel
+        if link.is_symlink() or not link.exists():
+            if link.is_symlink():
+                link.unlink()
+            link.parent.mkdir(parents=True, exist_ok=True)
+            link.symlink_to(os.path.relpath(skills, link.parent))
+            done.append(f"{rel} -> .agents/skills")
+        else:
+            done.append(f"SKIPPED {rel}: exists and is not a symlink — merge by hand")
+
+    agent = target / "agent"
+    agent.mkdir(exist_ok=True)
+    place(ZWEI / "tools/ordnung_check", agent / "ordnung_check", dev)
+    place(ZWEI / "templates/agent", agent / "templates", dev)
+    place(ZWEI / "personas" / persona / "persona.md", agent / "persona.md", dev)
+    done += ["agent/ordnung_check", "agent/templates/", "agent/persona.md"]
+
+    settings = agent / "ordnung.toml"
+    if not settings.exists():
+        prefix, ddir = decision_scheme(read_persona(persona)[0])
+        settings.write_text("# Ordnung-Zwei project settings, read by agent/ordnung_check\n"
+                            f'[decisions]\nprefix = "{prefix}"\ndir = "{ddir}"\n', encoding="utf-8")
+        done.append("agent/ordnung.toml")
+
+    if not (agent / "PROJECT.md").exists() and (ZWEI / "kernel/licenses").is_dir():
+        if not (target / "licenses").exists() and not (target / "LICENSE").exists():
+            shutil.copytree(ZWEI / "kernel/licenses", target / "licenses")
+            done.append("licenses/")
+    return done
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description="Install an Ordnung-Zwei contract into a project.")
+    ap.add_argument("target", type=Path)
+    ap.add_argument("--persona", required=True)
+    ap.add_argument("--link", action="append", default=None,
+                    help="extra skill-dir symlink(s), default .claude/skills")
+    ap.add_argument("--force", action="store_true", help="overwrite an existing AGENTS.md")
+    ap.add_argument("--dev", action="store_true",
+                    help="symlink instead of copy (this repository's own contract only)")
+    a = ap.parse_args(argv)
+    if not (ZWEI / "personas" / a.persona / "persona.md").is_file():
+        print(f"unknown persona {a.persona!r}; have: "
+              f"{', '.join(sorted(p.name for p in (ZWEI / 'personas').iterdir()))}")
+        return 1
+    for line in install(a.target.resolve(), a.persona, a.link or [".claude/skills"], a.force, a.dev):
+        print(line)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

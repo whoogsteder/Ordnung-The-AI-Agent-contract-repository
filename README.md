@@ -1,187 +1,73 @@
-![Ordnung! The AI Agent contract repository!](img/ordnung_logo.png)
+# Ordnung-Zwei
 
-**Bringing order to your agents.** 🧹
+Status: 🟡 release candidate `contracts-v2.0.0-rc.1`, in field test. The successor to Ordnung v1.
 
-Every AI coding agent starts your project as a brilliant amnesiac: great at the task in front
-of it, hopeless at remembering why you do things this way — until the next session wipes the
-slate clean. **Ordnung is the cure**: drop-in *agent contracts* that give a generic agent a
-role, a working discipline, and a memory system written to files instead of chat history. The
-agent may forget; Ordnung does not.
+> **Looking for v1?** It is frozen at tag
+> [`contracts-v1.4.0`](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0)
+> (the `contracts/persona/*` folders, `rules/`, `tools/check_sync`). Where each v1 piece went:
+> [docs/lineage.md](docs/lineage.md).
 
-Each contract is a self-contained folder you copy into your project root. It turns the same
-generic agent into a specialist — an infrastructure designer, an administrative assistant —
-and keeps it coherent across sessions without you babysitting.
+Same idea as v1: **durable state lives in files, not in conversation history.** What changes is
+how much of the contract sits in context at any moment, and what happens after a compaction.
 
-The contracts are **agent-agnostic**: the same files drive Copilot, Claude Code, Cline,
-Continue, Cursor or any tool that reads `AGENTS.md`. They were shaped against small local
-models (Qwen, DeepSeek), where explicit rules and externalized state are not a nicety but the
-only way to keep sessions coherent.
+- A **kernel** of 50–60 lines in `AGENTS.md`: the only text guaranteed to survive a summary,
+  because harnesses re-inject it. It tells the agent to run `ordnung-resume` after any summary.
+- Everything else is an **Agent Skill**, loaded when the work needs it.
+- Three memory files: `agent/PROJECT.md` (strategic: requirements, open decisions, questions for
+  the user, tracks), `agent/TASKS.md` (the task board) and `agent/STATUS.md` (tactical: the one
+  task in hand). Hard size limits and board rules, enforced by a script and a pre-commit hook.
+- Long or wide work is **delegated** with a brief that carries the kernel into the subagent.
 
-## Using an existing persona 📦
+Why, and what v1 taught us: [docs/design.md](docs/design.md) and the decision records in
+[docs/decisions/](docs/decisions/). How each agent finds skills: [docs/harness-matrix.md](docs/harness-matrix.md).
+Field-test reports: [docs/field-tests/feedback.md](docs/field-tests/feedback.md).
+Where every v1 piece went: [docs/lineage.md](docs/lineage.md).
 
-Using a shipped contract takes one copy and one open — no tooling required:
-
-1. **Pick** a contract from the [What is in the repo](#what-is-in-the-repo) table (e.g.
-   `contracts/persona/administrative/`) and **copy** the whole folder into your project root.
-   Rename it to something short (`contract/`) or keep the name — only its contents matter.
-2. **Open the project with any agent.** The tool's entry-point file sends it to `AGENTS.md`,
-   which makes the agent read all of `rules/` before doing anything else.
-3. **The first session runs bootstrap**: the agent asks about goal and scope, settles licensing,
-   creates the project skeleton and `agent/REPO-MAP.md`, and fills the shipped empty
-   `agent/STATUS.md` template with its first HANDOFF. Everything after that is the loop in the
-   diagram under [how the flow works](#reference-how-the-flow-works-boot--session-loop).
-   (Bootstrap recognizes itself by content: no REPO-MAP, or a STATUS.md without a written
-   HANDOFF, means it has not run yet.)
-
-From then on the contract folder is **read-only for agents**: rule files change only when you
-explicitly ask for that specific change.
-
-## Bring your own persona 🤝
-
-Ordnung is built to grow: **your take on an agent contract is welcome here.** Maybe you have a
-discipline for data-science notebooks, homelab operations, or legal drafting that actually
-keeps an agent honest. The framework gives you the hard parts up front — the shared core
-(boot protocol, HANDOFF continuity, verification discipline), guides for writing rules and
-rationale, and tooling (`tools/check_sync`, `tools/new_persona`) that scaffolds a new persona
-and keeps its shared sections from drifting against the others. You bring the specialist
-flavor; the repo keeps everyone's copy honest. Start at
-[CONTRIBUTING.md](CONTRIBUTING.md) — it walks through the whole process.
-
-## What is in the repo
-
-| Contract | Role | Specialist modules |
-|---|---|---|
-| [`contracts/persona/iac/`](contracts/persona/iac/) | IT infrastructure designer & administrator | Terraform/Terragrunt, Ansible, Python, web |
-| [`contracts/persona/administrative/`](contracts/persona/administrative/) | Administrative assistant (quotes, invoices, bookkeeping, correspondence) | Financial integrity, document lifecycle, approval classes, Python data scripting |
-| [`contracts/persona/game-hosting/`](contracts/persona/game-hosting/) | System engineer hosting dedicated game servers for inexperienced operators | Docker Compose delivery, SteamCMD acquisition, bundled multi-server web panel (auth + TLS enforced), Python, usability |
-| [`contracts/persona/document-writing/`](contracts/persona/document-writing/) | Technical writer for IT documents (architecture, integration how-tos, change plans, lifecycle advisories and product selections, research briefs, end-user guides) | Requirements brief as a gate, facts from a research pack or checked sources, writing style with page budgets, document-type profiles, review pass, classification at release |
-| [`contracts/persona/research/`](contracts/persona/research/) | IT researcher who answers a sharp question from primary sources and hands over a research pack | Question agreed first, source hierarchy, longlist-screen-shortlist on checked facts, missing-candidate check, fixed research-pack format, research briefs |
-| [`contracts/persona/review/`](contracts/persona/review/) | Independent reviewer of research packs, document drafts and requirements briefs; never edits, writes a review report | Yardstick-first review, independence by inputs, facts re-checked at the source, own must-have table, missing-candidate check, reader check, three severities and a verdict; runs as a second session or a sub-agent |
-| [`contracts/persona/knowledge-base/`](contracts/persona/knowledge-base/) | Knowledge-base maintainer: capture that stays honest, retrieval that stays measured, an index that stays disposable | Provenance as a schema requirement, corpus declared in config and excluded by the indexer, retrieval that announces degradation and can say "no result", golden-question evaluation as the merge gate, propose-then-approve capture, SemVer'd agent-facing interfaces, shared-backend resource discipline |
-| [`contracts/persona/tech-writing/`](contracts/persona/tech-writing/) | *Reference (1.x):* the original single-persona document author, kept for comparison. New document work uses `document-writing` + `research` + `review` | Classification ladder + distribution statements, open-items register, output-format menu with code generation, comparison fairness and sourcing, visual pass, document-set registers |
-
-All contracts share the same transferable core: session boot protocol, externalized memory, HANDOFF
-continuity, verification discipline, decision records. The decision-record naming follows the
-persona: `contracts/persona/iac/` uses **ADRs** (`rules/adr.md`, `docs/adr/`) because "architecture" is literal
-there and the convention matches existing projects; `contracts/persona/administrative/` uses plain **DRs**
-(`rules/dr.md`, `docs/decisions/`), as does `contracts/persona/tech-writing/` — the decision discipline
-applies, the architecture framing does not.
-
-## Reference: contract anatomy
+## Layout
 
 ```
-<contract>/
-├── AGENTS.md                        ← single source of truth: the boot protocol
-├── CLAUDE.md                        ← one line: load @AGENTS.md (Claude Code entry)
-├── .github/copilot-instructions.md  ← same pointer, for Copilot
-├── rules/
-│   ├── base.md                      ← always-on contract (role, memory, discipline)
-│   └── <module>.md                  ← loaded when that language/tool/domain is in use
-├── agent/
-│   ├── bootstrap.md                 ← new-project protocol (scope → license → skeleton)
-│   ├── project_layout.md            ← what a bootstrapped project looks like
-│   └── STATUS.md                    ← format spec for the agent's session memory
-├── docs/agent-contract/             ← WHY the rules exist (human rationale — never read at boot)
-└── licenses/                        ← license texts bootstrap picks from
+kernel/AGENTS.md.tmpl          kernel template (persona lines are rendered in)
+kernel/licenses/               license picker texts for bootstrap
+skills/core/ordnung-*/         shared skills: resume, checkpoint, board, ledger, delegate, bootstrap
+personas/<name>/persona.md     role, kernel lines, skill table, bootstrap questions
+personas/<name>/skills/        persona skills (gh-*, adv-*, iac-*, ca-* for this repo)
+templates/agent/               PROJECT.md, TASKS.md, STATUS.md, REPO-MAP.md
+tools/install                  install a persona into a project
+tools/ordnung_check            size / schema / freshness / ID checks (stdlib Python)
+tests/                         tests for the tools
+skills/core/*/evals/           skill-creator eval cases
 ```
 
-The pointer files (`CLAUDE.md`, `copilot-instructions.md`) contain no rules — they only send
-every tool to `AGENTS.md`, which dictates where the rules live. One contract, many entry points.
+## Install into a project
 
-## Reference: how the flow works (boot & session loop)
-
-```mermaid
-flowchart TD
-    A[Agent starts in project] --> B{"Entry-point file<br/>for this tool?"}
-    B -->|Claude Code| C[CLAUDE.md → @AGENTS.md]
-    B -->|Copilot| D[".github/copilot-instructions.md"]
-    B -->|Cline, Continue, other AGENTS-aware tools| E[AGENTS.md]
-    C --> E
-    D --> E
-    E --> F["Boot protocol: list rules/,<br/>read every rules/*.md (base.md first)"]
-    F --> G{agent/REPO-MAP.md exists &<br/>agent/STATUS.md has a HANDOFF?}
-    G -->|no — new project| H[agent/bootstrap.md:<br/>scope, license, skeleton]
-    G -->|yes — existing project| I[Read STATUS.md HANDOFF,<br/>scope work with REPO-MAP]
-    H --> I
-    I --> J[Work: rules stay in force<br/>modules apply per language/tool in use]
-    J --> K["Maintain memory:<br/>update REPO-MAP + STATUS on triggers;<br/>archive DONE items"]
-    K --> I
+```bash
+tools/install /path/to/project --persona iac      # or game-hosting, advisory
 ```
 
-Plain-text version (for non-rendering contexts):
-
-```
-agent starts
-  └─ entry point: CLAUDE.md / .github/copilot-instructions.md → AGENTS.md
-       └─ boot: list rules/ → read every rules/*.md, base.md first
-            ├─ no REPO-MAP, or STATUS is empty template → agent/bootstrap.md (new-project protocol)
-            └─ exists → read STATUS.md HANDOFF, scope via REPO-MAP
-                 └─ work under the rules
-                      └─ update REPO-MAP + STATUS on triggers; archive DONE items → loop
-```
-
-The design idea in one sentence: **durable state lives in files, not in conversation history** —
-`agent/REPO-MAP.md` is what exists, `agent/STATUS.md` is what is happening, the rules are how
-the agent behaves; the chat is disposable.
-
-## Editing a contract
-
-This repository **runs its own contract**: the root folder is the `repo-maintainer` persona
-(`AGENTS.md`, `rules/`, `agent/`), and agents working here follow the same boot protocol they
-ship. That self-hosting is deliberate — the sync problems these contracts police are the ones
-the repo would otherwise suffer itself.
-
-- Shared behavior between personas is marked with inline seams (`<!-- core -->`,
-  `<!-- slot: name -->`, `<!-- persona -->`) and enforced by `tools/check_sync` — see
-  [docs/authoring/core-sync.md](docs/authoring/core-sync.md). A commit that changes a core
-  section changes it in every persona and the root copy, in that same commit.
-- Adding a persona? Follow [docs/authoring/persona-anatomy.md](docs/authoring/persona-anatomy.md).
-- Releases: the contract set is versioned by the manifests and released as an annotated tag
-  `contracts-vX.Y.Z` on `main`; every release gets its entry in
-  [CHANGELOG.md](CHANGELOG.md), written in the same branch as the change it ships.
-- Rules are **generic** — no project-specific names, paths or numbers; those belong in each
-  project's REPO-MAP/STATUS.
-- Retiring a document is a reference-graph operation, not a `mv`: propose it, get the operator's
-  approval, `git mv` into `docs/archive/<same subpath>/` in a commit of its own, banner it, re-point
-  every citation repo-wide, and move both REPO-MAP rows with it — see the Document archiving section
-  of `rules/base.md`. The archive is never read at task time, and it is never a way to delete.
-- Keep the pattern: `base.md` carries what every session needs; modules stay short, imperative
-  checklists for their domain; the *why* goes in `docs/agent-contract/`, never into boot material.
-- When you change a rule, update its rationale page in `docs/agent-contract/` in the same commit.
-- Keep pointer files dumb: they point at `AGENTS.md` and contain nothing else.
+It writes `AGENTS.md` (or `AGENTS.md.ordnung-new` if one exists), pointer files, skills under
+`.agents/skills/` with a `.claude/skills` symlink, and `agent/ordnung_check`. It never touches
+existing memory files. The first agent session then runs `ordnung-bootstrap`, which also
+covers migrating from v1.
 
 ## Checks
 
-```sh
-python3 tools/check_sync            # seam structure + core drift (personas + root copy)
-uv run --with pytest --no-project python -m pytest tests/ -q   # checker self-tests
+```bash
+uv run --with pytest --no-project python -m pytest tests/ -q
 ```
 
-Both must pass before committing contract or tooling changes.
+## Personas
 
-## Where to read more
+| Persona | Status | Ported from |
+|---|---|---|
+| game-hosting | 0.1.0-draft | Ordnung v1 game-hosting 2.0.0 |
+| advisory | 0.1.0-draft | Ordnung v1 document-writing 1.2.0 + research |
+| iac | 0.1.0-draft | Ordnung v1 iac 1.5.0 + field project B's rule set and task board |
+| contract-authoring | 0.1.0-draft | v1's repo-maintainer contract; runs this repository |
 
-- Want to add a persona? [CONTRIBUTING.md](CONTRIBUTING.md), then
-  [docs/authoring/persona-anatomy.md](docs/authoring/persona-anatomy.md).
-- Each contract explains itself in detail under `docs/agent-contract/`:
+## Eat your own dogfood
 
-- [IaC rationale](contracts/persona/iac/docs/agent-contract/index.md) — base contract, verification/test ladder,
-  bootstrap lifecycle, tooling modules, document archiving (and why ADRs retire by `Status: CLOSED`
-  instead of moving).
-- [Administrative rationale](contracts/persona/administrative/docs/agent-contract/index.md) — base contract,
-  verification/records ladder, bootstrap lifecycle, financial integrity & approval classes, document
-  archiving (and why `records/` is never archived).
-- [Game-hosting rationale](contracts/persona/game-hosting/docs/agent-contract/index.md) — base contract
-  (pinning, save-data protection), frontend security (fail-closed auth, TLS), verification &
-  upstream truth, document archiving (and why live operator material is never archived).
-- [Technical-writing rationale](contracts/persona/tech-writing/docs/agent-contract/index.md) — base
-  contract, the audience and format questions, document-set registers, comparison evidence and
-  fairness, format generation, open items and the idea roadmap, document archiving (two trees, and why
-  a released deliverable gets no banner).
-- [Document-writing rationale](contracts/persona/document-writing/docs/agent-contract/index.md) — what
-  the `tech-writing` field test showed, the brief gate, facts before writing, page budgets, and why
-  writing and research are two personas.
-- [Research rationale](contracts/persona/research/docs/agent-contract/index.md) — why memory steers the
-  search but never supplies facts, compatibility lists first, the fixed research-pack shape.
-- [Review rationale](contracts/persona/review/docs/agent-contract/index.md) — why review is a persona,
-  independence by inputs, the reviewer's own must-have table, the missing-candidate check.
+This repository runs its own contract, as v1 did: the `contract-authoring` persona, installed with
+`tools/install . --persona contract-authoring --dev --force`. In dev mode the skills, checker and
+templates are symlinks into the source tree, so the contract the repo works under is always the one
+it ships. Its memory lives in `agent/` like any project's; `python3 agent/ordnung_check` runs as the
+pre-commit hook.

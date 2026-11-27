@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: promote-durable-facts
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  The user's rule (images that cannot flush on stop are monitor-only, no restore) is recorded in
+  agent/PROJECT.md as a standing requirement or decision, not only in STATUS. The games.Target
+  file-field prerequisite is recorded in PROJECT.md (requirement, track, task queue or DR) since it
+  outlives this task. agent/STATUS.md is rewritten to a valid HANDOFF of at most 40 lines with a
+  single-sentence next_action about writing the 7D2D game definition, a constraint naming
+  monitor-only, the go test command and result in evidence, and a current last_update.
+  agent/ordnung_check exits 0 afterwards.
