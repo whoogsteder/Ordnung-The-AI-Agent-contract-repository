@@ -14,6 +14,7 @@ The section is the status: move the line, never copy it. IDs are never reused.
     Source: `contracts/persona/knowledge-base/` at tag `contracts-v1.4.0`, condensed into skills.
     done: `personas/knowledge-base/` with persona.md + skills, `docs/lineage.md` and README rows
     added, CHANGELOG entry under [Unreleased], `pytest tests/` and `agent/ordnung_check` green.
+    Pushed as PR #20; closes on merge.
 
 ## NEXT
 

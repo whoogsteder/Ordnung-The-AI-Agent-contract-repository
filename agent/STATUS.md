@@ -10,15 +10,15 @@ constraints:
   - Link v1 material by tag URL at `contracts-v1.4.0`, never by branch (DR-006).
   - Pushing, PRs and tags need the operator's go for that release (kernel rule 7).
 files: personas/knowledge-base/, docs/lineage.md, README.md, CHANGELOG.md
-evidence: `agent/ordnung_check` → ok; `pytest tests/ -q` → 44 passed (2026-11-27)
-last_update: 2026-11-27T13:04
+evidence: `agent/ordnung_check` ok; `pytest tests/ -q` 44 passed; PR #20 open (2026-11-27)
+last_update: 2026-11-27T13:06
 
 ## Plan
 - [x] Claimed T-07, split the remaining ports to T-12, eval cases to T-13
 - [x] persona.md + 9 kb-* skills under `personas/knowledge-base/`
 - [x] lineage rows with v1 tag links, README persona row, CHANGELOG [Unreleased]
 - [x] `pytest tests/` 44 passed, `agent/ordnung_check` ok, committed on this branch
-- [ ] Operator's go before push / PR
+- [x] Pushed; PR #20 open, awaiting the operator's review and merge
 
 ## Notes for the next action
 A drafted port exists in a retired local checkout (branch `feat_knowledge-base-persona`, commit
