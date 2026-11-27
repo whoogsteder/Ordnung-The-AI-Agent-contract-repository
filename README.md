@@ -62,6 +62,7 @@ uv run --with pytest --no-project python -m pytest tests/ -q
 | game-hosting | 0.1.0-draft | Ordnung v1 game-hosting 2.0.0 |
 | advisory | 0.1.0-draft | Ordnung v1 document-writing 1.2.0 + research |
 | iac | 0.1.0-draft | Ordnung v1 iac 1.5.0 + field project B's rule set and task board |
+| knowledge-base | 0.1.0-draft | [Ordnung v1 knowledge-base 1.0.0](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base), rules recast as skills |
 | contract-authoring | 0.1.0-draft | v1's repo-maintainer contract; runs this repository |
 
 ## Eat your own dogfood

@@ -85,3 +85,26 @@ Field project B (an IaC firewall-management tool, docs/field-tests/feedback.md) 
 | adr.md | `ordnung-ledger` with `agent/ordnung.toml` (`ADR` / `docs/adr`) | merged; the prefix is configurable |
 | (implicit: LAB.md, read-only repos, customer data) | `iac-live` | new: made explicit |
 | web.md | — | not ported yet; port it when project B starts its web scaffold (board T-06) |
+
+## knowledge-base persona ([v1 1.0.0](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base) → `personas/knowledge-base/`)
+
+The v1 persona was authored but never installed in a field project, so there is no hardened copy to
+prefer over the v1 text. Its rules were always-loaded `rules/*.md`, which is the boot load this
+layout exists to remove, so each module is recast as a triggered skill rather than copied.
+
+| v1 | Zwei location | |
+|---|---|---|
+| [base.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/base.md) Role, State & change history, Documentation | `persona.md` role + kernel rules 9–11 | condensed to what survives a compaction |
+| [provenance.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/provenance.md) | `kb-provenance` | kept: source/evidence/date as schema, citation on every result, staleness and superseding |
+| [corpus.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/corpus.md), [scope.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/scope.md) | `kb-corpus`, `kb-scope` | split: what is indexed and rebuilt vs what a caller may read |
+| [retrieval.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/retrieval.md) | `kb-retrieval` | kept, with the re-ranker audit told in the skill so the failure mode stays concrete |
+| [eval.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/eval.md) | `kb-eval` | kept, plus the evidence tiers v1 put in verification.md |
+| [capture.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/capture.md) | `kb-capture` | kept, including the anti-trigger for restating what the sources already say |
+| [interfaces.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/interfaces.md) | `kb-interfaces` | kept: the tool and flag surface is public API |
+| [resource_discipline.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/resource_discipline.md) | `kb-resource-discipline` | kept: batching, content-hash caching, bounded retries |
+| [python.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/python.md) | `kb-python` | generic Python rules, plus determinism for anything that reaches an index; device/TLS specifics stay with `iac-python` |
+| [verification.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/verification.md) | folded into `kb-eval` | no `kb-verification`: the KB-specific evidence rules are eval rules |
+| [adr.md](https://github.com/whoogsteder/Ordnung-The-AI-Agent-contract-repository/tree/contracts-v1.4.0/contracts/persona/knowledge-base/rules/adr.md) | `ordnung-ledger` with `agent/ordnung.toml` (`ADR` / `docs/adr`) | same scheme as iac |
+
+Eval cases were not written with the port; they are board T-13, the same order advisory and iac
+shipped in before T-04 and T-05.
