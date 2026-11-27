@@ -9,8 +9,6 @@ The section is the status: move the line, never copy it. IDs are never reused.
 
 ## NOW
 
-- [T-01] Release contracts-v2.0.0-rc.1: Zwei replaces v1 on main — owner: both — ref: DR-006
-    done: PR merged on the public repo, tag contracts-v2.0.0-rc.1 pushed, pre-release published.
 
 ## NEXT
 

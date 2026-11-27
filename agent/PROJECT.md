@@ -25,7 +25,7 @@ tactical and strategic work. Personas specialise it; this repository runs its ow
 
 ## Tracks
 <!-- name — state — tasks — detail -->
-- 2.0.0 release — rc.1 being cut; final after field feedback — T-01, T-10 — CHANGELOG.md
+- 2.0.0 release — rc.1 published 2026-11-27; final after field feedback — T-10 — CHANGELOG.md
 - Evals — iteration 1 done for resume/checkpoint/delegate (only resume discriminates) — T-02, T-04, T-05 — skills/core/*/evals/
 - Harness support — desk research done, nothing tested yet — T-03 — docs/harness-matrix.md
 - Field tests — A (advisory), B (iac); feedback log — T-04, T-05, T-09 — docs/field-tests/feedback.md
