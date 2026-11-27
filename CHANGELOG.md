@@ -12,13 +12,32 @@ contract set is an annotated tag `contracts-vX.Y.Z` on `main`; release candidate
 ## [Unreleased]
 
 ### Added
+- **Batching low-effort development tasks** (DR-005, accepted 2026-11-27):
+  - At claim time, the agent may propose shipping several small, low-risk, decision-free tasks
+    as one branch, one PR, one review and one merge, with a per-task effort, impact and risk
+    table. The operator decides each proposal.
+  - Each task keeps its board line, `done:` and evidence, gets one commit, and gets its own
+    archive line.
+  - A rejected item holds the whole merge.
+  - A task that proves bigger than predicted stops, leaves the batch, goes back to NEXT, and is
+    logged in **`agent/estimates.md`**, which uses a fixed one-line format and has a new
+    template, `templates/agent/estimates.md`.
+  - Where this lives: `ordnung-board` (Batches), `iac-release` (what may share a PR: never ops
+    work or live systems except dev/test hosts and, on the operator's word, acceptance; never
+    production) and iac kernel rule 12.
+- **`ordnung_check`:**
+  - tasks sharing a `batch:` line take one NOW slot;
+  - every T-NN in the HANDOFF `task:` must sit in NOW;
+  - a task outside NOW may not keep a `batch:` line;
+  - `agent/estimates.md` lines must follow the DR-005 format.
+- **Eval case** `skills/core/ordnung-board/evals/batch-member-grows`: a batched dev task turns
+  out to touch the production upgrade script. Written; not yet run.
 
-- **`knowledge-base` persona 0.1.0-draft** (`personas/knowledge-base/`): nine skills for projects
-  that capture knowledge and serve it back — `kb-provenance`, `kb-corpus`, `kb-scope`,
-  `kb-retrieval`, `kb-eval`, `kb-capture`, `kb-interfaces`, `kb-resource-discipline`, `kb-python`.
-  Ported from the v1 persona of the same name (frozen at `contracts-v1.4.0`), whose always-loaded
-  rule files are recast as triggered skills. Eval cases are not part of this change; they are
-  tracked separately on the board.
+### Changed
+- game-hosting, advisory, iac and contract-authoring go to 0.2.0-draft, because the shared
+  `ordnung-board` changed.
+- **Migration** for installed projects: re-run `tools/install <project> --persona <p>`. The
+  changes are additive: a board with no `batch:` lines behaves exactly as before.
 
 ## [2.0.0-rc.1] - 2026-11-27
 

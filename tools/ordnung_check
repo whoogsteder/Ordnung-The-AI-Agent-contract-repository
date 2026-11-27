@@ -10,8 +10,10 @@ Checks, relative to the project root (the parent of the directory holding this f
   - REQ-/Q- IDs cited in STATUS exist in PROJECT; decision IDs (DR-NNN by default) cited in
     PROJECT/STATUS/TASKS resolve to <dir>/NNN-*.md; PROJECT's Decisions list holds only those IDs
   - agent/TASKS.md, when present (the task board): unique [T-NN] IDs not reused from the archive,
-    an owner on every task, at most 2 agent/both tasks in NOW, WAITING tasks name what they wait on, after: refs
-    resolve, and a HANDOFF task T-NN that is not DONE sits in NOW
+    an owner on every task, at most 2 agent/both slots in NOW (tasks sharing a `batch:` line take
+    one slot, DR-005), WAITING tasks name what they wait on, after: refs resolve, and every
+    HANDOFF task T-NN that is not DONE sits in NOW
+  - agent/estimates.md, when present: every entry is one line in the DR-005 format
   - AGENTS.md and agent/REPO-MAP.md are within their size caps
   - an installed pre-commit hook of ours runs what agent/ordnung.toml [hook] run lists
 Settings: agent/ordnung.toml — optional. [decisions] prefix, dir (defaults DR, docs/decisions);
@@ -38,6 +40,9 @@ SENTENCE_END = re.compile(r"[.!?](?=\s+\S)")
 NOW_MAX = 2
 BOARD_SECTIONS = ("NOW", "NEXT", "LATER", "WAITING")
 TASK_LINE = re.compile(r"^- \[(T-\d+)\]\s*(.*)$")
+BATCH = re.compile(r"^\s+batch:\s*([A-Za-z0-9_./-]+)", re.M)
+ESTIMATE = re.compile(r"^- \d{4}-\d{2}-\d{2} · T-\d+ · [^·]+ · predicted: [^·]+ · found: [^·]+ · "
+                      r"why: [^·]+ · then: .+$")
 OWNERS = re.compile(r"\bowner:\s*(agent|owner|both)\b")
 WAITS_ON = re.compile(r"\b(decision|waits|blocked by):", re.I)
 HOOK_MARK = "# installed by ordnung_check --install-hook"
@@ -129,14 +134,36 @@ def check_board(root: Path, task_field: str, status: str) -> list[str]:
                     if ref not in seen and ref not in archived and \
                             not any(ref == t for ts in board.values() for t, _ in ts):
                         out.append(f"TASKS: {tid} is after {ref}, which is neither on the board nor archived")
-    agent_now = [t for t, body in board["NOW"] if re.search(r"\bowner:\s*(agent|both)\b", body)]
-    if len(agent_now) > NOW_MAX:
-        out.append(f"TASKS: {len(agent_now)} agent tasks in NOW > {NOW_MAX} — park some in NEXT")
-    m = re.search(r"\bT-\d+\b", task_field)
-    if m and status != "DONE" and seen.get(m.group(0)) != "NOW":
-        where = seen.get(m.group(0), "not on the board")
-        out.append(f"HANDOFF: task {m.group(0)} is {where} — claim it into NOW first (ordnung-board)")
+    slots: set[str] = set()
+    for tid, body in board["NOW"]:
+        if re.search(r"\bowner:\s*(agent|both)\b", body):
+            b = BATCH.search(body)
+            slots.add(f"batch {b.group(1)}" if b else tid)
+    if len(slots) > NOW_MAX:
+        out.append(f"TASKS: {len(slots)} agent slots in NOW > {NOW_MAX} (a batch counts once) — "
+                   "park some in NEXT")
+    for name in ("NEXT", "LATER", "WAITING"):
+        for tid, body in board[name]:
+            if BATCH.search(body):
+                out.append(f"TASKS: {tid} is in {name} but still carries a batch: line — "
+                           "a task leaves its batch when it leaves NOW")
+    if status != "DONE":
+        for ref in dict.fromkeys(re.findall(r"\bT-\d+\b", task_field)):
+            if seen.get(ref) != "NOW":
+                where = seen.get(ref, "not on the board")
+                out.append(f"HANDOFF: task {ref} is {where} — claim it into NOW first (ordnung-board)")
     return out
+
+
+def check_estimates(root: Path) -> list[str]:
+    """agent/estimates.md (DR-005): every '- ' entry is one line in the fixed format."""
+    p = root / "agent/estimates.md"
+    if not p.is_file():
+        return []
+    return [f"estimates.md line {n}: not 'YYYY-MM-DD · T-NN · agent/model · predicted: … · "
+            f"found: … · why: … · then: …'"
+            for n, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1)
+            if line.startswith("- ") and not ESTIMATE.match(line)]
 
 
 def section(text: str, heading: str) -> str:
@@ -213,6 +240,7 @@ def check(root: Path, now: datetime | None = None) -> tuple[int, list[str]]:
     if (root / "agent/TASKS.md").is_file():
         cited_in.append("agent/TASKS.md")
         out += check_board(root, h.get("task", ""), st)
+    out += check_estimates(root)
     for rel in cited_in:
         for num in sorted(set(re.findall(rf"\b{prefix}-(\d{{3}})\b", (root / rel).read_text(encoding="utf-8")))):
             if not (dec.is_dir() and any(dec.glob(f"{num}-*.md"))):

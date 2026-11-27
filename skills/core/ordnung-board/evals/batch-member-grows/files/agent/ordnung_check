@@ -1,0 +1,292 @@
+#!/usr/bin/env python3
+"""ordnung_check — enforce the Ordnung-Zwei memory contract by script, not by memory.
+
+Checks, relative to the project root (the parent of the directory holding this file, or --root):
+  - agent/PROJECT.md exists (else: not bootstrapped, exit 2) and is within its size cap
+  - agent/STATUS.md has a well-formed HANDOFF, is within its size cap, and is fresh
+    (written no later than its own last_update stamp, which is not in the future)
+  - next_action is one line and one sentence
+  - status BLOCKED has an open Q-NN in PROJECT.md
+  - REQ-/Q- IDs cited in STATUS exist in PROJECT; decision IDs (DR-NNN by default) cited in
+    PROJECT/STATUS/TASKS resolve to <dir>/NNN-*.md; PROJECT's Decisions list holds only those IDs
+  - agent/TASKS.md, when present (the task board): unique [T-NN] IDs not reused from the archive,
+    an owner on every task, at most 2 agent/both slots in NOW (tasks sharing a `batch:` line take
+    one slot, DR-005), WAITING tasks name what they wait on, after: refs resolve, and every
+    HANDOFF task T-NN that is not DONE sits in NOW
+  - agent/estimates.md, when present: every entry is one line in the DR-005 format
+  - AGENTS.md and agent/REPO-MAP.md are within their size caps
+  - an installed pre-commit hook of ours runs what agent/ordnung.toml [hook] run lists
+Settings: agent/ordnung.toml — optional. [decisions] prefix, dir (defaults DR, docs/decisions);
+  [hook] run: extra shell commands the pre-commit hook runs after this check (default none).
+
+Usage:  ordnung_check [--root DIR]            run checks
+        ordnung_check [--root DIR] --install-hook   write .git/hooks/pre-commit
+Exit:   0 ok · 1 findings (one line each on stdout) · 2 not bootstrapped
+Stdlib only, so it runs under any agent and any CI.
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import sys
+from datetime import datetime, timedelta
+from pathlib import Path
+
+CAPS = {"AGENTS.md": 80, "agent/PROJECT.md": 80, "agent/STATUS.md": 40, "agent/REPO-MAP.md": 120}
+FIELDS = ("task", "status", "next_action", "skills", "constraints", "files", "evidence", "last_update")
+STATUSES = {"IN_PROGRESS", "PAUSED", "BLOCKED", "DONE"}
+FRESH_TOLERANCE = timedelta(minutes=2)
+SENTENCE_END = re.compile(r"[.!?](?=\s+\S)")
+NOW_MAX = 2
+BOARD_SECTIONS = ("NOW", "NEXT", "LATER", "WAITING")
+TASK_LINE = re.compile(r"^- \[(T-\d+)\]\s*(.*)$")
+BATCH = re.compile(r"^\s+batch:\s*([A-Za-z0-9_./-]+)", re.M)
+ESTIMATE = re.compile(r"^- \d{4}-\d{2}-\d{2} · T-\d+ · [^·]+ · predicted: [^·]+ · found: [^·]+ · "
+                      r"why: [^·]+ · then: .+$")
+OWNERS = re.compile(r"\bowner:\s*(agent|owner|both)\b")
+WAITS_ON = re.compile(r"\b(decision|waits|blocked by):", re.I)
+HOOK_MARK = "# installed by ordnung_check --install-hook"
+
+
+def parse_handoff(text: str) -> dict[str, str] | None:
+    """Return HANDOFF fields as raw strings (continuation lines joined), or None if absent."""
+    m = re.search(r"^## HANDOFF\s*$(.*?)(?=^## |\Z)", text, re.M | re.S)
+    if not m:
+        return None
+    fields: dict[str, str] = {}
+    key = None
+    for line in m.group(1).splitlines():
+        km = re.match(r"^([a-z_]+):\s*(.*)$", line)
+        if km and km.group(1) in FIELDS:
+            key = km.group(1)
+            fields[key] = km.group(2).strip()
+        elif key and line.strip():
+            fields[key] += "\n" + line.strip()
+    return fields
+
+
+def load_settings(root: Path) -> dict:
+    """agent/ordnung.toml as a dict; empty when absent, unreadable or tomllib is missing."""
+    p = root / "agent/ordnung.toml"
+    if p.is_file():
+        try:
+            import tomllib
+            return tomllib.loads(p.read_text(encoding="utf-8"))
+        except (ImportError, ValueError):
+            pass
+    return {}
+
+
+def settings(root: Path) -> tuple[str, str]:
+    """Decision-record prefix and directory from agent/ordnung.toml, with defaults."""
+    d = load_settings(root).get("decisions", {})
+    return d.get("prefix", "DR"), d.get("dir", "docs/decisions")
+
+
+def hook_text(root: Path) -> str:
+    """The pre-commit hook: this check, then each [hook] run command; the first failure stops it."""
+    run = [c for c in load_settings(root).get("hook", {}).get("run", []) if isinstance(c, str)]
+    if not run:
+        return f"#!/bin/sh\n{HOOK_MARK}\nexec python3 agent/ordnung_check\n"
+    return "\n".join(["#!/bin/sh", HOOK_MARK, "set -e", "python3 agent/ordnung_check", *run]) + "\n"
+
+
+def parse_board(text: str) -> dict[str, list[tuple[str, str]]]:
+    """Board sections → [(task id, the task's whole text: line plus indented detail)]."""
+    board: dict[str, list[tuple[str, str]]] = {s: [] for s in BOARD_SECTIONS}
+    for name in BOARD_SECTIONS:
+        cur: list[str] | None = None
+        for line in section(text, name).splitlines():
+            m = TASK_LINE.match(line)
+            if m:
+                cur = [line]
+                board[name].append((m.group(1), ""))
+            elif cur is not None and (line.startswith((" ", "\t")) or not line.strip()):
+                cur.append(line)
+            else:
+                cur = None
+            if cur is not None and board[name]:
+                board[name][-1] = (board[name][-1][0], "\n".join(cur))
+    return board
+
+
+def check_board(root: Path, task_field: str, status: str) -> list[str]:
+    out: list[str] = []
+    tasks_p = root / "agent/TASKS.md"
+    board = parse_board(tasks_p.read_text(encoding="utf-8"))
+    archive_p = root / "agent/TASKS.archive.md"
+    archived = set(re.findall(r"\[(T-\d+)\]", archive_p.read_text(encoding="utf-8"))) \
+        if archive_p.is_file() else set()
+    seen: dict[str, str] = {}
+    for name, tasks in board.items():
+        for tid, body in tasks:
+            if tid in seen:
+                out.append(f"TASKS: {tid} appears in {seen[tid]} and {name} — move the line, never copy it")
+            seen[tid] = name
+            if tid in archived:
+                out.append(f"TASKS: {tid} is already in TASKS.archive.md — IDs are never reused")
+            if not OWNERS.search(body):
+                out.append(f"TASKS: {tid} has no 'owner: agent|owner|both'")
+            if name == "WAITING" and not WAITS_ON.search(body):
+                out.append(f"TASKS: {tid} is WAITING but does not say on what ('decision:' or 'waits:')")
+            for dep in re.findall(r"\bafter:\s*([^\n]*)", body):
+                for ref in re.findall(r"T-\d+", dep):
+                    if ref not in seen and ref not in archived and \
+                            not any(ref == t for ts in board.values() for t, _ in ts):
+                        out.append(f"TASKS: {tid} is after {ref}, which is neither on the board nor archived")
+    slots: set[str] = set()
+    for tid, body in board["NOW"]:
+        if re.search(r"\bowner:\s*(agent|both)\b", body):
+            b = BATCH.search(body)
+            slots.add(f"batch {b.group(1)}" if b else tid)
+    if len(slots) > NOW_MAX:
+        out.append(f"TASKS: {len(slots)} agent slots in NOW > {NOW_MAX} (a batch counts once) — "
+                   "park some in NEXT")
+    for name in ("NEXT", "LATER", "WAITING"):
+        for tid, body in board[name]:
+            if BATCH.search(body):
+                out.append(f"TASKS: {tid} is in {name} but still carries a batch: line — "
+                           "a task leaves its batch when it leaves NOW")
+    if status != "DONE":
+        for ref in dict.fromkeys(re.findall(r"\bT-\d+\b", task_field)):
+            if seen.get(ref) != "NOW":
+                where = seen.get(ref, "not on the board")
+                out.append(f"HANDOFF: task {ref} is {where} — claim it into NOW first (ordnung-board)")
+    return out
+
+
+def check_estimates(root: Path) -> list[str]:
+    """agent/estimates.md (DR-005): every '- ' entry is one line in the fixed format."""
+    p = root / "agent/estimates.md"
+    if not p.is_file():
+        return []
+    return [f"estimates.md line {n}: not 'YYYY-MM-DD · T-NN · agent/model · predicted: … · "
+            f"found: … · why: … · then: …'"
+            for n, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1)
+            if line.startswith("- ") and not ESTIMATE.match(line)]
+
+
+def section(text: str, heading: str) -> str:
+    m = re.search(rf"^## {re.escape(heading)}\s*$(.*?)(?=^## |\Z)", text, re.M | re.S)
+    return m.group(1) if m else ""
+
+
+def check(root: Path, now: datetime | None = None) -> tuple[int, list[str]]:
+    now = now or datetime.now()
+    out: list[str] = []
+    project_p, status_p = root / "agent/PROJECT.md", root / "agent/STATUS.md"
+    if not project_p.is_file():
+        return 2, ["not bootstrapped: agent/PROJECT.md missing — load ordnung-bootstrap"]
+
+    for rel, cap in CAPS.items():
+        p = root / rel
+        if p.is_file():
+            n = len(p.read_text(encoding="utf-8").splitlines())
+            if n > cap:
+                out.append(f"{rel}: {n} lines > cap {cap} — move detail out (ordnung-ledger/checkpoint)")
+
+    project = project_p.read_text(encoding="utf-8")
+    project_ids = set(re.findall(r"^\s*-\s*((?:REQ|Q)-\d+):", project, re.M))
+
+    if not status_p.is_file():
+        out.append("agent/STATUS.md missing — write a HANDOFF now (ordnung-checkpoint)")
+        return 1, out
+    status_text = status_p.read_text(encoding="utf-8")
+    h = parse_handoff(status_text)
+    if h is None:
+        out.append("agent/STATUS.md: no ## HANDOFF block")
+        return 1, out
+
+    for f in FIELDS:
+        if f not in h or not h[f] or h[f].startswith("<"):
+            out.append(f"HANDOFF: field '{f}' missing or still a placeholder")
+
+    st = h.get("status", "")
+    if st and st not in STATUSES:
+        out.append(f"HANDOFF: status '{st}' not one of {sorted(STATUSES)}")
+    if st == "BLOCKED" and not re.search(r"^\s*-\s*Q-\d+:", section(project, "Waiting on the user"), re.M):
+        out.append("HANDOFF: status BLOCKED but PROJECT.md has no Q-NN under 'Waiting on the user'")
+
+    na = h.get("next_action", "")
+    if "\n" in na or na.startswith((">", "|")):
+        out.append("HANDOFF: next_action must be one line")
+    elif len(SENTENCE_END.findall(na)) > 0:
+        out.append("HANDOFF: next_action must be one sentence — move the rest to ## Plan or PROJECT.md")
+
+    if "ordnung-checkpoint" not in h.get("skills", ""):
+        out.append("HANDOFF: skills must include ordnung-checkpoint")
+
+    stamp_raw = h.get("last_update", "")
+    try:
+        stamp = datetime.fromisoformat(stamp_raw).replace(tzinfo=None)
+    except ValueError:
+        if stamp_raw and not stamp_raw.startswith("<"):
+            out.append(f"HANDOFF: last_update {stamp_raw!r} is not YYYY-MM-DDThh:mm")
+    else:
+        written = datetime.fromtimestamp(status_p.stat().st_mtime)
+        if stamp > now + FRESH_TOLERANCE:
+            out.append(f"HANDOFF: last_update {stamp:%Y-%m-%dT%H:%M} is in the future — read the clock")
+        elif written - stamp > FRESH_TOLERANCE:
+            out.append(f"STATUS stale: written {written:%Y-%m-%dT%H:%M} but last_update says "
+                       f"{stamp:%Y-%m-%dT%H:%M} — update the HANDOFF")
+
+    for ref in sorted(set(re.findall(r"\b((?:REQ|Q)-\d+)\b", status_text))):
+        if ref not in project_ids:
+            out.append(f"STATUS cites {ref}, which PROJECT.md does not define")
+
+    prefix, ddir = settings(root)
+    dec = root / ddir
+    cited_in = ["agent/PROJECT.md", "agent/STATUS.md"]
+    if (root / "agent/TASKS.md").is_file():
+        cited_in.append("agent/TASKS.md")
+        out += check_board(root, h.get("task", ""), st)
+    out += check_estimates(root)
+    for rel in cited_in:
+        for num in sorted(set(re.findall(rf"\b{prefix}-(\d{{3}})\b", (root / rel).read_text(encoding="utf-8")))):
+            if not (dec.is_dir() and any(dec.glob(f"{num}-*.md"))):
+                out.append(f"{rel} cites {prefix}-{num}, but {ddir}/{num}-*.md does not exist")
+    for line in section(project, "Decisions").splitlines():
+        m = re.match(r"^\s*-\s*([A-Z]+)-\d+\b", line)
+        if m and m.group(1) != prefix:
+            out.append(f"PROJECT.md Decisions: '{line.strip()[:40]}' — decision IDs here are "
+                       f"{prefix}-NNN with a record in {ddir}/ (ordnung-ledger)")
+    hook = root / ".git/hooks/pre-commit"
+    if hook.is_file() and HOOK_MARK in (t := hook.read_text(encoding="utf-8")) and t != hook_text(root):
+        out.append("pre-commit hook does not match agent/ordnung.toml [hook] run — "
+                   "rerun python3 agent/ordnung_check --install-hook")
+
+    return (1 if out else 0), out
+
+
+def install_hook(root: Path) -> int:
+    hooks = root / ".git/hooks"
+    if not hooks.is_dir():
+        print("no .git/hooks here — is this a git repository? (ask before git init)")
+        return 1
+    hook = hooks / "pre-commit"
+    if hook.exists() and "ordnung_check" not in hook.read_text(encoding="utf-8"):
+        print(f"{hook} exists and is not ours — add 'python3 agent/ordnung_check' to it by hand")
+        return 1
+    hook.write_text(hook_text(root), encoding="utf-8")
+    hook.chmod(0o755)
+    print(f"installed {hook}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
+    ap.add_argument("--install-hook", action="store_true")
+    a = ap.parse_args(argv)
+    if a.install_hook:
+        return install_hook(a.root)
+    code, findings = check(a.root)
+    for f in findings:
+        print(f"ordnung_check: {f}")
+    if code == 0:
+        print("ordnung_check: ok")
+    return code
+
+
+if __name__ == "__main__":
+    sys.exit(main())

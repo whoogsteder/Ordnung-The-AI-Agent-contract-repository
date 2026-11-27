@@ -1,6 +1,6 @@
 ---
 name: ordnung-board
-description: Keeps the task board agent/TASKS.md — the one place open work lives in an Ordnung-contract project. Covers claiming a task into NOW, writing a task line with owner, refs, after-dependencies and a checkable done criterion, splitting a task that grew, parking new work discovered mid-task, WAITING on an owner decision, closing and archiving a task, and choosing what comes next. Use this whenever work is picked up or finished, when new work or a follow-up turns up during a task, when a task turns out bigger than its line, when the user asks "what's next", "what's open" or adds work, and when ordnung_check reports a TASKS finding.
+description: Keeps the task board agent/TASKS.md — the one place open work lives in an Ordnung-contract project. Covers claiming a task into NOW, writing a task line with owner, refs, after-dependencies and a checkable done criterion, splitting a task that grew, parking new work discovered mid-task, WAITING on an owner decision, closing and archiving a task, and choosing what comes next. Use this whenever work is picked up or finished, when new work or a follow-up turns up during a task, when a task turns out bigger than its line, when the user asks "what's next", "what's open" or adds work, when several small tasks could ship together (proposing a batch), when a batched task turns out bigger than predicted, and when ordnung_check reports a TASKS or estimates finding.
 ---
 
 # The task board
@@ -25,9 +25,10 @@ drops them.
   never resolves a WAITING decision on the owner's behalf.
 - **`done:`** is written when the task is claimed at the latest. If you can't state it, ask the
   owner as you claim the task. "Done" that nobody can check is how tasks reopen.
-- **The section is the status.** NOW holds at most 2 tasks that the agent works on (`owner:
-  agent` or `both`). Owner tasks in NOW don't count against that limit, since they are the
-  owner's work in progress. NEXT holds ready tasks, in order.
+- **The section is the status.** NOW holds at most 2 *slots* for work the agent does (`owner:
+  agent` or `both`). A slot is one task, or one batch the operator approved (below). Owner tasks
+  in NOW don't count against that limit, since they are the owner's work in progress. NEXT holds
+  ready tasks, in order.
   LATER is real but not ready. WAITING says `decision: ...` or `waits: <event, date>`.
 
 ## Claim
@@ -38,6 +39,56 @@ drops them.
    HANDOFF whose task is not in NOW.
 4. A task that depends on a PROPOSED decision is not claimable. Raise the decision with the user,
    or claim the task that decides it.
+
+## Batches (DR-005)
+Each delivered change costs a merge, and on some setups every merge needs a second reviewer.
+When several small tasks are ready, they can ship as **one batch: one branch, one PR, one review,
+one merge**. Each task still keeps its own line, `done:` and evidence, and gets its own archive
+line.
+
+**Propose, never decide.** At claim time, a batch may be proposed when every candidate task:
+- is low effort (a few files, well understood);
+- is low risk (no stable surface, easy to revert);
+- needs no decision, and depends on no PROPOSED one;
+- is not excluded by the persona (iac: no ops work, and nothing that touches a live system —
+  `iac-release`).
+
+Put the proposal to the operator, and wait:
+```
+Batch proposal: <branch name>
+| Task | Effort | Impact | Risk | How it will be checked |
+| T-63 | low: one script + its doc | dev tooling only | low: env var with the old default | unit test + doc |
+| ...  |
+Why these fit together: <one line>
+```
+The operator decides each proposal. There is no fixed size, and tasks are never labelled as
+batchable in advance: the judgement is made fresh, at claim time.
+
+**On a yes:** move the tasks into NOW, each with `batch: <branch> (operator YYYY-MM-DD)` in its
+detail. The checker counts that batch as one slot. The HANDOFF names every task:
+`task: T-63, T-05, T-06 (batch <branch>)`.
+
+**While the batch runs:** one commit per task, with its ID in the message. Each task's `done:` is
+checked and its evidence recorded before you move to the next one.
+
+**A task turns out bigger than predicted** (more files, a decision appears, a live system comes
+into scope, a test you cannot make pass): **stop**.
+1. Take the task out of the batch: remove its `batch:` line and move it back to NEXT with one
+   line saying what you found. Drop or revert its commit on the batch branch.
+2. Append one line to `agent/estimates.md`. Create the file from `agent/templates/estimates.md`
+   if it doesn't exist yet. The format:
+   `- YYYY-MM-DD · T-NN · <agent>/<model> · predicted: <effort, risk> · found: <what> · why: <cause> · then: <what happened to the task>`
+   The checker enforces it. The file is read by the operator to improve the process, so be
+   specific about *why* the estimate was wrong.
+3. Report to the operator, then go on with the rest of the batch, unless the operator says
+   otherwise.
+
+**Review and merge:** a rejected item holds the whole merge. Fix it on the batch branch and ask
+for the re-review. Never merge part of a batch: a partial merge leaves the rejected item
+dangling, with nothing pushing anyone to fix it.
+
+**Close:** after the merge, archive every task of the batch, each with its own line citing its
+commit.
 
 ## While working
 - **New work turns up:** add it to the board in the same response, in NEXT if it is ready,

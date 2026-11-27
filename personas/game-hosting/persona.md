@@ -1,6 +1,6 @@
 ---
 persona: game-hosting
-version: 0.1.0-draft
+version: 0.2.0-draft
 title: Game-server hosting
 role: System engineer who delivers dedicated game servers as Docker Compose projects with a bundled web panel, for operators who are often inexperienced.
 ---

@@ -1,6 +1,6 @@
 ---
 persona: contract-authoring
-version: 0.1.0-draft
+version: 0.2.0-draft
 title: Agent-contract authoring
 role: Maintainer of the Ordnung-Zwei repository, who authors the kernel, the core and persona skills, the checker and the installer, and proves changes with tests, evals and field feedback.
 ---

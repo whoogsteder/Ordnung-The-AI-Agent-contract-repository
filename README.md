@@ -31,7 +31,7 @@ kernel/licenses/               license picker texts for bootstrap
 skills/core/ordnung-*/         shared skills: resume, checkpoint, board, ledger, delegate, bootstrap
 personas/<name>/persona.md     role, kernel lines, skill table, bootstrap questions
 personas/<name>/skills/        persona skills (gh-*, adv-*, iac-*, ca-* for this repo)
-templates/agent/               PROJECT.md, TASKS.md, STATUS.md, REPO-MAP.md
+templates/agent/               PROJECT.md, TASKS.md, STATUS.md, REPO-MAP.md, estimates.md
 tools/install                  install a persona into a project
 tools/ordnung_check            size / schema / freshness / ID checks (stdlib Python)
 tests/                         tests for the tools
